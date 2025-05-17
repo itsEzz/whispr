@@ -6,62 +6,46 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 72.2% 50.6%;
+    --destructive: 0 72.22% 50.59%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 240 10% 3.9%;
-    --radius: 0.5rem;
-	--sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
   }
 
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-	--sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -69,7 +53,89 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Scrollbar css */
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  --tw-bg-opacity: 1 !important;
+  background-color: hsl(var(--muted) / var(--tw-bg-opacity)) !important;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: calc(var(--radius) - 4px);
+  background-color: hsl(var(--muted-foreground) / 0.3) !important;
+}
+
+html {
+  scrollbar-color: hsl(215.4 16.3% 46.9% / 0.3);
+}
+
+html.dark {
+  scrollbar-color: hsl(215.4 16.3% 56.9% / 0.3);
+}
+
+/* Mode transition css */
+@layer base {
+  :root {
+    --theme-transition-duration: 0.5s;
+    --theme-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--theme-transition-duration);
+  animation-timing-function: var(--theme-transition-ease);
+}
+
+::view-transition-old(root) {
+  animation: fade-scale-out var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+::view-transition-new(root) {
+  animation: fade-scale-in var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Toast CSS */
+[data-close-button] {
+  background: hsl(var(--background));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground))
+}
+
+[data-close-button]:hover {
+  background: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground));
 }
