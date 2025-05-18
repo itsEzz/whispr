@@ -38,7 +38,7 @@
 								$errors.showCopyButton && 'border-destructive focus-visible:ring-destructive/50'
 							)}
 						/>
-						<Form.Label class="cursor-pointer">Show copy note button</Form.Label>
+						<Form.Label class="cursor-pointer">Show copy button</Form.Label>
 					</div>
 				{/snippet}
 			</Form.Control>
@@ -60,7 +60,7 @@
 								$errors.showDownloadButton && 'border-destructive focus-visible:ring-destructive/50'
 							)}
 						/>
-						<Form.Label class="cursor-pointer">Show download note button</Form.Label>
+						<Form.Label class="cursor-pointer">Show download button</Form.Label>
 					</div>
 				{/snippet}
 			</Form.Control>
