@@ -31,3 +31,14 @@ export function getUserLocale(): string {
 		(navigator.languages && navigator.languages.length > 0 ? navigator.languages[0] : 'en-US')
 	);
 }
+
+/**
+ * Checks if a given date is in the past (UTC)
+ *
+ * @param date - The date to check
+ * @returns True if the date is in the past, false otherwise
+ */
+export function isDateInPast(date: Date): boolean {
+	const now = new Date();
+	return now.getTime() > date.getTime();
+}
