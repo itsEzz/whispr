@@ -21,7 +21,14 @@
 	}
 </script>
 
-<DialogDrawer bind:open title="Navigate away?">
+<DialogDrawer
+	bind:open
+	title="Navigate away?"
+	role="alertdialog"
+	aria-labelledby="navigate-away-title"
+	escapeKeydownBehavior="close"
+	interactOutsideBehavior="close"
+>
 	{#snippet body()}
 		<div class="space-y-2">
 			<p class="text-sm text-muted-foreground">
@@ -31,7 +38,16 @@
 		</div>
 	{/snippet}
 	{#snippet footer()}
-		<Button variant="secondary" onclick={handleCloseDialog}>Stay on page</Button>
-		<Button variant="destructive" onclick={handleClickConfirm}>Leave page</Button>
+		<Button variant="secondary" onclick={handleCloseDialog} aria-label="Stay on current page">
+			Stay on page
+		</Button>
+		<Button
+			variant="destructive"
+			onclick={handleClickConfirm}
+			aria-label="Leave page and discard changes"
+			autofocus
+		>
+			Leave page
+		</Button>
 	{/snippet}
 </DialogDrawer>
