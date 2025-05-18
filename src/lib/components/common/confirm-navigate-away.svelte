@@ -26,8 +26,7 @@
 	title="Navigate away?"
 	role="alertdialog"
 	aria-labelledby="navigate-away-title"
-	escapeKeydownBehavior="close"
-	interactOutsideBehavior="close"
+	aria-describedby="navigate-away-description"
 >
 	{#snippet body()}
 		<div class="space-y-2">
