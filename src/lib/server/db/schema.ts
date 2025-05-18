@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import {
 	boolean,
 	index,
@@ -10,7 +11,7 @@ import {
 import { humanId } from 'human-id';
 import { nanoid } from 'nanoid';
 
-export const whispr = mysqlTable(
+export const whispr_table = mysqlTable(
 	'whispr',
 	{
 		id: varchar('id', { length: 50 })
@@ -28,7 +29,9 @@ export const whispr = mysqlTable(
 		showExpiresAt: boolean('show_expires_at').notNull(),
 		showCopyButton: boolean('show_copy_button').notNull(),
 		showDownloadButton: boolean('show_download_button').notNull(),
-		createdAt: timestamp('created_at').notNull().defaultNow()
+		createdAt: timestamp('created_at')
+			.notNull()
+			.default(sql`(UTC_TIMESTAMP)`)
 	},
 	(table) => [index('expires_at_index').on(table.expiresAt)]
 );
