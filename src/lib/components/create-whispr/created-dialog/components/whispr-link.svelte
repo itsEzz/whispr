@@ -2,6 +2,7 @@
 	import CopyButton from '$lib/components/common/copy-button.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import { Label } from '$lib/components/ui/label/index.js';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import { copyText, isCopySupported } from '$lib/utils/copy';
 	import { isShareSupported, shareText } from '$lib/utils/share';
@@ -48,7 +49,7 @@
 		}
 	}
 
-	function handleClickWhisprLink(
+	function handleClickWhisprLinkInput(
 		event: MouseEvent & {
 			currentTarget: EventTarget & HTMLInputElement;
 		}
@@ -58,18 +59,21 @@
 </script>
 
 <div class="mt-4 space-y-2">
-	<Input
-		type="text"
-		id="whispr-link"
-		placeholder="Your whispr link will appear here..."
-		aria-label="Whispr link"
-		class="focus-visible:ring-0 focus-visible:ring-offset-0"
-		readonly
-		value={inputValue}
-		aria-invalid={isInvalidLink}
-		aria-describedby={isInvalidLink ? 'whispr-link-error' : undefined}
-		onclick={handleClickWhisprLink}
-	/>
+	<div>
+		<Label for="whispr-link" class="sr-only">Whispr link</Label>
+		<Input
+			type="text"
+			id="whispr-link"
+			placeholder="Your whispr link will appear here..."
+			aria-label="Whispr link"
+			class="focus-visible:ring-0 focus-visible:ring-offset-0"
+			readonly
+			value={inputValue}
+			aria-invalid={isInvalidLink}
+			aria-describedby={isInvalidLink ? 'whispr-link-error' : undefined}
+			onclick={handleClickWhisprLinkInput}
+		/>
+	</div>
 
 	<div class="flex justify-center gap-2">
 		{#if isCopySupported()}
