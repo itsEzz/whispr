@@ -1,16 +1,24 @@
 <script lang="ts">
+	import { version } from '$app/environment';
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { Menu, MessageSquareLock, MonitorCog, Moon, Shield, Sun } from 'lucide-svelte';
 	import { mode, ModeWatcher, setMode } from 'mode-watcher';
+	import type { Snippet } from 'svelte';
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
-	import { version } from '$app/environment';
+
+	// Props
+	interface Props {
+		children: Snippet<[]>;
+	}
+
+	let { children }: Props = $props();
 
 	// Variables & States
-	let mobileNavOpen = false;
+	let mobileNavOpen = $state<boolean>(false);
 
 	// Handler Functions
 	function handleSetMode(newMode: 'light' | 'dark' | 'system') {
@@ -34,7 +42,7 @@
 <!-- Skip to content link for keyboard users -->
 <a
 	href="#main-content"
-	class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-4"
+	class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-4 focus:text-foreground focus:outline-ring"
 >
 	Skip to content
 </a>
@@ -98,7 +106,11 @@
 			<div class="flex flex-1 items-center justify-end space-x-2">
 				<!-- Theme Toggle -->
 				<DropdownMenu.Root>
-					<DropdownMenu.Trigger aria-label="Change theme">
+					<DropdownMenu.Trigger
+						aria-label="Change theme"
+						aria-haspopup="true"
+						id="theme-menu-button"
+					>
 						<Button variant="ghost" size="icon">
 							<Sun
 								class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
@@ -111,16 +123,16 @@
 							<span class="sr-only">Toggle theme</span>
 						</Button>
 					</DropdownMenu.Trigger>
-					<DropdownMenu.Content align="end">
-						<DropdownMenu.Item onclick={() => handleSetMode('light')}>
+					<DropdownMenu.Content align="end" aria-labelledby="theme-menu-button">
+						<DropdownMenu.Item onclick={() => handleSetMode('light')} role="menuitem">
 							<Sun class="mr-2 h-4 w-4" aria-hidden="true" />
 							<span>Light</span>
 						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={() => handleSetMode('dark')}>
+						<DropdownMenu.Item onclick={() => handleSetMode('dark')} role="menuitem">
 							<Moon class="mr-2 h-4 w-4" aria-hidden="true" />
 							<span>Dark</span>
 						</DropdownMenu.Item>
-						<DropdownMenu.Item onclick={() => handleSetMode('system')}>
+						<DropdownMenu.Item onclick={() => handleSetMode('system')} role="menuitem">
 							<MonitorCog class="mr-2 h-4 w-4" aria-hidden="true" />
 							<span>System</span>
 						</DropdownMenu.Item>
@@ -130,13 +142,23 @@
 				<!-- Mobile Navigation Trigger -->
 				<div class="sm:hidden">
 					<Sheet.Root bind:open={mobileNavOpen}>
-						<Sheet.Trigger aria-label="Open navigation menu" aria-expanded={mobileNavOpen}>
+						<Sheet.Trigger
+							aria-label="Open navigation menu"
+							aria-expanded={mobileNavOpen}
+							aria-controls="mobile-navigation"
+						>
 							<Button variant="ghost" size="icon">
 								<Menu class="h-5 w-5" aria-hidden="true" />
 								<span class="sr-only">Toggle Menu</span>
 							</Button>
 						</Sheet.Trigger>
-						<Sheet.Content side="left" class="w-[240px] sm:w-[280px]">
+						<Sheet.Content
+							side="left"
+							class="w-[240px] sm:w-[280px]"
+							id="mobile-navigation"
+							role="dialog"
+							aria-label="Navigation menu"
+						>
 							<a
 								href="/"
 								class="mb-6 flex items-center space-x-2"
@@ -188,8 +210,8 @@
 		</div>
 	</header>
 
-	<main id="main-content" class="flex-1">
-		<slot />
+	<main id="main-content" class="flex-1" tabindex="-1">
+		{@render children()}
 	</main>
 
 	<footer class="border-t py-4">
