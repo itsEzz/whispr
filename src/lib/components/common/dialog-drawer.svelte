@@ -22,6 +22,9 @@
 			| 'defer-otherwise-close'
 			| 'defer-otherwise-ignore';
 		idToFocusOnOpen?: string;
+		role?: string;
+		'aria-describedby'?: string;
+		'aria-labelledby'?: string;
 	}
 
 	let {
@@ -35,7 +38,10 @@
 		dialogContentCss = 'sm:max-w-[425px]',
 		escapeKeydownBehavior = 'close',
 		interactOutsideBehavior,
-		idToFocusOnOpen
+		idToFocusOnOpen,
+		role,
+		'aria-describedby': ariaDescribedby = 'dialog-description',
+		'aria-labelledby': ariaLabelledby = 'dialog-title'
 	}: Props = $props();
 
 	// Variables & States
@@ -58,9 +64,12 @@
 			{escapeKeydownBehavior}
 			{interactOutsideBehavior}
 			{onOpenAutoFocus}
+			{role}
+			aria-describedby={ariaDescribedby}
+			aria-labelledby={ariaLabelledby}
 		>
 			<Dialog.Header>
-				<Dialog.Title>
+				<Dialog.Title id={ariaLabelledby}>
 					{#if typeof title === 'string'}
 						{title}
 					{:else}
@@ -68,7 +77,7 @@
 					{/if}
 				</Dialog.Title>
 				{#if description}
-					<Dialog.Description>
+					<Dialog.Description id={ariaDescribedby}>
 						{#if typeof description === 'string'}
 							{description}
 						{:else}
@@ -89,17 +98,24 @@
 	</Dialog.Root>
 {:else}
 	<Drawer.Root bind:open {onOpenChange}>
-		<Drawer.Content {escapeKeydownBehavior} {interactOutsideBehavior} {onOpenAutoFocus}>
+		<Drawer.Content
+			{escapeKeydownBehavior}
+			{interactOutsideBehavior}
+			{onOpenAutoFocus}
+			{role}
+			aria-describedby={ariaDescribedby}
+			aria-labelledby={ariaLabelledby}
+		>
 			<Drawer.Header class="text-left">
-				<Drawer.Title>
+				<Drawer.Title id={ariaLabelledby}>
 					{#if typeof title === 'string'}
 						{title}
 					{:else}
 						{@render title()}
-					{/if}</Drawer.Title
-				>
+					{/if}
+				</Drawer.Title>
 				{#if description}
-					<Drawer.Description>
+					<Drawer.Description id={ariaDescribedby}>
 						{#if typeof description === 'string'}
 							{description}
 						{:else}
