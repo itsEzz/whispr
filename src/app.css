@@ -138,4 +138,5 @@ html.dark {
 [data-close-button]:hover {
   background: hsl(var(--secondary)) !important;
   color: hsl(var(--secondary-foreground));
+  border-color: hsl(var(--foreground)) !important;
 }
