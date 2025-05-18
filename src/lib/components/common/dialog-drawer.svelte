@@ -38,7 +38,7 @@
 		drawerBodyCss,
 		dialogContentCss = 'sm:max-w-[425px]',
 		escapeKeydownBehavior = 'close',
-		interactOutsideBehavior,
+		interactOutsideBehavior = 'close',
 		idToFocusOnOpen,
 		role,
 		'aria-describedby': ariaDescribedby = 'dialog-description',
@@ -87,7 +87,7 @@
 					</Dialog.Description>
 				{/if}
 			</Dialog.Header>
-			<div class="max-h-[70dvh] overflow-y-auto">
+			<div class="max-h-[70dvh] overflow-y-auto" id={!description ? ariaDescribedby : undefined}>
 				{@render body?.()}
 			</div>
 			{#if footer}
@@ -125,7 +125,10 @@
 					</Drawer.Description>
 				{/if}
 			</Drawer.Header>
-			<div class={cn(drawerBodyCss, 'mx-4 max-h-[70dvh] overflow-y-auto')}>
+			<div
+				class={cn(drawerBodyCss, 'mx-4 max-h-[70dvh] overflow-y-auto')}
+				id={!description ? ariaDescribedby : undefined}
+			>
 				{@render body?.()}
 			</div>
 			{#if footer}
