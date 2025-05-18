@@ -10,14 +10,33 @@
 		variant?: BadgeVariant;
 		class?: string;
 		popoverContent: string | Snippet;
+		label?: string;
+		id?: string;
 	}
 
-	let { content, variant, class: classes, popoverContent }: Props = $props();
+	let {
+		content,
+		variant,
+		class: classes,
+		popoverContent,
+		label = 'More information',
+		id = 'default'
+	}: Props = $props();
+
+	// Variables & States
+	let open = $state<boolean>(false);
+	const badgeId = `badge-${id}`;
+	const popoverId = `popover-${id}`;
 </script>
 
-<Popover.Root>
-	<Popover.Trigger>
-		<Badge {variant} class={cn('h-7', classes)}>
+<Popover.Root bind:open>
+	<Popover.Trigger
+		aria-label={label}
+		aria-expanded={open}
+		aria-controls={popoverId}
+		aria-describedby={badgeId}
+	>
+		<Badge {variant} class={cn('h-7', classes)} id={badgeId}>
 			{#if typeof content === 'string'}
 				{content}
 			{:else}
@@ -25,7 +44,12 @@
 			{/if}
 		</Badge>
 	</Popover.Trigger>
-	<Popover.Content class="mx-2 w-fit max-w-[min(500px,calc(100vw-2rem))] p-2">
+	<Popover.Content
+		class="mx-2 w-fit max-w-[min(500px,calc(100vw-2rem))] p-2"
+		id={popoverId}
+		role="tooltip"
+		aria-live="polite"
+	>
 		{#if typeof popoverContent === 'string'}
 			{popoverContent}
 		{:else}
