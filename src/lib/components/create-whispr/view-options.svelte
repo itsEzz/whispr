@@ -28,7 +28,7 @@
 <div class="space-y-3 px-4">
 	<Form.Field {form} name="views">
 		<Form.Control>
-			{#snippet children({ props }: { props: any })}
+			{#snippet children({ props })}
 				<Form.Label>Views</Form.Label>
 				{#if $formData.unlimitedViews}
 					<Input
@@ -45,7 +45,6 @@
 					bind:value={$formData.views}
 					disabled={$submitting}
 					type="number"
-					aria-invalid={$errors.views ? 'true' : undefined}
 					aria-describedby={$errors.views ? 'views-error' : undefined}
 					class={cn(
 						$errors.views && 'border-destructive focus-visible:ring-destructive/50',
@@ -65,7 +64,6 @@
 						{...$constraints.showViews}
 						bind:checked={$formData.showViews}
 						disabled={$submitting}
-						aria-invalid={$errors.showViews ? 'true' : undefined}
 						aria-describedby={$errors.showViews ? 'show-views-error' : undefined}
 						class={cn($errors.showViews && 'border-destructive focus-visible:ring-destructive/50')}
 					/>
@@ -84,7 +82,6 @@
 						{...$constraints.unlimitedViews}
 						bind:checked={$formData.unlimitedViews}
 						disabled={$submitting}
-						aria-invalid={$errors.unlimitedViews ? 'true' : undefined}
 						aria-describedby={$errors.unlimitedViews ? 'unlimited-views-error' : undefined}
 						class={cn(
 							$errors.unlimitedViews && 'border-destructive focus-visible:ring-destructive/50'
