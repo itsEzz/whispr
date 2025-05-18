@@ -54,6 +54,21 @@ export const isError = <T, E>(result: Result<T, E>): result is Failure<E> => {
 };
 
 /**
+ * Infer the return type of tryCatch based on the input type
+ * If the input is a Promise<T>, the output is Promise<Result<T, E>>
+ * If the input is a function returning Promise<T>, the output is Promise<Result<T, E>>
+ * If the input is a function returning T, the output is Result<T, E>
+ */
+type TryCatchReturn<T, E, F> =
+	F extends Promise<infer U>
+		? Promise<Result<U, E>>
+		: F extends () => Promise<infer U>
+			? Promise<Result<U, E>>
+			: F extends () => infer U
+				? Result<U, E>
+				: never;
+
+/**
  * Safely executes a function or awaits a promise, capturing any errors
  *
  * This utility provides a consistent way to handle both synchronous and asynchronous
@@ -62,46 +77,47 @@ export const isError = <T, E>(result: Result<T, E>): result is Failure<E> => {
  *
  * @template T The type of the successful result
  * @template E The type of the error, defaults to unknown
+ * @template F The type of the function or promise
  * @param arg The function to execute or promise to await
  * @param handler Optional error handler or 'throw' to rethrow errors
  * @param cleanup Optional function to run after completion (in finally block)
  * @returns A Result object or Promise<Result> containing either data or error
  */
-export function tryCatch<T, E = unknown>(
-	arg: Promise<T> | (() => MaybePromise<T>),
-	handler?: ((error: E) => void) | 'throw',
-	cleanup?: () => void
-): Result<T, E> | Promise<Result<T, E>> {
+export function tryCatch<
+	T,
+	E = unknown,
+	F extends Promise<T> | (() => MaybePromise<T>) = Promise<T> | (() => MaybePromise<T>)
+>(arg: F, handler?: ((error: E) => void) | 'throw', cleanup?: () => void): TryCatchReturn<T, E, F> {
 	if (typeof arg === 'function') {
 		try {
-			const result = arg();
+			const result = (arg as () => MaybePromise<T>)();
 			if (result instanceof Promise) {
 				return result
 					.then((data) => ({ data }))
 					.catch((error) => {
 						if (handler === 'throw') throw error;
-						if (handler) handler(error);
+						if (handler) handler(error as E);
 						return { error: error as E };
 					})
-					.finally(cleanup);
+					.finally(cleanup) as TryCatchReturn<T, E, F>;
 			}
 			const successResponse = { data: result };
 			cleanup?.();
-			return successResponse;
+			return successResponse as TryCatchReturn<T, E, F>;
 		} catch (error) {
 			if (handler === 'throw') throw error;
 			if (handler) handler(error as E);
 			cleanup?.();
-			return { error: error as E };
+			return { error: error as E } as TryCatchReturn<T, E, F>;
 		}
 	}
 
-	return arg
+	return (arg as Promise<T>)
 		.then((data) => ({ data }))
 		.catch((error) => {
 			if (handler === 'throw') throw error;
 			if (handler) handler(error as E);
 			return { error: error as E };
 		})
-		.finally(cleanup);
+		.finally(cleanup) as TryCatchReturn<T, E, F>;
 }
