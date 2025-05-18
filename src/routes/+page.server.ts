@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { whispr } from '$lib/server/db/schema';
+import { whispr_table } from '$lib/server/db/schema';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
 import { isError, tryCatch } from '$lib/utils/try-catch';
 import { fail } from '@sveltejs/kit';
@@ -44,7 +44,7 @@ export const actions = {
 
 		const whisprId = await tryCatch(
 			db
-				.insert(whispr)
+				.insert(whispr_table)
 				.values({
 					content: form.data.content,
 					views: form.data.views,
@@ -58,7 +58,7 @@ export const actions = {
 				.$returningId()
 		);
 
-		if (isError(whisprId)) {
+		if (isError(whisprId) || whisprId.data.length === 0) {
 			console.error('Failed to create whispr in database', whisprId.error);
 			return fail(500, {
 				form,
@@ -69,12 +69,12 @@ export const actions = {
 			});
 		}
 
-		const createdWhispr = await tryCatch(
-			db.select().from(whispr).where(eq(whispr.id, whisprId.data[0].id))
+		const whispr = await tryCatch(
+			db.select().from(whispr_table).where(eq(whispr_table.id, whisprId.data[0].id))
 		);
 
-		if (isError(createdWhispr)) {
-			console.error('Failed to retrieve whispr from database', createdWhispr.error);
+		if (isError(whispr) || whispr.data.length === 0) {
+			console.error('Failed to retrieve whispr from database', whispr.error);
 			return fail(500, {
 				form,
 				error: {
@@ -85,18 +85,18 @@ export const actions = {
 			});
 		}
 
-		const createdWhisprData = createdWhispr.data[0];
+		const whisprData = whispr.data[0];
 
 		const response: CreatedWhispr = {
-			id: createdWhisprData.id,
-			deleteId: createdWhisprData.deleteId,
-			views: createdWhisprData.views,
-			showViews: createdWhisprData.showViews,
-			unlimitedViews: createdWhisprData.unlimitedViews,
-			expiresAt: createdWhisprData.expiresAt,
-			showExpiresAt: createdWhisprData.showExpiresAt,
-			showCopyButton: createdWhisprData.showCopyButton,
-			showDownloadButton: createdWhisprData.showDownloadButton
+			id: whisprData.id,
+			deleteId: whisprData.deleteId,
+			views: whisprData.views,
+			showViews: whisprData.showViews,
+			unlimitedViews: whisprData.unlimitedViews,
+			expiresAt: whisprData.expiresAt,
+			showExpiresAt: whisprData.showExpiresAt,
+			showCopyButton: whisprData.showCopyButton,
+			showDownloadButton: whisprData.showDownloadButton
 		};
 
 		return {
