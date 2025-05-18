@@ -46,13 +46,23 @@
 	{...buttonProps}
 	onclick={handleClick}
 	class={cn(classes, copyStatus !== 'idle' && 'cursor-default')}
+	aria-label={buttonText ||
+		(copyStatus === 'idle'
+			? 'Copy to clipboard'
+			: copyStatus === 'copied'
+				? 'Copied to clipboard'
+				: 'Copy failed')}
+	aria-live="polite"
+	aria-disabled={copyStatus !== 'idle'}
 >
-	{buttonText}
+	{#if buttonText}
+		<span>{buttonText}</span>
+	{/if}
 	{#if copyStatus === 'idle'}
-		<Copy />
+		<Copy aria-hidden="true" />
 	{:else if copyStatus === 'copied'}
-		<CircleCheck />
+		<CircleCheck aria-hidden="true" />
 	{:else if copyStatus === 'failed'}
-		<CircleX />
+		<CircleX aria-hidden="true" />
 	{/if}
 </Button>
