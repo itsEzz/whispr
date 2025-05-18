@@ -177,10 +177,11 @@
 						disabled={$submitting || !isFormValid}
 						aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
 					>
+						Create whispr
 						{#if $submitting}
-							Creating whispr...<LoaderCircle class="animate-spin" aria-hidden="true" />
+							<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
+							<span class="sr-only">Creating whispr...</span>
 						{:else}
-							Create whispr
 							<Send aria-hidden="true" />
 						{/if}
 					</Form.Button>
