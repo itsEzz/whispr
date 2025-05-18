@@ -92,7 +92,6 @@
 				aria-label={showPassword ? 'Hide password' : 'Show password'}
 				aria-pressed={showPassword}
 				onclick={handleTogglePasswordVisibility}
-				type="button"
 			>
 				{#if showPassword}
 					<EyeOff aria-hidden="true" />
@@ -109,7 +108,6 @@
 				size="icon"
 				aria-label="Generate secure password"
 				onclick={handleGeneratePassword}
-				type="button"
 			>
 				{#if loading}
 					<LoaderCircle class="animate-spin" aria-hidden="true" />

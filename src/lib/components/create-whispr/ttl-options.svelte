@@ -49,7 +49,6 @@
 							size="sm"
 							onclick={() => handleClickTtlPreset(preset)}
 							class="min-w-[calc(50%-0.25rem)] flex-1 sm:min-w-[calc(25%-0.375rem)]"
-							type="button"
 							disabled={$submitting}
 							aria-pressed={$formData.ttlValue === preset.value &&
 								$formData.ttlUnit === preset.unit}
