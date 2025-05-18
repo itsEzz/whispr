@@ -3,6 +3,7 @@
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
 	import { cn } from '$lib/utils';
 	import type { Snippet } from 'svelte';
+	import type { AriaRole } from 'svelte/elements';
 	import { MediaQuery } from 'svelte/reactivity';
 
 	// Props
@@ -22,7 +23,7 @@
 			| 'defer-otherwise-close'
 			| 'defer-otherwise-ignore';
 		idToFocusOnOpen?: string;
-		role?: string;
+		role?: AriaRole;
 		'aria-describedby'?: string;
 		'aria-labelledby'?: string;
 	}
