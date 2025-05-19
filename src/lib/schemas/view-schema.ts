@@ -5,7 +5,7 @@ const idRegex: RegExp = /^[a-z]+\-[a-z]+\-[a-z]+$/i;
 export const idSchema = z
 	.string()
 	.trim()
-	.min(1, { message: 'Requird' })
+	.min(1, { message: 'Required' })
 	.refine((val) => (val.length > 0 ? idRegex.test(val) : true), {
 		message: 'Invalid ID'
 	});
