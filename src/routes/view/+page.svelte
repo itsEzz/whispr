@@ -1,0 +1,129 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import ConfirmNavigateAway from '$lib/components/common/confirm-navigate-away.svelte';
+	import FormError from '$lib/components/common/form-error.svelte';
+	import * as Card from '$lib/components/ui/card/index.js';
+	import * as Form from '$lib/components/ui/form/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { viewSchema, type ViewSchema } from '$lib/schemas/view-schema';
+	import { cn } from '$lib/utils.js';
+	import { Eye, LoaderCircle } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
+	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+
+	// Props
+	interface Props {
+		data: {
+			form: SuperValidated<Infer<ViewSchema>>;
+		};
+	}
+
+	let { data }: Props = $props();
+
+	// Variables & States
+	let openNavigateAwayDialog = $state<{
+		open: boolean;
+		onConfirm: () => void;
+	}>({ open: false, onConfirm: () => {} });
+	const form = superForm(data.form, {
+		validators: zodClient(viewSchema),
+		onUpdate({ form, result }) {
+			if (result.type !== 'success') {
+				if (result.data.error.title || result.data.error.description) {
+					toast.error(result.data.error.title, {
+						description: result.data.error.description
+					});
+				}
+				return;
+			}
+			return form.data;
+		},
+		taintedMessage: () => {
+			return new Promise(
+				(resolve) => (openNavigateAwayDialog = { open: true, onConfirm: () => resolve(true) })
+			);
+		}
+	});
+
+	const {
+		form: formData,
+		capture,
+		restore,
+		enhance,
+		submitting,
+		allErrors,
+		errors,
+		constraints
+	} = form;
+
+	let isFormValid = $derived($allErrors.length === 0);
+
+	export const snapshot = { capture, restore };
+
+	$effect(() => {
+		const redirectReason = page.url.searchParams.get('redirect-reason');
+		if (!redirectReason) return;
+
+		if (redirectReason === 'invalid-id') {
+			toast.error('Whispr not found', {
+				description: 'The whispr you are looking for does not exist or has expired.',
+				duration: 10000
+			});
+		}
+
+		const url = new URL(window.location.href);
+		url.searchParams.delete('redirect-reason');
+		goto(url.toString(), { replaceState: true, keepFocus: true, noScroll: true });
+	});
+</script>
+
+<ConfirmNavigateAway
+	bind:open={openNavigateAwayDialog.open}
+	onConfirm={openNavigateAwayDialog.onConfirm}
+/>
+
+<main class="container mx-auto flex h-full flex-col overflow-hidden p-4">
+	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
+		<Card.Root class="w-full max-w-md">
+			<Card.Header>
+				<Card.Title>View Whispr</Card.Title>
+				<Card.Description>Provide your Whispr ID to view the secure content.</Card.Description>
+			</Card.Header>
+
+			<form method="POST" use:enhance autocomplete="off">
+				<Card.Content>
+					<Form.Field {form} name="id">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Whispr ID</Form.Label>
+								<Input
+									{...props}
+									{...$constraints.id}
+									bind:value={$formData.id}
+									placeholder="word-word-word"
+									aria-describedby={$errors.id ? 'id-error' : undefined}
+									class={cn($errors.id && 'border-destructive focus-visible:ring-destructive/50')}
+									autocomplete="off"
+								/>
+							{/snippet}
+						</Form.Control>
+						<FormError errors={$errors.id} id="id-error" />
+					</Form.Field>
+				</Card.Content>
+
+				<Card.Footer class="flex justify-end">
+					<Form.Button disabled={$submitting || !isFormValid} aria-busy={$submitting}>
+						{$submitting ? 'Loading...' : 'View Whispr'}
+						{#if $submitting}
+							<LoaderCircle class="animate-spin" aria-hidden="true" />
+						{:else}
+							<Eye aria-hidden="true" />
+						{/if}
+					</Form.Button>
+				</Card.Footer>
+			</form>
+		</Card.Root>
+	</div>
+</main>
