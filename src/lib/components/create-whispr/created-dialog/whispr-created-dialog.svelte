@@ -21,7 +21,7 @@
 	// Variables & States
 	let whisprUrl = $derived.by(() => {
 		if (createdWhispr === null) return '';
-		return `${page.url.origin}/${createdWhispr.id}${randomPassword !== null ? `/${Base64.encode(randomPassword, true)}` : ''}`;
+		return `${page.url.origin}/v/${createdWhispr.id}${randomPassword !== null ? `/${Base64.encode(randomPassword, true)}` : ''}`;
 	});
 	let deleteUrl = $derived.by(() => {
 		if (createdWhispr === null) return '';
