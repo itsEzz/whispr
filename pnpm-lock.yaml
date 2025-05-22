@@ -24,6 +24,9 @@ importers:
       '@internationalized/date':
         specifier: ^3.8.0
         version: 3.8.0
+      '@itsezz/try-catch':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@lucide/svelte':
         specifier: ^0.503.0
         version: 0.503.0(svelte@5.28.2)
@@ -695,6 +698,10 @@ packages:
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
+
+  '@itsezz/try-catch@1.0.0':
+    resolution: {integrity: sha512-nBybAJ9nsJN5glw46a8Uz3yIPU/dMQ6dunWVHGE8RnhzJBUztDGZVk9DAuSWjXsD5r7hT6AeQHf3HNXzcoLFXg==}
+    engines: {node: '>=14.0.0'}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -2800,6 +2807,8 @@ snapshots:
       strip-ansi-cjs: strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
+
+  '@itsezz/try-catch@1.0.0': {}
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
