@@ -1,5 +1,5 @@
+import { isSuccess, tryCatch } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
-import { isSuccess, tryCatch } from './try-catch';
 
 /**
  * Checks if the clipboard API is supported in the current browser environment

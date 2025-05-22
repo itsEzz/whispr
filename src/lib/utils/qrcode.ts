@@ -1,5 +1,5 @@
+import { isError, isSuccess, tryCatch } from '@itsezz/try-catch';
 import QRCode from 'qrcode';
-import { isError, isSuccess, tryCatch } from './try-catch';
 
 /**
  * Helper function to download a file

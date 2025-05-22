@@ -1,6 +1,6 @@
 import { idSchema } from '$lib/schemas/view-schema';
 import type { ViewWhispr } from '$lib/types/view-whispr';
-import { isError, tryCatch } from '$lib/utils/try-catch';
+import { isError, tryCatch } from '@itsezz/try-catch';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { db } from './db';

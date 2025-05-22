@@ -10,7 +10,7 @@
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
-	import { isError, tryCatch } from '$lib/utils/try-catch';
+	import { isError, tryCatch } from '@itsezz/try-catch';
 	import { Eraser, LoaderCircle, Send } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import { type Infer, superForm, type SuperValidated } from 'sveltekit-superforms';

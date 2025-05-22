@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
-import { isError, tryCatch } from '$lib/utils/try-catch';
+import { isError, tryCatch } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
