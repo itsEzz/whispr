@@ -6,21 +6,16 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { viewSchema, type ViewSchema } from '$lib/schemas/view-schema';
+	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
 	import { Eye, LoaderCircle } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
-	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import type { PageProps } from './$types.js';
 
 	// Props
-	interface Props {
-		data: {
-			form: SuperValidated<Infer<ViewSchema>>;
-		};
-	}
-
-	let { data }: Props = $props();
+	let { data }: PageProps = $props();
 
 	// Variables & States
 	let openNavigateAwayDialog = $state<{

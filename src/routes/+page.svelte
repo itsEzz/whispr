@@ -13,9 +13,9 @@
 	import { isError, tryCatch } from '@itsezz/try-catch';
 	import { Eraser, LoaderCircle, Send } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
-	import { type Infer, superForm, type SuperValidated } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { createSchema, type CreateSchema } from '../lib/schemas/create-schema';
+	import { createSchema } from '../lib/schemas/create-schema';
 	import type { PageProps } from './$types.js';
 
 	// Props
