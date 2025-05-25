@@ -25,17 +25,7 @@
 	async function handleClickCopyWhisprUrl(): Promise<boolean> {
 		if (createdWhispr === null) return false;
 
-		const copied = await copyText(whisprUrl);
-		if (!copied) {
-			toast.error('Whispr link copy failed', {
-				description: "We're having trouble copying to clipboard. Try copying the link manually."
-			});
-			return false;
-		}
-		toast.success('Whispr link copied', {
-			description: 'The whispr link is now in your clipboard.'
-		});
-		return true;
+		return await copyText(whisprUrl);
 	}
 
 	async function handleClickShareWhisprUrl() {

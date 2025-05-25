@@ -29,11 +29,7 @@
 
 	// Handler Functions
 	async function handleDownloadQrCodePng() {
-		if (await qrCodeToPng(whisprUrl)) {
-			toast.success('QR code downloaded', {
-				description: 'PNG file saved to your downloads.'
-			});
-		} else {
+		if (!(await qrCodeToPng(whisprUrl))) {
 			toast.error('Download failed', {
 				description: 'Could not generate PNG QR code. Please try again.'
 			});
@@ -41,11 +37,7 @@
 	}
 
 	async function handleDownloadQrCodeSvg() {
-		if (await qrCodeToSvg(whisprUrl)) {
-			toast.success('QR code downloaded', {
-				description: 'SVG file saved to your downloads.'
-			});
-		} else {
+		if (!(await qrCodeToSvg(whisprUrl))) {
 			toast.error('Download failed', {
 				description: 'Could not generate SVG QR code. Please try again.'
 			});
@@ -72,17 +64,7 @@
 	}
 
 	async function handleCopyDeleteUrl(): Promise<boolean> {
-		const copied = await copyText(deleteUrl);
-		if (!copied) {
-			toast.error('Deletion link copy failed', {
-				description: "We're having trouble copying to clipboard. Try copying the link manually."
-			});
-			return false;
-		}
-		toast.success('Deletion link copied', {
-			description: 'The deletion link is now in your clipboard.'
-		});
-		return true;
+		return await copyText(deleteUrl);
 	}
 
 	function handleClickDeleteLinkInput(
