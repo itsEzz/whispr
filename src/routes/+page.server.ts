@@ -56,6 +56,7 @@ export const actions = {
 					showDownloadButton: form.data.showDownloadButton
 				})
 				.$returningId()
+				.execute()
 		);
 
 		if (isError(whisprId) || whisprId.data.length === 0) {
@@ -70,7 +71,7 @@ export const actions = {
 		}
 
 		const whispr = await tryCatch(
-			db.select().from(whispr_table).where(eq(whispr_table.id, whisprId.data[0].id))
+			db.select().from(whispr_table).where(eq(whispr_table.id, whisprId.data[0].id)).execute()
 		);
 
 		if (isError(whispr) || whispr.data.length === 0) {
