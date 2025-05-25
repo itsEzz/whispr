@@ -16,14 +16,10 @@
 	import { type Infer, superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { createSchema, type CreateSchema } from '../lib/schemas/create-schema';
+	import type { PageProps } from './$types.js';
 
 	// Props
-	interface Props {
-		data: {
-			form: SuperValidated<Infer<CreateSchema>>;
-		};
-	}
-	let { data }: Props = $props();
+	let { data }: PageProps = $props();
 
 	// Variables & States
 	let openResetDialog = $state<boolean>(false);
