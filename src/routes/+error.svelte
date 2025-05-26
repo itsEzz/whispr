@@ -51,10 +51,8 @@
 
 		<Card.Content>
 			<div class="space-y-4">
-				<p class="text-muted-foreground">{getErrorDescription(status)}</p>
-
 				<div class="rounded-md bg-muted p-4" role="region" aria-label="Help suggestions">
-					<p class="mb-2 font-medium">Need help?</p>
+					<p class="mb-2 font-medium">{getErrorDescription(status)}</p>
 					<p class="text-sm text-muted-foreground">
 						If you continue to experience issues, you can try refreshing the page, returning to the
 						home page, or reporting the issue on GitHub.
