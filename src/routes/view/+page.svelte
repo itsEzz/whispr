@@ -42,20 +42,9 @@
 		}
 	});
 
-	const {
-		form: formData,
-		capture,
-		restore,
-		enhance,
-		submitting,
-		allErrors,
-		errors,
-		constraints
-	} = form;
+	const { form: formData, enhance, submitting, allErrors, errors, constraints } = form;
 
 	let isFormValid = $derived($allErrors.length === 0);
-
-	export const snapshot = { capture, restore };
 
 	$effect(() => {
 		const redirectReason = page.url.searchParams.get('redirect-reason');
@@ -79,7 +68,7 @@
 	onConfirm={openNavigateAwayDialog.onConfirm}
 />
 
-<main class="container mx-auto flex h-full flex-col overflow-hidden p-4">
+<div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
 		<Card.Root class="w-full max-w-md">
 			<Card.Header>
@@ -121,4 +110,4 @@
 			</form>
 		</Card.Root>
 	</div>
-</main>
+</div>
