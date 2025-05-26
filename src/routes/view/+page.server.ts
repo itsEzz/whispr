@@ -23,6 +23,6 @@ export const actions: Actions = {
 			});
 		}
 
-		redirect(307, `/v/${form.data.id.trim().toLowerCase()}`);
+		redirect(303, `/v/${form.data.id.trim().toLowerCase()}`);
 	}
 };
