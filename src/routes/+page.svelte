@@ -61,23 +61,12 @@
 		}
 	});
 
-	const {
-		form: formData,
-		capture,
-		restore,
-		enhance,
-		submitting,
-		isTainted,
-		tainted,
-		allErrors
-	} = form;
+	const { form: formData, enhance, submitting, isTainted, tainted, allErrors } = form;
 
 	let isFormDirty = $derived(isTainted($tainted) || password.length > 0);
 	let isFormValid = $derived(
 		$allErrors.length === 0 && (passwordOptionsComponent?.isValidPassword() ?? true)
 	);
-
-	export const snapshot = { capture, restore };
 
 	// Handler Functions
 	function handleOpenResetDialog() {
