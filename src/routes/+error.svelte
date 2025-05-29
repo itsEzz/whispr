@@ -55,7 +55,7 @@
 					<p class="mb-2 font-medium">{getErrorDescription(status)}</p>
 					<p class="text-sm text-muted-foreground">
 						If you continue to experience issues, you can try refreshing the page, returning to the
-						home page, or reporting the issue on GitHub.
+						home page, contacting the site administrator, or reporting the issue on GitHub.
 					</p>
 				</div>
 			</div>
@@ -63,8 +63,8 @@
 
 		<Card.Footer class="flex flex-wrap justify-center gap-2 sm:justify-end">
 			<Button variant="outline" onclick={handleRefreshPage} aria-label="Refresh the page">
-				<RefreshCw aria-hidden="true" />
 				Refresh Page
+				<RefreshCw aria-hidden="true" />
 			</Button>
 
 			<Button
@@ -74,13 +74,13 @@
 				rel="noopener noreferrer"
 				aria-label="Report issue on GitHub (opens in a new tab)"
 			>
-				<CircleDot aria-hidden="true" />
 				Report Issue
+				<CircleDot aria-hidden="true" />
 			</Button>
 
 			<Button href="/" aria-label="Go back to home page">
-				<Home aria-hidden="true" />
 				Back to Home
+				<Home aria-hidden="true" />
 			</Button>
 		</Card.Footer>
 	</Card.Root>
