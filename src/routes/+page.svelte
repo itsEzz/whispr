@@ -69,11 +69,11 @@
 	);
 
 	// Handler Functions
-	function handleOpenResetDialog() {
+	function handleClickOpenResetDialog() {
 		openResetDialog = true;
 	}
 
-	function handleResetForm() {
+	function handleClickResetForm() {
 		form.reset();
 		form.validateForm({ update: true });
 		password = '';
@@ -90,7 +90,7 @@
 			return null;
 		}
 
-		const pwd = await tryCatch(() => {
+		const pwd = tryCatch(() => {
 			if (password.length > 0) return password;
 			randomPassword = passwordGenerator.generate(30);
 			return randomPassword;
@@ -125,7 +125,7 @@
 	}
 </script>
 
-<ConfirmReset bind:open={openResetDialog} onConfirm={handleResetForm} />
+<ConfirmReset bind:open={openResetDialog} onConfirm={handleClickResetForm} />
 
 <ConfirmNavigateAway
 	bind:open={openNavigateAwayDialog.open}
@@ -152,7 +152,7 @@
 				<div class="flex w-full justify-end gap-2 sm:col-span-2 lg:col-span-3">
 					<Button
 						variant="destructive"
-						onclick={handleOpenResetDialog}
+						onclick={handleClickOpenResetDialog}
 						disabled={!isFormDirty || $submitting}
 						aria-label="Reset form"
 					>
