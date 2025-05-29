@@ -49,7 +49,7 @@
 	{/snippet}
 	{#snippet body()}
 		<div class="grid h-full items-start gap-2">
-			{#if randomPassword === null}
+			{#if randomPassword !== null}
 				<div
 					class="flex gap-3 rounded-lg border border-orange-300/30 bg-orange-500/10 p-3 text-orange-700 dark:border-orange-400/30 dark:bg-orange-400/10 dark:text-orange-300"
 					role="alert"
