@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { isSuccess, tryCatch } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
 
@@ -8,6 +9,8 @@ import { toast } from 'svelte-sonner';
  * @returns Boolean indicating if clipboard operations are supported
  */
 export function isCopySupported(showToast: boolean = false): boolean {
+	if (!browser) return false;
+
 	const isSupported = window.isSecureContext && 'clipboard' in navigator;
 
 	if (showToast && !isSupported) {

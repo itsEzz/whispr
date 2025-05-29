@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { DateFormatter } from '@internationalized/date';
 
 /**
@@ -25,7 +26,8 @@ export function formatDate(
  * @returns The user's locale string (e.g., 'en-US', 'fr-FR')
  */
 export function getUserLocale(): string {
-	if (!navigator || (!('language' in navigator) && !('languages' in navigator))) return 'en-US';
+	if (!browser || !navigator || (!('language' in navigator) && !('languages' in navigator)))
+		return 'en-US';
 	return (
 		navigator.language ||
 		(navigator.languages && navigator.languages.length > 0 ? navigator.languages[0] : 'en-US')

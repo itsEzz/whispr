@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { isSuccess, tryCatch } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
 
@@ -11,6 +12,8 @@ import { toast } from 'svelte-sonner';
  * @returns Boolean indicating if the Web Share API is available
  */
 export function isShareSupported(showToast: boolean = false): boolean {
+	if (!browser) return false;
+
 	const isSupported = window.isSecureContext && 'share' in navigator;
 
 	if (showToast && !isSupported) {

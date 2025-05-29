@@ -1,5 +1,6 @@
 import { isError, isSuccess, tryCatch } from '@itsezz/try-catch';
 import QRCode from 'qrcode';
+import { browser } from '$app/environment';
 
 /**
  * Helper function to download a file
@@ -8,7 +9,9 @@ import QRCode from 'qrcode';
  * @returns Promise resolving to success status
  */
 async function downloadFile(urlOrData: string, filename: string): Promise<boolean> {
-	const result = await tryCatch(() => {
+	if (!browser) return false;
+
+	const result = tryCatch(() => {
 		const link = document.createElement('a');
 		link.href = urlOrData;
 		link.download = filename;
@@ -40,6 +43,8 @@ export async function qrCodeToPng(text: string): Promise<boolean> {
  * @returns Promise resolving to success status
  */
 export async function qrCodeToSvg(text: string): Promise<boolean> {
+	if (!browser) return false;
+
 	const svgString = await getSvgString(text);
 	if (!svgString) return false;
 
