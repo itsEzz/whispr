@@ -2,86 +2,101 @@
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { AlertTriangle, CircleDot, Home, RefreshCw } from 'lucide-svelte';
-
-	// Variables & States
-	const status = page.status;
-	const message = page.error?.message || 'Something went wrong';
+	import { AlertTriangle, ArrowLeft, Home, RefreshCw, SearchX } from 'lucide-svelte';
 
 	// Handler Functions
-	function handleRefreshPage() {
+	function handleClickRefreshPage() {
 		window.location.reload();
 	}
 
-	// Functions
-	function getErrorDescription(status: number): string {
-		switch (status) {
-			case 404:
-				return "The page you're looking for doesn't exist or has been moved.";
-			case 500:
-				return "We're experiencing some technical difficulties. Please try again later.";
-			default:
-				return 'An unexpected error occurred while processing your request.';
+	function handleClickGoBack() {
+		if (window.history.length > 1) {
+			window.history.back();
+		} else {
+			window.location.href = '/';
 		}
 	}
 </script>
 
-<svelte:head>
-	<title>Error {status} | Whispr</title>
-	<meta name="description" content="Error {status}: {message}" />
-</svelte:head>
-
-<div
-	class="container flex min-h-[calc(100vh-8rem)] items-center justify-center px-4 py-8"
-	role="main"
-	aria-labelledby="error-heading"
->
-	<Card.Root class="w-full max-w-lg">
-		<Card.Header>
-			<div class="flex items-center gap-2">
-				<AlertTriangle class="h-8 w-8 text-destructive" aria-hidden="true" />
-				<Card.Title id="error-heading">
-					Error {status}
+<div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
+	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
+		<Card.Root class="w-full max-w-lg">
+			<Card.Header class="text-center">
+				<div
+					class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/50 ring-1 ring-border"
+				>
+					{#if page.status === 404}
+						<SearchX class="h-10 w-10" aria-hidden="true" />
+					{:else}
+						<AlertTriangle class="h-10 w-10 text-destructive" aria-hidden="true" />
+					{/if}
+				</div>
+				<Card.Title class="text-2xl" id="error-heading">
+					{#if page.status === 404}
+						Page Not Found
+					{:else}
+						Something Went Wrong
+					{/if}
 				</Card.Title>
-			</div>
-			<Card.Description class="text-base">
-				{message}
-			</Card.Description>
-		</Card.Header>
+			</Card.Header>
 
-		<Card.Content>
-			<div class="space-y-4">
-				<div class="rounded-md bg-muted p-4" role="region" aria-label="Help suggestions">
-					<p class="mb-2 font-medium">{getErrorDescription(status)}</p>
+			<Card.Content class="text-center" aria-describedby="error-heading">
+				<div class="space-y-4">
 					<p class="text-sm text-muted-foreground">
-						If you continue to experience issues, you can try refreshing the page, returning to the
-						home page, contacting the site administrator, or reporting the issue on GitHub.
+						{#if page.status === 404}
+							The page you're looking for doesn't exist or has been moved. <br />
+							Please check the URL for any typos.
+						{:else}
+							If you continue to experience issues, try refreshing the page, contacting the site's
+							administrator or opening an issue in the GitHub repository.
+						{/if}
+					</p>
+
+					{#if page.status !== 404}
+						<div class="rounded-lg border bg-muted/20 p-3">
+							<p class="font-mono text-xs text-muted-foreground">
+								Error Code: {page.status}
+								{#if page.error?.message}
+									<br />
+									Message: {page.error?.message}
+								{/if}
+							</p>
+						</div>
+					{/if}
+
+					<p class="text-xs text-muted-foreground">
+						Need help? Visit the
+						<a
+							href="https://github.com/itsEzz/whispr"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="underline underline-offset-4 transition-colors hover:text-foreground"
+							aria-label="GitHub repository (opens in new tab)"
+						>
+							GitHub repository
+						</a>
 					</p>
 				</div>
-			</div>
-		</Card.Content>
+			</Card.Content>
 
-		<Card.Footer class="flex flex-wrap justify-center gap-2 sm:justify-end">
-			<Button variant="outline" onclick={handleRefreshPage} aria-label="Refresh the page">
-				Refresh Page
-				<RefreshCw aria-hidden="true" />
-			</Button>
+			<Card.Footer class="flex flex-wrap justify-center gap-3">
+				<Button variant="outline" onclick={handleClickGoBack} aria-label="Go back to previous page">
+					<ArrowLeft aria-hidden="true" />
+					Go Back
+				</Button>
 
-			<Button
-				variant="outline"
-				href="https://github.com/itsEzz/whispr/issues/new"
-				target="_blank"
-				rel="noopener noreferrer"
-				aria-label="Report issue on GitHub (opens in a new tab)"
-			>
-				Report Issue
-				<CircleDot aria-hidden="true" />
-			</Button>
+				{#if page.status !== 404}
+					<Button variant="outline" onclick={handleClickRefreshPage} aria-label="Refresh the page">
+						Refresh Page
+						<RefreshCw aria-hidden="true" />
+					</Button>
+				{/if}
 
-			<Button href="/" aria-label="Go back to home page">
-				Back to Home
-				<Home aria-hidden="true" />
-			</Button>
-		</Card.Footer>
-	</Card.Root>
+				<Button href="/" aria-label="Go back to home page">
+					Back to Home
+					<Home aria-hidden="true" />
+				</Button>
+			</Card.Footer>
+		</Card.Root>
+	</div>
 </div>
