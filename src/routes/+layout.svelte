@@ -49,7 +49,6 @@
 
 <Toaster
 	theme={mode.current}
-	expand={true}
 	duration={6000}
 	closeButton
 	toastOptions={{
