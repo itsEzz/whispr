@@ -4,6 +4,9 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { AlertTriangle, ArrowLeft, Home, RefreshCw, SearchX } from 'lucide-svelte';
 
+	// Variables & States
+	const is404 = page.status === 404;
+
 	// Handler Functions
 	function handleClickRefreshPage() {
 		window.location.reload();
@@ -23,16 +26,16 @@
 		<Card.Root class="w-full max-w-lg">
 			<Card.Header class="text-center">
 				<div
-					class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/50 ring-1 ring-border"
+					class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/50"
 				>
-					{#if page.status === 404}
+					{#if is404}
 						<SearchX class="h-10 w-10" aria-hidden="true" />
 					{:else}
 						<AlertTriangle class="h-10 w-10 text-destructive" aria-hidden="true" />
 					{/if}
 				</div>
 				<Card.Title class="text-2xl" id="error-heading">
-					{#if page.status === 404}
+					{#if is404}
 						Page Not Found
 					{:else}
 						Something Went Wrong
@@ -43,7 +46,7 @@
 			<Card.Content class="text-center" aria-describedby="error-heading">
 				<div class="space-y-4">
 					<p class="text-sm text-muted-foreground">
-						{#if page.status === 404}
+						{#if is404}
 							The page you're looking for doesn't exist or has been moved. <br />
 							Please check the URL for any typos.
 						{:else}
@@ -52,7 +55,7 @@
 						{/if}
 					</p>
 
-					{#if page.status !== 404}
+					{#if !is404}
 						<div class="rounded-lg border bg-muted/20 p-3">
 							<p class="font-mono text-xs text-muted-foreground">
 								Error Code: {page.status}
@@ -85,7 +88,7 @@
 					Go Back
 				</Button>
 
-				{#if page.status !== 404}
+				{#if !is404}
 					<Button variant="outline" onclick={handleClickRefreshPage} aria-label="Refresh the page">
 						Refresh Page
 						<RefreshCw aria-hidden="true" />
