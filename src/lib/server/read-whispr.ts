@@ -16,8 +16,8 @@ export async function readWhispr(id: string): Promise<ViewWhispr> {
 	);
 
 	if (isError(whispr)) {
-		console.error(whispr.error);
-		error(500, 'Error fetching whispr');
+		console.error('Database error while retrieving whispr:', whispr.error);
+		error(500, 'Database connection error while retrieving whispr information');
 	}
 
 	if (whispr.data.length === 0) redirect(303, '/view?redirect-reason=invalid-id');
