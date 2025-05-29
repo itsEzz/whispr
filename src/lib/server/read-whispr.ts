@@ -9,16 +9,18 @@ import { whispr_table } from './db/schema';
 export async function readWhispr(id: string): Promise<ViewWhispr> {
 	const validationResult = idSchema.safeParse(id);
 
-	if (!validationResult.success) redirect(307, '/view?redirect-reason=invalid-id');
+	if (!validationResult.success) redirect(303, '/view?redirect-reason=invalid-id');
 
-	const whispr = await tryCatch(db.select().from(whispr_table).where(eq(whispr_table.id, id)));
+	const whispr = await tryCatch(
+		db.select().from(whispr_table).where(eq(whispr_table.id, id)).execute()
+	);
 
 	if (isError(whispr)) {
 		console.error(whispr.error);
 		error(500, 'Error fetching whispr');
 	}
 
-	if (whispr.data.length === 0) redirect(307, '/view?redirect-reason=invalid-id');
+	if (whispr.data.length === 0) redirect(303, '/view?redirect-reason=invalid-id');
 
 	const whisprData = whispr.data[0];
 
