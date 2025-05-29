@@ -10,10 +10,13 @@ export const idSchema = z
 		message: 'Invalid ID'
 	});
 
-export const viewPasswordSchema = z.string().trim().min(1, { message: 'Required' });
+export const viewPasswordSchema = z.object({
+	password: z.string().trim().min(1, { message: 'Required' })
+});
 
 export const viewSchema = z.object({
 	id: idSchema
 });
 
 export type ViewSchema = typeof viewSchema;
+export type ViewPasswordSchema = typeof viewPasswordSchema;
