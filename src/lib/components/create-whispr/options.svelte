@@ -6,7 +6,7 @@
 	import type { PasswordComponent } from '$lib/types/password';
 	import { MediaQuery } from 'svelte/reactivity';
 	import type { Infer } from 'sveltekit-superforms';
-	import type { SuperForm, SuperFormData, ValidationErrors } from 'sveltekit-superforms/client';
+	import type { SuperForm, ValidationErrors } from 'sveltekit-superforms/client';
 	import AdditionalOptions from './additional-options.svelte';
 	import PasswordOptions from './password-options.svelte';
 	import TtlOptions from './ttl-options.svelte';
@@ -15,12 +15,11 @@
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
-		formData: SuperFormData<Infer<CreateSchema>>;
 		password: string;
 		passwordOptionsComponent: PasswordComponent;
 	}
 
-	let { form, formData, password = $bindable(), passwordOptionsComponent }: Props = $props();
+	let { form, password = $bindable(), passwordOptionsComponent }: Props = $props();
 
 	// Variables & States
 	const { errors, submitting } = form;
@@ -59,11 +58,11 @@
 		>
 			<PasswordOptions bind:password bind:this={passwordOptionsComponent} disabled={$submitting} />
 			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<ViewOptions {form} {formData} />
+			<ViewOptions {form} />
 			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<TtlOptions {form} {formData} />
+			<TtlOptions {form} />
 			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<AdditionalOptions {form} {formData} />
+			<AdditionalOptions {form} />
 		</Card.Content>
 	</Card.Root>
 {/snippet}

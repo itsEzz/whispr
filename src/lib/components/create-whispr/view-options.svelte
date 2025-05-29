@@ -4,20 +4,19 @@
 	import { Switch } from '$lib/components/ui/switch';
 	import { cn } from '$lib/utils';
 	import type { Infer } from 'sveltekit-superforms';
-	import type { SuperForm, SuperFormData } from 'sveltekit-superforms/client';
+	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
 
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
-		formData: SuperFormData<Infer<CreateSchema>>;
 	}
 
-	let { form, formData }: Props = $props();
+	let { form }: Props = $props();
 
 	// Variables & States
-	const { errors, constraints, submitting } = form;
+	const { form: formData, errors, constraints, submitting } = form;
 
 	// Functions
 	function onUnlimitedViewsChange(checked: boolean) {

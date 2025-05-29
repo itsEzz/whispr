@@ -3,20 +3,19 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { cn } from '$lib/utils';
 	import type { Infer } from 'sveltekit-superforms';
-	import type { SuperForm, SuperFormData } from 'sveltekit-superforms/client';
+	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
 
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
-		formData: SuperFormData<Infer<CreateSchema>>;
 	}
 
-	let { form, formData }: Props = $props();
+	let { form }: Props = $props();
 
 	// Variables & States
-	const { errors, constraints, submitting } = form;
+	const { form: formData, errors, constraints, submitting } = form;
 </script>
 
 <Form.Field {form} name="content" class="flex h-full flex-col">

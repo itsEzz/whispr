@@ -61,7 +61,7 @@
 		}
 	});
 
-	const { form: formData, enhance, submitting, isTainted, tainted, allErrors } = form;
+	const { enhance, submitting, isTainted, tainted, allErrors } = form;
 
 	let isFormDirty = $derived(isTainted($tainted) || password.length > 0);
 	let isFormValid = $derived(
@@ -144,10 +144,10 @@
 		<form method="POST" use:enhance aria-labelledby="page-title">
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				<div class="lg:col-span-2">
-					<Content {form} {formData} />
+					<Content {form} />
 				</div>
 				<div>
-					<Options {form} {formData} bind:password {passwordOptionsComponent} />
+					<Options {form} bind:password {passwordOptionsComponent} />
 				</div>
 				<div class="flex w-full justify-end gap-2 sm:col-span-2 lg:col-span-3">
 					<Button

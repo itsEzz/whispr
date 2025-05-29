@@ -7,20 +7,19 @@
 	import type { TtlPreset } from '$lib/types/ttl';
 	import { cn } from '$lib/utils';
 	import type { Infer } from 'sveltekit-superforms';
-	import type { SuperForm, SuperFormData } from 'sveltekit-superforms/client';
+	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
 
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
-		formData: SuperFormData<Infer<CreateSchema>>;
 	}
 
-	let { form, formData }: Props = $props();
+	let { form }: Props = $props();
 
 	// Variables & States
-	const { errors, constraints, submitting } = form;
+	const { form: formData, errors, constraints, submitting } = form;
 	const ttlPresets: TtlPreset[] = [
 		{ label: '1 hour', value: 1, unit: 'hours' },
 		{ label: '1 day', value: 1, unit: 'days' },
