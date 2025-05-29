@@ -31,9 +31,6 @@
 		loading = true;
 		try {
 			password = passwordGenerator.generate(30);
-			toast.success('Password generated', {
-				description: 'A secure password has been generated for you. Please take note of it.'
-			});
 
 			const passwordInput = document.getElementById('whispr-password');
 			if (passwordInput) {
