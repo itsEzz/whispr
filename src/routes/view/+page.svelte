@@ -72,7 +72,7 @@
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
 		<Card.Root class="w-full max-w-md">
 			<Card.Header>
-				<Card.Title>View Whispr</Card.Title>
+				<Card.Title id="page-title">View Whispr</Card.Title>
 				<Card.Description>Provide your Whispr ID to view the secure content.</Card.Description>
 			</Card.Header>
 
@@ -86,10 +86,11 @@
 									{...props}
 									{...$constraints.id}
 									bind:value={$formData.id}
-									placeholder="word-word-word"
+									placeholder="e.g., apple-tree-house"
 									aria-describedby={$errors.id ? 'id-error' : undefined}
 									class={cn($errors.id && 'border-destructive focus-visible:ring-destructive/50')}
 									autocomplete="off"
+									autofocus
 								/>
 							{/snippet}
 						</Form.Control>
