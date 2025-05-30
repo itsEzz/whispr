@@ -72,7 +72,11 @@
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
 		<Card.Root class="w-full max-w-md">
 			<Card.Header>
-				<Card.Title id="page-title">View Whispr</Card.Title>
+				<Card.Title id="page-title">
+					<div class="flex items-center">
+						<Eye class="mr-2" aria-hidden="true" /> View Whispr
+					</div>
+				</Card.Title>
 				<Card.Description>Provide your Whispr ID to view the secure content.</Card.Description>
 			</Card.Header>
 
