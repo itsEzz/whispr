@@ -34,7 +34,7 @@
 				<Card.Header>
 					<Card.Title>
 						<div class="flex items-center">
-							<LockOpen class="mr-2" aria-hidden="true" /> Unlock Whispr
+							<LockOpen class="mr-2" aria-hidden="true" /> Decrypt Whispr
 						</div>
 					</Card.Title>
 					<Card.Description>
@@ -86,13 +86,13 @@
 				<Card.Footer class="justify-end">
 					<Form.Button
 						disabled={$submitting || !isFormValid}
-						aria-label={$submitting ? 'Unlocking Whispr...' : 'Unlock Whispr'}
+						aria-label={$submitting ? 'Decrypting Whispr...' : 'Decrypt Whispr'}
 					>
 						{#if $submitting}
-							Unlocking Whispr...
+							Decrypting Whispr...
 							<LoaderCircle class="animate-spin" aria-hidden="true" />
 						{:else}
-							Unlock Whispr
+							Decrypt Whispr
 							<LockOpen aria-hidden="true" />
 						{/if}
 					</Form.Button>
