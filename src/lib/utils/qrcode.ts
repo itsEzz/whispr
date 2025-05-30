@@ -13,7 +13,7 @@ export async function qrCodeToPng(text: string): Promise<boolean> {
 
 	if (isError(dataUrl)) return false;
 
-	return await downloadFile(dataUrl.data, 'whispr-qr.png');
+	return downloadFile(dataUrl.data, 'whispr-qr.png');
 }
 
 /**
@@ -30,7 +30,7 @@ export async function qrCodeToSvg(text: string): Promise<boolean> {
 	const blob = new Blob([svgString], { type: 'image/svg+xml' });
 	const url = URL.createObjectURL(blob);
 
-	const downloadResult = await downloadFile(url, 'whispr-qr.svg');
+	const downloadResult = downloadFile(url, 'whispr-qr.svg');
 	URL.revokeObjectURL(url);
 
 	return downloadResult;
