@@ -17,7 +17,7 @@
 		text,
 		copySuccessText,
 		copyFailedText,
-		copyTimeout = 3000,
+		copyTimeout = 2500,
 		copyFn,
 		class: classes,
 		...buttonProps
