@@ -82,8 +82,9 @@
 				</a>
 				<a
 					href="/view"
-					class="text-sm font-medium transition-colors hover:text-primary {page.url.pathname ===
-					'/view'
+					class="text-sm font-medium transition-colors hover:text-primary {page.url.pathname.startsWith(
+						'/v'
+					)
 						? 'text-primary'
 						: 'text-muted-foreground'}"
 					aria-current={page.url.pathname === '/view' ? 'page' : undefined}
@@ -181,8 +182,9 @@
 								</a>
 								<a
 									href="/view"
-									class="rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground {page
-										.url.pathname === '/view'
+									class="rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground {page.url.pathname.startsWith(
+										'/v'
+									)
 										? 'text-primary'
 										: 'text-muted-foreground'}"
 									onclick={handleCloseMobileMenu}
