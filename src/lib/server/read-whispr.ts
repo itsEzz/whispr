@@ -1,10 +1,21 @@
 import { idSchema } from '$lib/schemas/view-schema';
 import type { ViewWhispr } from '$lib/types/view-whispr';
+import { isDateInPast } from '$lib/utils/date-helpers';
 import { isError, tryCatch } from '@itsezz/try-catch';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { db } from './db';
 import { whispr_table } from './db/schema';
+
+async function deleteWhispr(id: string) {
+	const deleteResult = await tryCatch(
+		db.delete(whispr_table).where(eq(whispr_table.id, id)).execute()
+	);
+	if (isError(deleteResult)) {
+		console.error('Database connection error while deleting whispr:', deleteResult.error);
+		error(500, 'Database connection error while deleting whispr');
+	}
+}
 
 export async function readWhispr(id: string): Promise<ViewWhispr> {
 	const validationResult = idSchema.safeParse(id);
@@ -16,13 +27,43 @@ export async function readWhispr(id: string): Promise<ViewWhispr> {
 	);
 
 	if (isError(whispr)) {
-		console.error('Database error while retrieving whispr:', whispr.error);
-		error(500, 'Database connection error while retrieving whispr information');
+		console.error('Database connection error while retrieving whispr:', whispr.error);
+		error(500, 'Database connection error while retrieving whispr');
 	}
 
 	if (whispr.data.length === 0) redirect(303, '/view?redirect-reason=invalid-id');
 
 	const whisprData = whispr.data[0];
+
+	if (isDateInPast(whisprData.expiresAt)) {
+		await deleteWhispr(id);
+		redirect(303, '/view?redirect-reason=invalid-id');
+	}
+
+	if (!whisprData.unlimitedViews && whisprData.views === 0) {
+		await deleteWhispr(id);
+		redirect(303, '/view?redirect-reason=invalid-id');
+	}
+
+	if (!whisprData.unlimitedViews && whisprData.views === 1) {
+		await deleteWhispr(id);
+		whisprData.views = 0;
+	} else if (!whisprData.unlimitedViews && whisprData.views > 1) {
+		const updatedWhispr = await tryCatch(
+			db
+				.update(whispr_table)
+				.set({ views: whisprData.views - 1 })
+				.where(eq(whispr_table.id, id))
+				.execute()
+		);
+
+		if (isError(updatedWhispr)) {
+			console.error('Database connection error while updating whispr:', updatedWhispr.error);
+			error(500, 'Database connection error while updating whispr');
+		}
+
+		whisprData.views -= 1;
+	}
 
 	const response: ViewWhispr = {
 		id: whisprData.id,
