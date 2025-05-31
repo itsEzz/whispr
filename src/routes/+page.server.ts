@@ -32,8 +32,8 @@ export const actions = {
 			return fail(400, {
 				form,
 				error: {
-					title: 'Invalid form data',
-					description: 'Please check the form for errors and try again.'
+					title: 'Invalid form submission',
+					description: 'Please ensure you have filled out the form correctly.'
 				}
 			});
 		}

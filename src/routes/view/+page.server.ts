@@ -17,8 +17,8 @@ export const actions: Actions = {
 			return fail(400, {
 				form,
 				error: {
-					title: 'Invalid Whispr ID',
-					description: 'Please enter a valid Whispr ID.'
+					title: 'Invalid form submission',
+					description: 'Please ensure you have filled out the form correctly.'
 				}
 			});
 		}
