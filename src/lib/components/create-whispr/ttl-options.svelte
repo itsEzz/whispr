@@ -23,8 +23,8 @@
 	const ttlPresets: TtlPreset[] = [
 		{ label: '1 hour', value: 1, unit: 'hours' },
 		{ label: '1 day', value: 1, unit: 'days' },
-		{ label: '1 week', value: 7, unit: 'days' },
-		{ label: '1 month', value: 30, unit: 'days' }
+		{ label: '1 week', value: 1, unit: 'weeks' },
+		{ label: '1 month', value: 1, unit: 'months' }
 	];
 
 	// Handler Functions
@@ -104,6 +104,12 @@
 											Hour{$formData.ttlValue === 1 ? '' : 's'}
 										</Select.Item>
 										<Select.Item value="days">Day{$formData.ttlValue === 1 ? '' : 's'}</Select.Item>
+										<Select.Item value="weeks">
+											Week{$formData.ttlValue === 1 ? '' : 's'}
+										</Select.Item>
+										<Select.Item value="months">
+											Month{$formData.ttlValue === 1 ? '' : 's'}
+										</Select.Item>
 									</Select.Content>
 								</Select.Root>
 							{/snippet}

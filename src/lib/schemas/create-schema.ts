@@ -6,7 +6,9 @@ import { z } from 'zod';
 export const ttlUnits: TtlUnits = {
 	minutes: 60,
 	hours: 3600,
-	days: 86400
+	days: 86400,
+	weeks: 604800,
+	months: 2629800
 };
 
 const passwordConfig: PasswordOptions = {
@@ -94,14 +96,16 @@ export const createSchema = z
 			.number({ message: 'Must be a number' })
 			.int({ message: 'Must be an integer' })
 			.min(1, { message: 'Must be at least 1' }),
-		ttlUnit: z.enum(['minutes', 'hours', 'days'], { message: 'Must be a valid unit' }),
+		ttlUnit: z.enum(['minutes', 'hours', 'days', 'weeks', 'months'], {
+			message: 'Must be a valid unit'
+		}),
 		showTtl: z.boolean({ message: 'Must be a boolean' }).default(false),
 		showCopyButton: z.boolean({ message: 'Must be a boolean' }).default(false),
 		showDownloadButton: z.boolean({ message: 'Must be a boolean' }).default(false)
 	})
 	.superRefine((val, ctx) => {
 		const ttl = val.ttlValue * ttlUnits[val.ttlUnit];
-		const maxTtl = 60 * 24 * 60 * 60; // 60 days in seconds
+		const maxTtl = 2 * ttlUnits.months;
 		if (ttl > maxTtl)
 			ctx.addIssue({
 				code: z.ZodIssueCode.too_big,
