@@ -82,8 +82,8 @@ export const createSchema = z
 	.object({
 		content: z
 			.string({ message: 'Must be a string' })
-			.min(1, { message: 'Content is required' })
-			.max(1000000, { message: 'Content is too long' }),
+			.min(1, { message: 'Must be at least 1 character' })
+			.max(1000000, { message: 'Must be at most 1 million characters' }),
 		views: z
 			.number({ message: 'Must be a number' })
 			.min(1, { message: 'Must be at least 1' })
