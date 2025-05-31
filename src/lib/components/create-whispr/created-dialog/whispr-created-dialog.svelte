@@ -71,7 +71,7 @@
 
 			<Separator class="my-3" decorative aria-hidden="true" />
 
-			<WhisprAccordion {whisprUrl} {deleteUrl} />
+			<WhisprAccordion {whisprUrl} {deleteUrl} whisprId={createdWhispr?.id} />
 		</div>
 	{/snippet}
 </DialogDrawer>

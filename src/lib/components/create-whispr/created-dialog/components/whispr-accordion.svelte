@@ -16,9 +16,10 @@
 	interface Props {
 		whisprUrl: string;
 		deleteUrl: string;
+		whisprId?: string;
 	}
 
-	let { whisprUrl, deleteUrl }: Props = $props();
+	let { whisprUrl, deleteUrl, whisprId }: Props = $props();
 
 	// Variables & States
 	let exportQrCodeOpen = $state<boolean>(false);
@@ -29,7 +30,7 @@
 
 	// Handler Functions
 	async function handleDownloadQrCodePng() {
-		if (!(await qrCodeToPng(whisprUrl))) {
+		if (!(await qrCodeToPng(whisprUrl, whisprId))) {
 			toast.error('Download failed', {
 				description: 'Could not generate PNG QR code. Please try again.'
 			});
@@ -37,7 +38,7 @@
 	}
 
 	async function handleDownloadQrCodeSvg() {
-		if (!(await qrCodeToSvg(whisprUrl))) {
+		if (!(await qrCodeToSvg(whisprUrl, whisprId))) {
 			toast.error('Download failed', {
 				description: 'Could not generate SVG QR code. Please try again.'
 			});

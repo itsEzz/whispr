@@ -6,22 +6,26 @@ import { downloadFile } from './download';
 /**
  * Generates a QR code as PNG and triggers download
  * @param text Content to encode in the QR code
+ * @param whisprId Optional identifier for the QR code, used in the filename
  * @returns Promise resolving to success status
  */
-export async function qrCodeToPng(text: string): Promise<boolean> {
+export async function qrCodeToPng(text: string, whisprId?: string): Promise<boolean> {
 	const dataUrl = await tryCatch(QRCode.toDataURL(text));
 
 	if (isError(dataUrl)) return false;
 
-	return downloadFile(dataUrl.data, 'whispr-qr.png');
+	const fileName = whisprId ? `whispr-${whisprId}-qr.png` : 'whispr-qr.png';
+
+	return downloadFile(dataUrl.data, fileName);
 }
 
 /**
  * Generates a QR code as SVG and triggers download
  * @param text Content to encode in the QR code
+ * @param whisprId Optional identifier for the QR code, used in the filename
  * @returns Promise resolving to success status
  */
-export async function qrCodeToSvg(text: string): Promise<boolean> {
+export async function qrCodeToSvg(text: string, whisprId?: string): Promise<boolean> {
 	if (!browser) return false;
 
 	const svgString = await getSvgString(text);
@@ -30,7 +34,9 @@ export async function qrCodeToSvg(text: string): Promise<boolean> {
 	const blob = new Blob([svgString], { type: 'image/svg+xml' });
 	const url = URL.createObjectURL(blob);
 
-	const downloadResult = downloadFile(url, 'whispr-qr.svg');
+	const fileName = whisprId ? `whispr-${whisprId}-qr.png` : 'whispr-qr.png';
+
+	const downloadResult = downloadFile(url, fileName);
 	URL.revokeObjectURL(url);
 
 	return downloadResult;
