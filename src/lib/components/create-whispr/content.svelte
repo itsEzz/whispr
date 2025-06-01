@@ -71,7 +71,6 @@
 		};
 		reader.readAsText(file);
 
-		// Reset the input so the same file can be selected again
 		target.value = '';
 	}
 
@@ -119,9 +118,7 @@
 					placeholder="Enter your note here or upload a file..."
 					aria-describedby={$errors.content ? 'content-error' : undefined}
 				/>
-				<div
-					class={cn('flex items-center border-t p-3', $errors.content ? 'border-destructive' : '')}
-				>
+				<div class="flex items-center p-3">
 					<Button
 						size="sm"
 						variant="ghost"
@@ -131,8 +128,8 @@
 						class="gap-2 text-muted-foreground hover:text-foreground"
 						aria-label="Upload text file"
 					>
-						<Upload class="size-4" />
 						Upload File
+						<Upload />
 					</Button>
 					<div class="ml-auto gap-1.5">
 						<Badge variant="outline" aria-label="Content length">
