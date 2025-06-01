@@ -215,23 +215,18 @@
 		{@render children()}
 	</main>
 
-	<footer class="border-t py-4">
-		<div class="container flex flex-col items-center justify-between gap-6 sm:flex-row">
+	<footer class="border-t py-2">
+		<div class="container flex flex-col items-center justify-between gap-2">
 			<p class="text-sm text-muted-foreground">
-				Made with <span aria-hidden="true">❤️</span><span class="sr-only">love</span> by Adrian Gast
-				| v{version}
-			</p>
-			<nav class="flex gap-4 sm:gap-6" aria-label="Footer Navigation">
-				<a
-					href="https://github.com/itsEzz/whispr"
+				Made with <span aria-hidden="true">❤️</span><span class="sr-only">love</span> by <Button
+					variant="link"
+					href="https://adriangast.de"
 					target="_blank"
 					rel="noreferrer"
-					class="text-sm underline-offset-4 hover:underline"
-					aria-label="Source Code on GitHub (opens in new tab)"
-				>
-					Source Code
-				</a>
-			</nav>
+					aria-label="Adrian Gast's Website (opens in new tab)"
+					class="p-0">Adrian Gast</Button
+				> | v{version}
+			</p>
 		</div>
 	</footer>
 </div>
