@@ -4,10 +4,10 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
-	import { Menu, MessageSquareLock, MonitorCog, Moon, Shield, Sun } from 'lucide-svelte';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { Menu, MessageSquareLock, MonitorCog, Moon, Shield, Sun } from '@lucide/svelte';
 	import { mode, ModeWatcher, setMode } from 'mode-watcher';
-	import type { Snippet } from 'svelte';
-	import { Toaster } from 'svelte-sonner';
+	import { type Snippet } from 'svelte';
 	import '../app.css';
 
 	// Props
@@ -42,7 +42,7 @@
 <!-- Skip to content link for keyboard users -->
 <a
 	href="#main-content"
-	class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-4 focus:text-foreground focus:outline-ring"
+	class="focus:bg-background focus:text-foreground focus:outline-ring sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4"
 >
 	Skip to content
 </a>
@@ -58,14 +58,14 @@
 	}}
 />
 
-<div class="grid min-h-screen grid-rows-[auto_1fr_auto] bg-background">
+<div class="bg-background grid min-h-screen grid-rows-[auto_1fr_auto]">
 	<header
-		class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+		class="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-sm"
 	>
 		<div class="container flex h-14 items-center">
 			<!-- Logo and Site Name -->
 			<a href="/" class="mr-6 flex items-center space-x-2" aria-label="Whispr Home">
-				<MessageSquareLock class="h-6 w-6 text-primary" aria-hidden="true" />
+				<MessageSquareLock size={24} class="text-primary" aria-hidden="true" />
 				<span class="font-bold sm:inline-block">whispr</span>
 			</a>
 
@@ -73,7 +73,7 @@
 			<nav class="hidden flex-1 items-center space-x-4 sm:flex" aria-label="Main Navigation">
 				<a
 					href="/"
-					class="text-sm font-medium transition-colors hover:text-primary {page.url.pathname === '/'
+					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname === '/'
 						? 'text-primary'
 						: 'text-muted-foreground'}"
 					aria-current={page.url.pathname === '/' ? 'page' : undefined}
@@ -82,7 +82,7 @@
 				</a>
 				<a
 					href="/view"
-					class="text-sm font-medium transition-colors hover:text-primary {page.url.pathname.startsWith(
+					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname.startsWith(
 						'/v'
 					)
 						? 'text-primary'
@@ -93,7 +93,7 @@
 				</a>
 				<a
 					href="/about"
-					class="text-sm font-medium transition-colors hover:text-primary {page.url.pathname ===
+					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname ===
 					'/about'
 						? 'text-primary'
 						: 'text-muted-foreground'}"
@@ -113,11 +113,13 @@
 					>
 						<Button variant="ghost" size="icon">
 							<Sun
-								class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+								size={16}
+								class="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
 								aria-hidden="true"
 							/>
 							<Moon
-								class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+								size={16}
+								class="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
 								aria-hidden="true"
 							/>
 							<span class="sr-only">Toggle theme</span>
@@ -125,15 +127,15 @@
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content align="end" aria-labelledby="theme-menu-button">
 						<DropdownMenu.Item onclick={() => handleSetMode('light')} role="menuitem">
-							<Sun class="mr-2 h-4 w-4" aria-hidden="true" />
+							<Sun size={16} class="mr-2" aria-hidden="true" />
 							<span>Light</span>
 						</DropdownMenu.Item>
 						<DropdownMenu.Item onclick={() => handleSetMode('dark')} role="menuitem">
-							<Moon class="mr-2 h-4 w-4" aria-hidden="true" />
+							<Moon size={16} class="mr-2" aria-hidden="true" />
 							<span>Dark</span>
 						</DropdownMenu.Item>
 						<DropdownMenu.Item onclick={() => handleSetMode('system')} role="menuitem">
-							<MonitorCog class="mr-2 h-4 w-4" aria-hidden="true" />
+							<MonitorCog size={16} class="mr-2" aria-hidden="true" />
 							<span>System</span>
 						</DropdownMenu.Item>
 					</DropdownMenu.Content>
@@ -148,7 +150,7 @@
 							aria-controls="mobile-navigation"
 						>
 							<Button variant="ghost" size="icon">
-								<Menu class="h-5 w-5" aria-hidden="true" />
+								<Menu size={20} aria-hidden="true" />
 								<span class="sr-only">Toggle Menu</span>
 							</Button>
 						</Sheet.Trigger>
@@ -165,13 +167,13 @@
 								onclick={handleCloseMobileMenu}
 								aria-label="Whispr Home"
 							>
-								<Shield class="h-6 w-6 text-primary" aria-hidden="true" />
+								<Shield size={24} class="text-primary" aria-hidden="true" />
 								<span class="font-bold">whispr</span>
 							</a>
 							<nav class="flex flex-col space-y-2" aria-label="Mobile Navigation">
 								<a
 									href="/"
-									class="rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground {page
+									class="hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-lg font-medium transition-colors {page
 										.url.pathname === '/'
 										? 'text-primary'
 										: 'text-muted-foreground'}"
@@ -182,7 +184,7 @@
 								</a>
 								<a
 									href="/view"
-									class="rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground {page.url.pathname.startsWith(
+									class="hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-lg font-medium transition-colors {page.url.pathname.startsWith(
 										'/v'
 									)
 										? 'text-primary'
@@ -194,7 +196,7 @@
 								</a>
 								<a
 									href="/about"
-									class="rounded-md px-3 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground {page
+									class="hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-2 text-lg font-medium transition-colors {page
 										.url.pathname === '/about'
 										? 'text-primary'
 										: 'text-muted-foreground'}"
@@ -217,7 +219,7 @@
 
 	<footer class="border-t py-2">
 		<div class="container flex flex-col items-center justify-between gap-2">
-			<p class="text-sm text-muted-foreground">
+			<p class="text-muted-foreground text-sm">
 				Made with <span aria-hidden="true">❤️</span><span class="sr-only">love</span> by <Button
 					variant="link"
 					href="https://adriangast.de"

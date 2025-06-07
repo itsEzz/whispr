@@ -2,7 +2,7 @@
 	import PopoverBadge from '$lib/components/common/popover-badge.svelte';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import { formatDate, getUserLocale } from '$lib/utils/date-helpers';
-	import { CalendarX, Copy, Download, Eye } from 'lucide-svelte';
+	import { CalendarX, Copy, Download, Eye } from '@lucide/svelte';
 	import { MediaQuery } from 'svelte/reactivity';
 
 	// Props
@@ -70,29 +70,29 @@
 		<h2 id="whispr-overview-title" class="sr-only">Whispr settings overview</h2>
 
 		{#if isDesktop.current}
-			<div class="grid grid-cols-2 gap-4 rounded-lg bg-muted p-4" role="list">
+			<div class="bg-muted grid grid-cols-2 gap-4 rounded-lg p-4" role="list">
 				<div class="grid gap-4">
 					<div class="space-y-2" role="listitem">
 						<div class="flex items-center gap-2">
-							<Eye class="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+							<Eye size={20} class="text-muted-foreground" aria-hidden="true" />
 							<h3 class="text-md font-medium">Views</h3>
 						</div>
 						<div class="space-y-1">
-							<p class="text-sm text-foreground/90">
+							<p class="text-foreground/90 text-sm">
 								{viewsText}
 							</p>
-							<p class="text-xs text-muted-foreground">
+							<p class="text-muted-foreground text-xs">
 								{viewsVisibilityText}
 							</p>
 						</div>
 					</div>
 					<div class="space-y-2" role="listitem">
 						<div class="flex items-center gap-2">
-							<Copy class="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+							<Copy size={20} class="text-muted-foreground" aria-hidden="true" />
 							<h3 class="text-md font-medium">Copy Button</h3>
 						</div>
 						<div class="space-y-1">
-							<p class="text-sm text-foreground/90">
+							<p class="text-foreground/90 text-sm">
 								{copyButtonVisibilityText}
 							</p>
 						</div>
@@ -101,25 +101,25 @@
 				<div class="grid gap-4">
 					<div class="space-y-2" role="listitem">
 						<div class="flex items-center gap-2">
-							<CalendarX class="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+							<CalendarX size={20} class="text-muted-foreground" aria-hidden="true" />
 							<h3 class="text-md font-medium">Expiration</h3>
 						</div>
 						<div class="space-y-1">
-							<p class="text-sm text-foreground/90">
+							<p class="text-foreground/90 text-sm">
 								{formattedLongExpirationDate}
 							</p>
-							<p class="text-xs text-muted-foreground">
+							<p class="text-muted-foreground text-xs">
 								{expirationVisibilityText}
 							</p>
 						</div>
 					</div>
 					<div class="space-y-2" role="listitem">
 						<div class="flex items-center gap-2">
-							<Download class="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+							<Download size={20} class="text-muted-foreground" aria-hidden="true" />
 							<h3 class="text-md font-medium">Download Button</h3>
 						</div>
 						<div class="space-y-1">
-							<p class="text-sm text-foreground/90">
+							<p class="text-foreground/90 text-sm">
 								{downloadButtonVisibilityText}
 							</p>
 						</div>
@@ -130,7 +130,7 @@
 			<div class="flex flex-wrap gap-2" role="list">
 				<PopoverBadge variant="secondary" label="View whispr view settings" id="views-badge">
 					{#snippet content()}
-						<Eye class="mr-2 h-4 w-4" aria-hidden="true" />
+						<Eye size={16} class="mr-2" aria-hidden="true" />
 						{#if createdWhispr.unlimitedViews === true}
 							Unlimited
 						{:else}
@@ -142,7 +142,7 @@
 							<p class="text-foreground/90">
 								{viewsText}
 							</p>
-							<p class="text-xs text-muted-foreground">
+							<p class="text-muted-foreground text-xs">
 								{viewsVisibilityText}
 							</p>
 						</div>
@@ -154,7 +154,7 @@
 					id="expiration-badge"
 				>
 					{#snippet content()}
-						<CalendarX class="mr-2 h-4 w-4" aria-hidden="true" />
+						<CalendarX size={16} class="mr-2" aria-hidden="true" />
 						{formattedExpirationDate}
 					{/snippet}
 					{#snippet popoverContent()}
@@ -162,7 +162,7 @@
 							<p class="text-foreground/90">
 								{formattedLongExpirationDate}
 							</p>
-							<p class="text-xs text-muted-foreground">
+							<p class="text-muted-foreground text-xs">
 								{expirationVisibilityText}
 							</p>
 						</div>
@@ -170,7 +170,7 @@
 				</PopoverBadge>
 				<PopoverBadge variant="secondary" label="View whispr copy button settings" id="copy-badge">
 					{#snippet content()}
-						<Copy class="mr-2 h-4 w-4" aria-hidden="true" />
+						<Copy size={16} class="mr-2" aria-hidden="true" />
 						{#if createdWhispr.showCopyButton}
 							Visible
 						{:else}
@@ -178,7 +178,7 @@
 						{/if}
 					{/snippet}
 					{#snippet popoverContent()}
-						<p class="text-sm text-foreground/90">
+						<p class="text-foreground/90 text-sm">
 							{copyButtonVisibilityText}
 						</p>
 					{/snippet}
@@ -189,7 +189,7 @@
 					id="download-badge"
 				>
 					{#snippet content()}
-						<Download class="mr-2 h-4 w-4" aria-hidden="true" />
+						<Download size={16} class="mr-2" aria-hidden="true" />
 						{#if createdWhispr.showDownloadButton}
 							Visible
 						{:else}
@@ -197,7 +197,7 @@
 						{/if}
 					{/snippet}
 					{#snippet popoverContent()}
-						<p class="break-words text-sm text-foreground/90">
+						<p class="text-foreground/90 text-sm break-words">
 							{downloadButtonVisibilityText}
 						</p>
 					{/snippet}

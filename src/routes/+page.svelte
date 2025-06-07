@@ -11,7 +11,7 @@
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
 	import { isError, tryCatch } from '@itsezz/try-catch';
-	import { Eraser, LoaderCircle, Send } from 'lucide-svelte';
+	import { Eraser, LoaderCircle, Send } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';

@@ -5,7 +5,7 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { cn } from '$lib/utils';
 	import { getAcceptAttribute, validateTextFile } from '$lib/utils/file-validation';
-	import { Upload } from 'lucide-svelte';
+	import { Upload } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm } from 'sveltekit-superforms/client';
@@ -101,7 +101,7 @@
 		{#snippet children({ props })}
 			<div
 				class={cn(
-					'relative flex flex-grow flex-col overflow-hidden rounded-lg border bg-background ring-offset-2 ring-offset-background focus-within:ring-2',
+					'bg-background ring-offset-background relative flex grow flex-col overflow-hidden rounded-lg border ring-offset-2 focus-within:ring-2',
 					$errors.content
 						? 'border-destructive focus-within:ring-destructive/50 '
 						: 'focus-within:ring-ring'
@@ -125,7 +125,7 @@
 						disabled={$submitting}
 						onclick={handleClickFileUpload}
 						type="button"
-						class="gap-2 text-muted-foreground hover:text-foreground"
+						class="text-muted-foreground hover:text-foreground gap-2"
 						aria-label="Upload text file"
 					>
 						Upload File

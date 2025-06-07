@@ -6,7 +6,7 @@
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 	import { type ViewPasswordSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils';
-	import { Eye, EyeOff, LoaderCircle, LockOpen } from 'lucide-svelte';
+	import { Eye, EyeOff, LoaderCircle, LockOpen } from '@lucide/svelte';
 	import type { Infer, SuperForm } from 'sveltekit-superforms';
 	import FormError from '../common/form-error.svelte';
 

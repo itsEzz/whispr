@@ -7,7 +7,7 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { copyText, isCopySupported } from '$lib/utils/copy';
 	import { getSvgString, qrCodeToPng, qrCodeToSvg } from '$lib/utils/qrcode';
-	import { ChevronDown, ChevronUp, CodeXml, ImageDown } from 'lucide-svelte';
+	import { ChevronDown, ChevronUp, CodeXml, ImageDown } from '@lucide/svelte';
 	import { mode } from 'mode-watcher';
 	import QRCode from 'qrcode';
 	import { toast } from 'svelte-sonner';
@@ -123,7 +123,7 @@
 				<div class="flex flex-col items-start gap-3">
 					<div class="space-y-1.5">
 						<p class="text-sm font-medium">Share on mobile devices</p>
-						<p class="text-sm text-muted-foreground">
+						<p class="text-muted-foreground text-sm">
 							Scan this QR code with your phone's camera to instantly access your whispr or download
 							the QR code as PNG/SVG or copy the code for sharing.
 						</p>
@@ -174,7 +174,7 @@
 		</Accordion.Trigger>
 		<Accordion.Content id="delete-content">
 			<div class="flex flex-col gap-2">
-				<p class="text-sm text-muted-foreground">
+				<p class="text-muted-foreground text-sm">
 					Use the link below to permanently delete your whispr at any time. Make sure to save it!
 				</p>
 				<div class="flex flex-col gap-2">

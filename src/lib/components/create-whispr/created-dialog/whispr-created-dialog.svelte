@@ -3,7 +3,7 @@
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import { Base64 } from 'js-base64';
-	import { Lock, TriangleAlert } from 'lucide-svelte';
+	import { Lock, TriangleAlert } from '@lucide/svelte';
 	import DialogDrawer from '../../common/dialog-drawer.svelte';
 	import WhisprAccordion from './components/whispr-accordion.svelte';
 	import WhisprLink from './components/whispr-link.svelte';
@@ -57,7 +57,7 @@
 				>
 					<TriangleAlert class="size-5 shrink-0" aria-hidden="true" />
 					<div class="space-y-1">
-						<p class="font-medium leading-none">No password set</p>
+						<p class="leading-none font-medium">No password set</p>
 						<p class="text-sm text-orange-700/90 dark:text-orange-300/90">
 							Everyone with access to the link can view and decrypt this whispr!
 						</p>

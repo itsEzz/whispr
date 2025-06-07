@@ -4,7 +4,7 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import { cn } from '$lib/utils';
-	import { Dices, Eye, EyeOff, LoaderCircle } from 'lucide-svelte';
+	import { Dices, Eye, EyeOff, LoaderCircle } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import { passwordSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';

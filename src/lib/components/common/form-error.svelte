@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AlertCircle } from 'lucide-svelte';
+	import { AlertCircle } from '@lucide/svelte';
 
 	// Props
 	interface Props {
@@ -12,14 +12,14 @@
 
 {#if errors && errors.length > 0}
 	<div
-		class="mt-2 space-y-1.5 text-sm font-medium text-destructive"
+		class="text-destructive mt-2 space-y-1.5 text-sm font-medium"
 		{id}
 		role="alert"
 		aria-live="polite"
 	>
 		{#each errors as error}
-			<div class="flex items-start rounded-sm bg-destructive/10 px-3 py-2">
-				<AlertCircle class="mr-2 mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
+			<div class="bg-destructive/10 flex items-start rounded-sm px-3 py-2">
+				<AlertCircle size={16} class="mt-0.5 mr-2 shrink-0" aria-hidden="true" />
 				<span class="leading-tight">{error}</span>
 			</div>
 		{/each}

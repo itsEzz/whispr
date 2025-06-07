@@ -6,7 +6,7 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { deleteSchema } from '$lib/schemas/delete-schema';
 	import { cn } from '$lib/utils.js';
-	import { AlertTriangle, Home, LoaderCircle, SearchX, Shredder, Trash2 } from 'lucide-svelte';
+	import { AlertTriangle, Home, LoaderCircle, SearchX, Shredder, Trash2 } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -61,7 +61,7 @@
 		</div>
 	{/snippet}
 	{#snippet body()}
-		<p class="text-sm text-muted-foreground">
+		<p class="text-muted-foreground text-sm">
 			You'll be redirected to the homepage once you close this dialog or by clicking the button
 			below.
 		</p>
@@ -94,7 +94,7 @@
 							<Form.Field
 								{form}
 								name="confirm"
-								class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"
+								class="flex flex-row items-start space-y-0 space-x-3 rounded-md border p-4"
 							>
 								<Form.Control>
 									{#snippet children({ props })}
@@ -144,15 +144,15 @@
 				<Card.Root class="w-full max-w-lg">
 					<Card.Header class="text-center">
 						<div
-							class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/50"
+							class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center rounded-full"
 						>
-							<SearchX class="h-10 w-10" aria-hidden="true" />
+							<SearchX size={40} aria-hidden="true" />
 						</div>
 						<Card.Title id="error-heading">Whispr Not Found</Card.Title>
 					</Card.Header>
 
 					<Card.Content class="text-center">
-						<p class="text-sm text-muted-foreground">
+						<p class="text-muted-foreground text-sm">
 							The Whispr you're trying to delete either doesn't exist or has already been removed.
 							Please double-check the link for any typos.
 						</p>

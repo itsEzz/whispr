@@ -7,7 +7,7 @@
 	import { copyText } from '$lib/utils/copy';
 	import { formatDate, getUserLocale } from '$lib/utils/date-helpers';
 	import { downloadFile } from '$lib/utils/download';
-	import { CalendarX, Download, Eye } from 'lucide-svelte';
+	import { CalendarX, Download, Eye } from '@lucide/svelte';
 
 	// Props
 	interface Props {
@@ -51,7 +51,7 @@
 	<h1 class="mb-4 px-1 text-2xl font-bold">Whispr Content</h1>
 	<div class="flex-1 overflow-auto p-1">
 		<div class="flex h-full flex-col gap-4">
-			<div class="relative flex flex-grow flex-col overflow-hidden rounded-lg border bg-background">
+			<div class="bg-background relative flex grow flex-col overflow-hidden rounded-lg border">
 				<Textarea
 					readonly
 					value={content}
@@ -74,7 +74,7 @@
 										{/if}
 									{/snippet}
 									{#snippet popoverContent()}
-										<p class="text-sm text-foreground/90">
+										<p class="text-foreground/90 text-sm">
 											{#if whispr.unlimitedViews === true}
 												Can be viewed unlimited times
 											{:else}
@@ -91,7 +91,7 @@
 										{formattedExpirationDate}
 									{/snippet}
 									{#snippet popoverContent()}
-										<p class="text-sm text-foreground/90">
+										<p class="text-foreground/90 text-sm">
 											Expires on {formattedExpirationDate}
 										</p>
 									{/snippet}

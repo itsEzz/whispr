@@ -8,7 +8,7 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
-	import { Eye, LoaderCircle } from 'lucide-svelte';
+	import { Eye, LoaderCircle } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
