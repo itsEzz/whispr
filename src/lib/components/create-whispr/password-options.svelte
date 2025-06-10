@@ -4,7 +4,10 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import { cn } from '$lib/utils';
-	import { Dices, Eye, EyeOff, LoaderCircle } from '@lucide/svelte';
+	import Dices from '@lucide/svelte/icons/dices';
+	import Eye from '@lucide/svelte/icons/eye';
+	import EyeOff from '@lucide/svelte/icons/eye-off';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import { toast } from 'svelte-sonner';
 	import { passwordSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
@@ -73,9 +76,6 @@
 			placeholder="Enter a secure password"
 			min={1}
 			max={1000}
-			class={cn(
-				!validationResult.success && 'border-destructive focus-visible:ring-destructive/50'
-			)}
 			bind:value={password}
 			aria-invalid={!validationResult.success}
 			aria-describedby={errors ? 'password-error' : undefined}
