@@ -6,7 +6,7 @@
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import { copyText, isCopySupported } from '$lib/utils/copy';
 	import { isShareSupported, shareText } from '$lib/utils/share';
-	import { Share2 } from '@lucide/svelte';
+	import Share2 from '@lucide/svelte/icons/share-2';
 	import { toast } from 'svelte-sonner';
 
 	// Props
