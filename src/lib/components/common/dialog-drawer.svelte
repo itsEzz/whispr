@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import { cn } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 	import type { AriaRole } from 'svelte/elements';
 	import { MediaQuery } from 'svelte/reactivity';
@@ -14,7 +13,7 @@
 		description?: string | Snippet;
 		body?: Snippet;
 		footer?: Snippet;
-		drawerBodyCss?: string;
+		drawerContentCss?: string;
 		dialogContentCss?: string;
 		escapeKeydownBehavior?: 'ignore' | 'close' | 'defer-otherwise-close' | 'defer-otherwise-ignore';
 		interactOutsideBehavior?:
@@ -35,7 +34,7 @@
 		description,
 		body,
 		footer,
-		drawerBodyCss,
+		drawerContentCss,
 		dialogContentCss = 'sm:max-w-[425px]',
 		escapeKeydownBehavior = 'close',
 		interactOutsideBehavior = 'close',
@@ -87,7 +86,7 @@
 					</Dialog.Description>
 				{/if}
 			</Dialog.Header>
-			<div class="max-h-[70dvh] overflow-y-auto" id={!description ? ariaDescribedby : undefined}>
+			<div id={!description ? ariaDescribedby : undefined}>
 				{@render body?.()}
 			</div>
 			{#if footer}
@@ -100,6 +99,7 @@
 {:else}
 	<Drawer.Root bind:open {onOpenChange}>
 		<Drawer.Content
+			class={drawerContentCss}
 			{escapeKeydownBehavior}
 			{interactOutsideBehavior}
 			{onOpenAutoFocus}
@@ -107,7 +107,7 @@
 			aria-describedby={ariaDescribedby}
 			aria-labelledby={ariaLabelledby}
 		>
-			<Drawer.Header class="text-left">
+			<Drawer.Header>
 				<Drawer.Title id={ariaLabelledby}>
 					{#if typeof title === 'string'}
 						{title}
@@ -125,10 +125,7 @@
 					</Drawer.Description>
 				{/if}
 			</Drawer.Header>
-			<div
-				class={cn(drawerBodyCss, 'mx-4 max-h-[70dvh] overflow-y-auto')}
-				id={!description ? ariaDescribedby : undefined}
-			>
+			<div id={!description ? ariaDescribedby : undefined}>
 				{@render body?.()}
 			</div>
 			{#if footer}
