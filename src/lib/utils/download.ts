@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isSuccess, tryCatch } from '@itsezz/try-catch';
+import { isSuccess, tc } from '@itsezz/try-catch';
 
 /**
  * Helper function to download a file
@@ -15,7 +15,7 @@ export function downloadFile(content: string, filename: string): boolean {
 			? content
 			: URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
 
-	const result = tryCatch(() => {
+	const result = tc(() => {
 		const link = document.createElement('a');
 		link.href = url;
 		link.download = filename;

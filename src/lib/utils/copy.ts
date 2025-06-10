@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isSuccess, tryCatch } from '@itsezz/try-catch';
+import { isSuccess, tca } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
 
 /**
@@ -36,7 +36,7 @@ export function isCopySupported(showToast: boolean = false): boolean {
 export async function copyText(text: string): Promise<boolean> {
 	if (!isCopySupported(true)) return false;
 
-	const result = await tryCatch(navigator.clipboard.writeText(text));
+	const result = await tca(navigator.clipboard.writeText(text));
 
 	return isSuccess(result);
 }

@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isError, tryCatch } from '@itsezz/try-catch';
+import { isError, tca } from '@itsezz/try-catch';
 import QRCode from 'qrcode';
 import { downloadFile } from './download';
 
@@ -10,7 +10,7 @@ import { downloadFile } from './download';
  * @returns Promise resolving to success status
  */
 export async function qrCodeToPng(text: string, whisprId?: string): Promise<boolean> {
-	const dataUrl = await tryCatch(QRCode.toDataURL(text));
+	const dataUrl = await tca(QRCode.toDataURL(text));
 
 	if (isError(dataUrl)) return false;
 
@@ -48,7 +48,7 @@ export async function qrCodeToSvg(text: string, whisprId?: string): Promise<bool
  * @returns Promise resolving to SVG string or null if failed
  */
 export async function getSvgString(text: string): Promise<string | null> {
-	const svgString = await tryCatch(
+	const svgString = await tca(
 		QRCode.toString(text, {
 			type: 'svg'
 		})

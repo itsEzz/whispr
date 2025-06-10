@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isSuccess, tryCatch } from '@itsezz/try-catch';
+import { isSuccess, tca } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
 
 /**
@@ -40,7 +40,7 @@ export function isShareSupported(showToast: boolean = false): boolean {
 export async function shareText(title?: string, text?: string, url?: string): Promise<boolean> {
 	if (!isShareSupported(true)) return false;
 
-	const result = await tryCatch(navigator.share({ title, text, url }));
+	const result = await tca(navigator.share({ title, text, url }));
 
 	return isSuccess(result);
 }

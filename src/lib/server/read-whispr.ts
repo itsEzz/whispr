@@ -1,16 +1,14 @@
 import { idSchema } from '$lib/schemas/view-schema';
 import type { ViewWhispr } from '$lib/types/view-whispr';
 import { isDateInPast } from '$lib/utils/date-helpers';
-import { isError, tryCatch } from '@itsezz/try-catch';
+import { isError, tca } from '@itsezz/try-catch';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { db } from './db';
 import { whispr_table } from './db/schema';
 
 async function deleteWhispr(id: string) {
-	const deleteResult = await tryCatch(
-		db.delete(whispr_table).where(eq(whispr_table.id, id)).execute()
-	);
+	const deleteResult = await tca(db.delete(whispr_table).where(eq(whispr_table.id, id)));
 	if (isError(deleteResult)) {
 		console.error('Database connection error while deleting whispr:', deleteResult.error);
 		error(500, 'Database connection error while deleting whispr');
@@ -22,9 +20,7 @@ export async function readWhispr(id: string): Promise<ViewWhispr> {
 
 	if (!validationResult.success) redirect(303, '/view?redirect-reason=invalid-id');
 
-	const whispr = await tryCatch(
-		db.select().from(whispr_table).where(eq(whispr_table.id, id)).execute()
-	);
+	const whispr = await tca(db.select().from(whispr_table).where(eq(whispr_table.id, id)));
 
 	if (isError(whispr)) {
 		console.error('Database connection error while retrieving whispr:', whispr.error);
@@ -49,12 +45,11 @@ export async function readWhispr(id: string): Promise<ViewWhispr> {
 		await deleteWhispr(id);
 		whisprData.views = 0;
 	} else if (!whisprData.unlimitedViews && whisprData.views > 1) {
-		const updatedWhispr = await tryCatch(
+		const updatedWhispr = await tca(
 			db
 				.update(whispr_table)
 				.set({ views: whisprData.views - 1 })
 				.where(eq(whispr_table.id, id))
-				.execute()
 		);
 
 		if (isError(updatedWhispr)) {
