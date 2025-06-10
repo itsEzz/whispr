@@ -45,10 +45,7 @@
 					disabled={$submitting}
 					type="number"
 					aria-describedby={$errors.views ? 'views-error' : undefined}
-					class={cn(
-						$errors.views && 'border-destructive focus-visible:ring-destructive/50',
-						$formData.unlimitedViews && 'hidden'
-					)}
+					class={cn($formData.unlimitedViews && 'hidden')}
 				/>
 			{/snippet}
 		</Form.Control>
@@ -64,7 +61,6 @@
 						bind:checked={$formData.showViews}
 						disabled={$submitting}
 						aria-describedby={$errors.showViews ? 'show-views-error' : undefined}
-						class={cn($errors.showViews && 'border-destructive focus-visible:ring-destructive/50')}
 					/>
 					<Form.Label class="cursor-pointer">Show remaining views to recipients</Form.Label>
 				</div>
@@ -82,9 +78,6 @@
 						bind:checked={$formData.unlimitedViews}
 						disabled={$submitting}
 						aria-describedby={$errors.unlimitedViews ? 'unlimited-views-error' : undefined}
-						class={cn(
-							$errors.unlimitedViews && 'border-destructive focus-visible:ring-destructive/50'
-						)}
 						onCheckedChange={onUnlimitedViewsChange}
 					/>
 					<Form.Label class="cursor-pointer">Unlimited views</Form.Label>
