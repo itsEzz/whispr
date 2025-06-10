@@ -1,7 +1,7 @@
 import { deleteIdSchema, deleteSchema } from '$lib/schemas/delete-schema';
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
-import { isError, tryCatch } from '@itsezz/try-catch';
+import { isError, tca } from '@itsezz/try-catch';
 import { error, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
@@ -31,8 +31,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		};
 	}
 
-	const foundWhispr = await tryCatch(
-		db.select().from(whispr_table).where(eq(whispr_table.deleteId, deleteId)).execute()
+	const foundWhispr = await tca(
+		db.select().from(whispr_table).where(eq(whispr_table.deleteId, deleteId))
 	);
 
 	if (isError(foundWhispr)) {
@@ -69,8 +69,8 @@ export const actions = {
 			});
 		}
 
-		const deletedWhispr = await tryCatch(
-			db.delete(whispr_table).where(eq(whispr_table.deleteId, form.data.id)).execute()
+		const deletedWhispr = await tca(
+			db.delete(whispr_table).where(eq(whispr_table.deleteId, form.data.id))
 		);
 
 		if (isError(deletedWhispr)) {

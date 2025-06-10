@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
-import { isError, tryCatch } from '@itsezz/try-catch';
+import { isError, tca } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
@@ -42,7 +42,7 @@ export const actions = {
 		const now = new Date();
 		const ttlDate = new Date(now.getTime() + ttl * 1000);
 
-		const whisprId = await tryCatch(
+		const whisprId = await tca(
 			db
 				.insert(whispr_table)
 				.values({
@@ -56,7 +56,6 @@ export const actions = {
 					showDownloadButton: form.data.showDownloadButton
 				})
 				.$returningId()
-				.execute()
 		);
 
 		if (isError(whisprId) || whisprId.data.length === 0) {
@@ -70,8 +69,8 @@ export const actions = {
 			});
 		}
 
-		const whispr = await tryCatch(
-			db.select().from(whispr_table).where(eq(whispr_table.id, whisprId.data[0].id)).execute()
+		const whispr = await tca(
+			db.select().from(whispr_table).where(eq(whispr_table.id, whisprId.data[0].id))
 		);
 
 		if (isError(whispr) || whispr.data.length === 0) {
