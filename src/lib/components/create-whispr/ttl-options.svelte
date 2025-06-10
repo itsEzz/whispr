@@ -58,10 +58,10 @@
 				</div>
 				<div
 					class={cn(
-						'flex items-stretch overflow-hidden rounded-md border border-input ring-offset-2 ring-offset-background focus-within:ring-2 ',
+						'border-input ring-offset-background flex items-stretch overflow-hidden rounded-md border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]',
 						$errors.ttlValue || $errors.ttlUnit
-							? 'border-destructive focus-within:ring-destructive/50'
-							: 'focus-within:ring-ring'
+							? 'border-destructive ring-destructive/20 dark:ring-destructive/40'
+							: 'focus-within:border-ring focus-within:ring-ring/50'
 					)}
 					role="group"
 					aria-labelledby="ttl-custom-label"
@@ -74,10 +74,10 @@
 						disabled={$submitting}
 						type="number"
 						aria-describedby={$errors.ttlValue ? 'ttl-value-error' : undefined}
-						class="h-10 w-full rounded-none border-0 bg-transparent px-3 text-foreground focus-visible:ring-0"
+						class="w-full rounded-none border-0 focus-visible:ring-0"
 					/>
-					<div class="relative my-1.5 w-px" aria-hidden="true">
-						<div class="absolute inset-0 bg-input"></div>
+					<div class="relative w-px" aria-hidden="true">
+						<div class="bg-input absolute inset-0"></div>
 					</div>
 					<Form.Field {form} name="ttlUnit">
 						<Form.Control>
@@ -90,7 +90,7 @@
 									type="single"
 								>
 									<Select.Trigger
-										class="w-28 rounded-none border-0 bg-transparent px-3 focus:ring-0"
+										class="mb-0 w-32 rounded-none border-0 px-3 focus:ring-0"
 										aria-label="Time unit"
 									>
 										{$formData.ttlUnit.charAt(0).toUpperCase() +
@@ -133,7 +133,6 @@
 						bind:checked={$formData.showTtl}
 						disabled={$submitting}
 						aria-describedby={$errors.showTtl ? 'show-ttl-error' : undefined}
-						class={cn($errors.showTtl && 'border-destructive focus-visible:ring-destructive/50')}
 					/>
 					<Form.Label class="cursor-pointer">Show expiration date to recipients</Form.Label>
 				</div>
