@@ -2,7 +2,11 @@
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { AlertTriangle, ArrowLeft, Home, RefreshCw, SearchX } from '@lucide/svelte';
+	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
+	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import Home from '@lucide/svelte/icons/home';
+	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
+	import SearchX from '@lucide/svelte/icons/search-x';
 
 	// Variables & States
 	const is404 = page.status === 404;
