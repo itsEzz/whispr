@@ -6,7 +6,12 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { deleteSchema } from '$lib/schemas/delete-schema';
 	import { cn } from '$lib/utils.js';
-	import { AlertTriangle, Home, LoaderCircle, SearchX, Shredder, Trash2 } from '@lucide/svelte';
+	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
+	import Home from '@lucide/svelte/icons/home';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
+	import SearchX from '@lucide/svelte/icons/search-x';
+	import Shredder from '@lucide/svelte/icons/shredder';
+	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
