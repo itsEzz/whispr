@@ -19,7 +19,7 @@
 </script>
 
 <div class="space-y-3 px-4">
-	<h3 class="text-sm font-medium leading-none" id="additional-options-heading">
+	<h3 class="text-sm leading-none font-medium" id="additional-options-heading">
 		Additional options
 	</h3>
 	<div role="group" aria-labelledby="additional-options-heading" class="space-y-3">
@@ -33,9 +33,6 @@
 							bind:checked={$formData.showCopyButton}
 							disabled={$submitting}
 							aria-describedby={$errors.showCopyButton ? 'show-copy-button-error' : undefined}
-							class={cn(
-								$errors.showCopyButton && 'border-destructive focus-visible:ring-destructive/50'
-							)}
 						/>
 						<Form.Label class="cursor-pointer">Show copy button</Form.Label>
 					</div>
@@ -55,9 +52,6 @@
 							aria-describedby={$errors.showDownloadButton
 								? 'show-download-button-error'
 								: undefined}
-							class={cn(
-								$errors.showDownloadButton && 'border-destructive focus-visible:ring-destructive/50'
-							)}
 						/>
 						<Form.Label class="cursor-pointer">Show download button</Form.Label>
 					</div>
