@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { Button, type ButtonProps } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils';
-	import { CircleCheck, CircleX, Copy } from '@lucide/svelte';
+	import CircleCheck from '@lucide/svelte/icons/circle-check';
+	import CircleX from '@lucide/svelte/icons/circle-x';
+	import Copy from '@lucide/svelte/icons/copy';
 
 	// Props
 	interface Props extends Omit<ButtonProps, 'onclick'> {
