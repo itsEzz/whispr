@@ -3,7 +3,8 @@
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import { Base64 } from 'js-base64';
-	import { Lock, TriangleAlert } from '@lucide/svelte';
+	import Lock from '@lucide/svelte/icons/lock';
+	import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
 	import DialogDrawer from '../../common/dialog-drawer.svelte';
 	import WhisprAccordion from './components/whispr-accordion.svelte';
 	import WhisprLink from './components/whispr-link.svelte';
@@ -35,7 +36,6 @@
 	description="Your secure and encrypted whispr link is ready to share!"
 	escapeKeydownBehavior="ignore"
 	interactOutsideBehavior="ignore"
-	drawerBodyCss="mb-4"
 	dialogContentCss="sm:max-w-[650px]"
 	idToFocusOnOpen="copy-whispr-link"
 	aria-labelledby="whispr-created-dialog-title"
