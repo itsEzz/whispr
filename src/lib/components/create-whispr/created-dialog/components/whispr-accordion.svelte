@@ -7,7 +7,10 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { copyText, isCopySupported } from '$lib/utils/copy';
 	import { getSvgString, qrCodeToPng, qrCodeToSvg } from '$lib/utils/qrcode';
-	import { ChevronDown, ChevronUp, CodeXml, ImageDown } from '@lucide/svelte';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
+	import ChevronUp from '@lucide/svelte/icons/chevron-up';
+	import CodeXml from '@lucide/svelte/icons/code-xml';
+	import ImageDown from '@lucide/svelte/icons/image-down';
 	import { mode } from 'mode-watcher';
 	import QRCode from 'qrcode';
 	import { toast } from 'svelte-sonner';
@@ -102,8 +105,8 @@
 	});
 </script>
 
-<Accordion.Root type="multiple" class="w-full">
-	<Accordion.Item value="qrcode" class="rounded-lg rounded-b-none border px-4">
+<Accordion.Root type="multiple" class="w-full rounded-lg border">
+	<Accordion.Item value="qrcode" class="px-4">
 		<Accordion.Trigger
 			class="py-2 hover:no-underline"
 			id="qrcode-trigger"
@@ -164,7 +167,7 @@
 			</div>
 		</Accordion.Content>
 	</Accordion.Item>
-	<Accordion.Item value="delete" class="rounded-lg rounded-t-none border border-t-0 px-4">
+	<Accordion.Item value="delete" class="px-4">
 		<Accordion.Trigger
 			class="py-2 hover:no-underline"
 			id="delete-trigger"
