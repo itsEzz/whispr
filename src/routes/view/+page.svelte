@@ -8,7 +8,8 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
-	import { Eye, LoaderCircle } from '@lucide/svelte';
+	import Eye from '@lucide/svelte/icons/eye';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -42,7 +43,7 @@
 		}
 	});
 
-	const { form: formData, enhance, submitting, allErrors, errors, constraints } = form;
+	const { form: formData, enhance, submitting, allErrors, errors, constraints, submit } = form;
 
 	let isFormValid = $derived($allErrors.length === 0);
 
@@ -80,8 +81,8 @@
 				<Card.Description>Provide your Whispr ID to view the secure content.</Card.Description>
 			</Card.Header>
 
-			<form method="POST" use:enhance autocomplete="off">
-				<Card.Content>
+			<Card.Content>
+				<form method="POST" use:enhance autocomplete="off">
 					<Form.Field {form} name="id">
 						<Form.Control>
 							{#snippet children({ props })}
@@ -100,19 +101,24 @@
 						</Form.Control>
 						<FormError errors={$errors.id} id="id-error" />
 					</Form.Field>
-				</Card.Content>
+				</form>
+			</Card.Content>
 
-				<Card.Footer class="flex justify-end">
-					<Form.Button disabled={$submitting || !isFormValid} aria-busy={$submitting}>
-						{$submitting ? 'Loading...' : 'View Whispr'}
-						{#if $submitting}
-							<LoaderCircle class="animate-spin" aria-hidden="true" />
-						{:else}
-							<Eye aria-hidden="true" />
-						{/if}
-					</Form.Button>
-				</Card.Footer>
-			</form>
+			<Card.Footer class="flex justify-end">
+				<Form.Button
+					disabled={$submitting || !isFormValid}
+					aria-busy={$submitting}
+					onclick={submit}
+				>
+					{#if $submitting}
+						Loading Whispr...
+						<LoaderCircle class="animate-spin" aria-hidden="true" />
+					{:else}
+						View Whispr
+						<Eye aria-hidden="true" />
+					{/if}
+				</Form.Button>
+			</Card.Footer>
 		</Card.Root>
 	</div>
 </div>

@@ -6,4 +6,4 @@
 	let { data }: LayoutProps = $props();
 </script>
 
-<ViewWhispr form={data.form} whispr={data.whispr} />
+<ViewWhispr whispr={data.whispr} />

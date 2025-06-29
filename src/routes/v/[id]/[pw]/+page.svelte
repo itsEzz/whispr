@@ -7,4 +7,4 @@
 	let { data }: LayoutProps = $props();
 </script>
 
-<ViewWhispr form={data.form} whispr={data.whispr} encodedUrlPassword={page.params.pw} />
+<ViewWhispr whispr={data.whispr} encodedUrlPassword={page.params.pw} />
