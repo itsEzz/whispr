@@ -10,8 +10,10 @@
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
-	import { isError, tryCatch } from '@itsezz/try-catch';
-	import { Eraser, LoaderCircle, Send } from '@lucide/svelte';
+	import { isError, tc, tca } from '@itsezz/try-catch';
+	import Eraser from '@lucide/svelte/icons/eraser';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
+	import Send from '@lucide/svelte/icons/send';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -90,7 +92,7 @@
 			return null;
 		}
 
-		const pwd = tryCatch(() => {
+		const pwd = tc(() => {
 			if (password.length > 0) return password;
 			randomPassword = passwordGenerator.generate(30);
 			return randomPassword;
@@ -103,7 +105,7 @@
 			return null;
 		}
 
-		const encryptedContent = await tryCatch(aes.encrypt(content, pwd.data));
+		const encryptedContent = await tca(aes.encrypt(content, pwd.data));
 		if (isError(encryptedContent)) {
 			toast.error('Encryption issue', {
 				description: "We're having trouble encrypting your content. Please try again."
@@ -142,34 +144,34 @@
 	<h1 class="mb-4 px-1 text-2xl font-bold" id="page-title">Create Whispr</h1>
 	<div class="flex-1 overflow-auto p-1">
 		<form method="POST" use:enhance aria-labelledby="page-title">
-			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				<div class="lg:col-span-2">
+			<div class="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<div class="flex flex-col lg:col-span-2">
 					<Content {form} />
 				</div>
-				<div>
+				<div class="flex flex-col">
 					<Options {form} bind:password {passwordOptionsComponent} />
-				</div>
-				<div class="flex w-full justify-end gap-2 sm:col-span-2 lg:col-span-3">
-					<Button
-						variant="destructive"
-						onclick={handleClickOpenResetDialog}
-						disabled={!isFormDirty || $submitting}
-						aria-label="Reset form"
-					>
-						Reset<Eraser aria-hidden="true" />
-					</Button>
-					<Form.Button
-						disabled={$submitting || !isFormValid}
-						aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
-					>
-						Create whispr
-						{#if $submitting}
-							<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
-							<span class="sr-only">Creating whispr...</span>
-						{:else}
-							<Send aria-hidden="true" />
-						{/if}
-					</Form.Button>
+					<div class="mt-4 flex w-full justify-end gap-2">
+						<Button
+							variant="destructive"
+							onclick={handleClickOpenResetDialog}
+							disabled={!isFormDirty || $submitting}
+							aria-label="Reset form"
+						>
+							Reset<Eraser aria-hidden="true" />
+						</Button>
+						<Form.Button
+							disabled={$submitting || !isFormValid}
+							aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
+						>
+							Create whispr
+							{#if $submitting}
+								<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
+								<span class="sr-only">Creating whispr...</span>
+							{:else}
+								<Send aria-hidden="true" />
+							{/if}
+						</Form.Button>
+					</div>
 				</div>
 			</div>
 		</form>
