@@ -7,7 +7,9 @@
 	import { copyText } from '$lib/utils/copy';
 	import { formatDate, getUserLocale } from '$lib/utils/date-helpers';
 	import { downloadFile } from '$lib/utils/download';
-	import { CalendarX, Download, Eye } from '@lucide/svelte';
+	import CalendarX from '@lucide/svelte/icons/calendar-x';
+	import Download from '@lucide/svelte/icons/download';
+	import Eye from '@lucide/svelte/icons/eye';
 
 	// Props
 	interface Props {
@@ -47,48 +49,52 @@
 	}
 </script>
 
+<!-- TODO textarea grows to big -->
 <div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
 	<h1 class="mb-4 px-1 text-2xl font-bold">Whispr Content</h1>
 	<div class="flex-1 overflow-auto p-1">
 		<div class="flex h-full flex-col gap-4">
-			<div class="bg-background relative flex grow flex-col overflow-hidden rounded-lg border">
+			<div
+				class="border-input dark:bg-input/30 focus-within:border-ring focus-within:ring-ring/50 relative mb-0 flex grow flex-col overflow-hidden rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]"
+			>
 				<Textarea
 					readonly
 					value={content}
-					class="h-full resize-none border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+					class="h-full resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
 					placeholder="Decrypted content will appear here..."
 					aria-label="Decrypted whispr content"
 				/>
 				{#if showFooter}
-					<div class="flex flex-col items-center gap-2 p-3 sm:flex-row">
+					<div
+						class="dark:bg-input/30 flex flex-col items-center gap-2 bg-transparent p-3 sm:flex-row"
+					>
 						<div class="flex flex-wrap items-center justify-center gap-2">
 							{#if whispr.unlimitedViews || whispr.views !== undefined}
 								<PopoverBadge variant="outline" id="views-badge">
 									{#snippet content()}
-										<Eye class="mr-2 h-4 w-4" aria-hidden="true" />
+										<Eye size={20} aria-hidden="true" />
 										{#if whispr.unlimitedViews === true}
-											Unlimtied views
+											Unlimited views
 										{:else}
-											{whispr.views} 10
-											{whispr.views === 1 ? 'view' : 'views'}
+											<span>{whispr.views} {whispr.views === 1 ? 'view' : 'views'}</span>
 										{/if}
 									{/snippet}
 									{#snippet popoverContent()}
 										<p class="text-foreground/90 text-sm">
 											{#if whispr.unlimitedViews === true}
-												Can be viewed unlimited times
+												Can be viewed unlimited more times
 											{:else}
-												Can be viewed ${whispr.views} ${whispr.views === 1 ? 'time' : 'times'}
+												Can be viewed {whispr.views} more {whispr.views === 1 ? 'time' : 'times'}
 											{/if}
 										</p>
 									{/snippet}
 								</PopoverBadge>
 							{/if}
 							{#if whispr.expiresAt}
-								<PopoverBadge variant="outline" id="expires-at-badge">
+								<PopoverBadge variant="outline" id="expiration-badge">
 									{#snippet content()}
-										<CalendarX class="mr-2 h-4 w-4" aria-hidden="true" />
-										{formattedExpirationDate}
+										<CalendarX size={20} aria-hidden="true" />
+										<span>{formattedExpirationDate}</span>
 									{/snippet}
 									{#snippet popoverContent()}
 										<p class="text-foreground/90 text-sm">

@@ -6,7 +6,10 @@
 	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
 	import { type ViewPasswordSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils';
-	import { Eye, EyeOff, LoaderCircle, LockOpen } from '@lucide/svelte';
+	import Eye from '@lucide/svelte/icons/eye';
+	import EyeOff from '@lucide/svelte/icons/eye-off';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
+	import LockOpen from '@lucide/svelte/icons/lock-open';
 	import type { Infer, SuperForm } from 'sveltekit-superforms';
 	import FormError from '../common/form-error.svelte';
 
@@ -19,7 +22,7 @@
 	let { form, loading }: Props = $props();
 
 	// Variables & States
-	const { form: formData, errors, enhance, constraints, submitting, allErrors } = form;
+	const { form: formData, errors, enhance, constraints, submitting, allErrors, submit } = form;
 	let showPassword = $state<boolean>(false);
 	let isFormValid = $derived($allErrors.length === 0);
 
@@ -31,31 +34,31 @@
 
 <div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
-		<form method="POST" use:enhance autocomplete="off">
-			<Card.Root class="w-full max-w-md">
-				<Card.Header>
-					<Card.Title>
-						<div class="flex items-center">
-							<LockOpen class="mr-2" aria-hidden="true" /> Decrypt Whispr
-						</div>
-					</Card.Title>
-					<Card.Description>Enter the password to unlock this Whispr.</Card.Description>
-				</Card.Header>
-				<Card.Content>
+		<Card.Root class="w-full max-w-md">
+			<Card.Header>
+				<Card.Title>
+					<div class="flex items-center">
+						<LockOpen class="mr-2" aria-hidden="true" /> Decrypt Whispr
+					</div>
+				</Card.Title>
+				<Card.Description>Enter the password to unlock this Whispr.</Card.Description>
+			</Card.Header>
+			<Card.Content>
+				<form use:enhance autocomplete="off">
 					<Form.Field {form} name="password">
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>
 									{#if loading}
-										<Skeleton class="h-6 w-16" />
+										<Skeleton class="h-3.5 w-16" />
 									{:else}
 										Password
 									{/if}
 								</Form.Label>
 								<div class="flex flex-row gap-2">
 									{#if loading}
-										<Skeleton class="h-10 w-full" />
-										<Skeleton class="h-10 w-11" />
+										<Skeleton class="h-9 w-full" />
+										<Skeleton class="h-9 w-10" />
 									{:else}
 										<Input
 											{...props}
@@ -94,22 +97,23 @@
 						</Form.Control>
 						{#if !loading}<FormError errors={$errors.password} id="password-error" />{/if}
 					</Form.Field>
-				</Card.Content>
-				<Card.Footer class="justify-end">
-					<Form.Button
-						disabled={$submitting || !isFormValid || loading}
-						aria-label={$submitting ? 'Decrypting Whispr...' : 'Decrypt Whispr'}
-					>
-						{#if $submitting || loading}
-							Decrypting Whispr...
-							<LoaderCircle class="animate-spin" aria-hidden="true" />
-						{:else}
-							Decrypt Whispr
-							<LockOpen aria-hidden="true" />
-						{/if}
-					</Form.Button>
-				</Card.Footer>
-			</Card.Root>
-		</form>
+				</form>
+			</Card.Content>
+			<Card.Footer class="justify-end">
+				<Form.Button
+					disabled={$submitting || !isFormValid || loading}
+					aria-label={$submitting ? 'Decrypting Whispr...' : 'Decrypt Whispr'}
+					onclick={submit}
+				>
+					{#if $submitting || loading}
+						Decrypting Whispr...
+						<LoaderCircle class="animate-spin" aria-hidden="true" />
+					{:else}
+						Decrypt Whispr
+						<LockOpen aria-hidden="true" />
+					{/if}
+				</Form.Button>
+			</Card.Footer>
+		</Card.Root>
 	</div>
 </div>
