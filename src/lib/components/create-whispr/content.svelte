@@ -5,7 +5,7 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { cn } from '$lib/utils';
 	import { getAcceptAttribute, validateTextFile } from '$lib/utils/file-validation';
-	import { Upload } from '@lucide/svelte';
+	import Upload from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm } from 'sveltekit-superforms/client';
@@ -95,16 +95,15 @@
 	onchange={handleOnChangeFile}
 	aria-label="Upload text file"
 />
-
-<Form.Field {form} name="content" class="flex h-full flex-col">
+<Form.Field {form} name="content" class="flex h-full min-h-0 flex-col">
 	<Form.Control>
 		{#snippet children({ props })}
 			<div
 				class={cn(
-					'bg-background ring-offset-background relative flex grow flex-col overflow-hidden rounded-lg border ring-offset-2 focus-within:ring-2',
+					'border-input dark:bg-input/30 relative mb-0 flex min-h-0 grow flex-col overflow-hidden rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px] sm:max-h-full',
 					$errors.content
-						? 'border-destructive focus-within:ring-destructive/50 '
-						: 'focus-within:ring-ring'
+						? 'border-destructive ring-destructive/20 dark:ring-destructive/40'
+						: 'focus-within:border-ring focus-within:ring-ring/50'
 				)}
 			>
 				<Textarea
@@ -113,12 +112,12 @@
 					bind:value={$formData.content}
 					disabled={$submitting}
 					class={cn(
-						'min-h-96 flex-1 resize-none border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0'
+						'max-h-96 min-h-96 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full'
 					)}
 					placeholder="Enter your note here or upload a file..."
 					aria-describedby={$errors.content ? 'content-error' : undefined}
 				/>
-				<div class="flex items-center p-3">
+				<div class="dark:bg-input/30 flex flex-shrink-0 items-center bg-transparent p-3">
 					<Button
 						size="sm"
 						variant="ghost"
