@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
+	import { cn } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 	import type { AriaRole } from 'svelte/elements';
 	import { MediaQuery } from 'svelte/reactivity';
@@ -125,7 +126,7 @@
 					</Drawer.Description>
 				{/if}
 			</Drawer.Header>
-			<div id={!description ? ariaDescribedby : undefined}>
+			<div id={!description ? ariaDescribedby : undefined} class={cn('mx-4', !footer && 'mb-4')}>
 				{@render body?.()}
 			</div>
 			{#if footer}
