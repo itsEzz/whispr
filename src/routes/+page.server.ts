@@ -39,8 +39,7 @@ export const actions = {
 		}
 
 		const ttl: number = form.data.ttlValue * ttlUnits[form.data.ttlUnit];
-		const now = new Date();
-		const ttlDate = new Date(now.getTime() + ttl * 1000);
+		const ttlDate = new Date(Date.now() + ttl * 1000);
 
 		const whisprId = await tca(
 			db
