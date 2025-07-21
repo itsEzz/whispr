@@ -16,7 +16,7 @@
 	import Send from '@lucide/svelte/icons/send';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { createSchema } from '../lib/schemas/create-schema';
 	import type { PageProps } from './$types.js';
 
@@ -36,7 +36,7 @@
 	let passwordOptionsComponent = $state<PasswordComponent>();
 
 	const form = superForm(data.form, {
-		validators: zodClient(createSchema),
+		validators: zod4Client(createSchema),
 		onSubmit: async ({ formData, cancel }) => {
 			const originalContent = formData.get('content')?.toString();
 			const content = await getEncryptedContent(originalContent);

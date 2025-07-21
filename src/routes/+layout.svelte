@@ -6,7 +6,6 @@
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import Eye from '@lucide/svelte/icons/eye';
-	import Info from '@lucide/svelte/icons/info';
 	import Menu from '@lucide/svelte/icons/menu';
 	import MessageSquareLock from '@lucide/svelte/icons/message-square-lock';
 	import MonitorCog from '@lucide/svelte/icons/monitor-cog';

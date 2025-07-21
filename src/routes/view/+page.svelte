@@ -12,7 +12,7 @@
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import type { PageProps } from './$types.js';
 
 	// Props
@@ -24,7 +24,7 @@
 		onConfirm: () => void;
 	}>({ open: false, onConfirm: () => {} });
 	const form = superForm(data.form, {
-		validators: zodClient(viewSchema),
+		validators: zod4Client(viewSchema),
 		onUpdate({ form, result }) {
 			if (result.type !== 'success') {
 				if (result.data.error.title || result.data.error.description) {

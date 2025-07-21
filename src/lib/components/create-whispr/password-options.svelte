@@ -12,6 +12,8 @@
 	import { passwordSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
 
+	// TODO show pw strength indicator instead of enforcing strong pw
+
 	// Props
 	interface Props {
 		disabled?: boolean;

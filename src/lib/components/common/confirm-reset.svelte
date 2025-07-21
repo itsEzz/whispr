@@ -29,7 +29,7 @@
 	aria-describedby="reset-form-description"
 >
 	{#snippet body()}
-		<p class="text-sm text-muted-foreground">
+		<p class="text-muted-foreground text-sm">
 			This action will reset all fields to their default values.
 		</p>
 	{/snippet}
