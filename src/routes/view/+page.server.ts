@@ -1,17 +1,17 @@
 import { viewSchema } from '$lib/schemas/view-schema';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const form = await superValidate(zod(viewSchema), { errors: true });
+	const form = await superValidate(zod4(viewSchema), { errors: true });
 	return { form };
 };
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(viewSchema));
+		const form = await superValidate(request, zod4(viewSchema));
 
 		if (!form.valid) {
 			return fail(400, {

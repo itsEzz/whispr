@@ -5,7 +5,7 @@ import { isError, tca } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import { createSchema, ttlUnits } from '../lib/schemas/create-schema';
 import type { PageServerLoad } from './$types';
 
@@ -20,14 +20,14 @@ export const load: PageServerLoad = async () => {
 			showCopyButton: true,
 			showDownloadButton: true
 		},
-		zod(createSchema)
+		zod4(createSchema)
 	);
 	return { form };
 };
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(createSchema));
+		const form = await superValidate(request, zod4(createSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form,

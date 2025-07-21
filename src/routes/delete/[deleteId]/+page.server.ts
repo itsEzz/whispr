@@ -5,7 +5,7 @@ import { isError, tca } from '@itsezz/try-catch';
 import { error, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			id: deleteId,
 			confirm: false
 		},
-		zod(deleteSchema)
+		zod4(deleteSchema)
 	);
 
 	const validationResult = deleteIdSchema.safeParse(deleteId);
@@ -58,7 +58,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const form = await superValidate(request, zod(deleteSchema));
+		const form = await superValidate(request, zod4(deleteSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form,

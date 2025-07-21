@@ -7,7 +7,7 @@
 	import { onMount, tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { defaults, setError, superForm } from 'sveltekit-superforms';
-	import { zod } from 'sveltekit-superforms/adapters';
+	import { zod4 } from 'sveltekit-superforms/adapters';
 	import ConfirmNavigateAway from '../common/confirm-navigate-away.svelte';
 	import DecryptWhispr from './decrypt-whispr.svelte';
 	import DecryptedContent from './decrypted-content.svelte';
@@ -28,9 +28,9 @@
 	}>({ open: false, onConfirm: () => {} });
 	let decryptedContent: string | null = $state<string | null>(null);
 
-	const form = superForm(defaults(zod(viewPasswordSchema)), {
+	const form = superForm(defaults(zod4(viewPasswordSchema)), {
 		SPA: true,
-		validators: zod(viewPasswordSchema),
+		validators: zod4(viewPasswordSchema),
 		onUpdate: async ({ form }) => {
 			if (!form.valid) return;
 			const decryptionResult = await tca(aes.decrypt(whispr.content, form.data.password));

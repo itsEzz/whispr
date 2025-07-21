@@ -29,53 +29,59 @@ export const passwordSchema = z
 	.string({ message: 'Must be a string' })
 	.trim()
 	.or(z.literal(''))
-	.superRefine((val, ctx) => {
-		if (val === '') return;
-		if (val.length < passwordConfig.minLength) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.too_small,
+	.check((ctx) => {
+		if (ctx.value === '') return;
+		if (ctx.value.length < passwordConfig.minLength) {
+			ctx.issues.push({
+				code: 'too_small',
 				minimum: passwordConfig.minLength,
-				type: 'string',
+				origin: 'string',
 				inclusive: true,
-				message: `Must be at least ${passwordConfig.minLength} character${passwordConfig.minLength === 1 ? '' : 's'}`
+				message: `Must be at least ${passwordConfig.minLength} character${passwordConfig.minLength === 1 ? '' : 's'}`,
+				input: ctx.value
 			});
 		}
 
-		if (val.length > passwordConfig.maxLength) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.too_big,
+		if (ctx.value.length > passwordConfig.maxLength) {
+			ctx.issues.push({
+				code: 'too_big',
 				maximum: passwordConfig.maxLength,
-				type: 'string',
+				origin: 'string',
 				inclusive: true,
-				message: `Must be at most ${passwordConfig.maxLength} characters`
+				message: `Must be at most ${passwordConfig.maxLength} characters`,
+				input: ctx.value
 			});
 		}
 
-		if (passwordConfig.upperCaseRequired && !upperCaseRegex.test(val)) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Must contain at least one uppercase letter'
+		if (passwordConfig.upperCaseRequired && !upperCaseRegex.test(ctx.value)) {
+			ctx.issues.push({
+				code: 'custom',
+				message: 'Must contain at least one uppercase letter',
+				input: ctx.value
 			});
 		}
 
-		if (passwordConfig.lowerCaseRequired && !lowerCaseRegex.test(val)) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Must contain at least one lowercase letter'
+		if (passwordConfig.lowerCaseRequired && !lowerCaseRegex.test(ctx.value)) {
+			ctx.issues.push({
+				code: 'custom',
+				message: 'Must contain at least one lowercase letter',
+				input: ctx.value
 			});
 		}
 
-		if (passwordConfig.numberRequired && !numberRegex.test(val)) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Must contain at least one number'
+		if (passwordConfig.numberRequired && !numberRegex.test(ctx.value)) {
+			ctx.issues.push({
+				code: 'custom',
+				message: 'Must contain at least one number',
+				input: ctx.value
 			});
 		}
 
-		if (passwordConfig.specialCharacterRequired && !specialCharacterRegex.test(val)) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'Must contain at least one special character'
+		if (passwordConfig.specialCharacterRequired && !specialCharacterRegex.test(ctx.value)) {
+			ctx.issues.push({
+				code: 'custom',
+				message: 'Must contain at least one special character',
+				input: ctx.value
 			});
 		}
 	});
@@ -103,17 +109,18 @@ export const createSchema = z
 		showCopyButton: z.boolean({ message: 'Must be a boolean' }).default(false),
 		showDownloadButton: z.boolean({ message: 'Must be a boolean' }).default(false)
 	})
-	.superRefine((val, ctx) => {
-		const ttl = val.ttlValue * ttlUnits[val.ttlUnit];
+	.check((ctx) => {
+		const ttl = ctx.value.ttlValue * ttlUnits[ctx.value.ttlUnit];
 		const maxTtl = 2 * ttlUnits.months;
 		if (ttl > maxTtl)
-			ctx.addIssue({
-				code: z.ZodIssueCode.too_big,
+			ctx.issues.push({
+				code: 'too_big',
 				maximum: maxTtl,
-				type: 'number',
+				origin: 'number',
 				inclusive: true,
 				message: 'Must be at most 60 days',
-				path: ['ttlValue']
+				path: ['ttlValue'],
+				input: ctx.value
 			});
 	});
 
