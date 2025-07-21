@@ -113,16 +113,6 @@
 				>
 					View
 				</a>
-				<a
-					href="/about"
-					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname ===
-					'/about'
-						? 'text-primary'
-						: 'text-muted-foreground'}"
-					aria-current={page.url.pathname === '/about' ? 'page' : undefined}
-				>
-					About
-				</a>
 			</nav>
 
 			<div class="flex flex-1 items-center justify-end space-x-2">
@@ -243,27 +233,6 @@
 											</div>
 
 											<span>View</span>
-										</a>
-
-										<a
-											href="/about"
-											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page
-												.url.pathname === '/about'
-												? 'bg-primary/10 text-primary'
-												: 'text-foreground'}"
-											onclick={handleCloseMobileMenu}
-											aria-current={page.url.pathname === '/about' ? 'page' : undefined}
-										>
-											<div
-												class="mr-3 flex h-8 w-8 items-center justify-center rounded-md {page.url
-													.pathname === '/about'
-													? 'bg-primary/20'
-													: 'bg-muted group-hover:bg-accent'}"
-											>
-												<Info size={16} aria-hidden="true" />
-											</div>
-
-											<span>About</span>
 										</a>
 									</nav>
 								</div>
