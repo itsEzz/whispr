@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import DialogDrawer from '$lib/components/common/dialog-drawer.svelte';
 	import FormError from '$lib/components/common/form-error.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
@@ -6,7 +9,6 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { deleteSchema } from '$lib/schemas/delete-schema';
 	import { cn } from '$lib/utils.js';
-	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
 	import Home from '@lucide/svelte/icons/home';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import SearchX from '@lucide/svelte/icons/search-x';
@@ -14,11 +16,8 @@
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import type { PageProps } from './$types';
-	import DialogDrawer from '$lib/components/common/dialog-drawer.svelte';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/state';
 
 	// Props
 	let { data }: PageProps = $props();
@@ -26,7 +25,7 @@
 	// Variables & States
 	let deleted = $state<boolean>(false);
 	const form = superForm(data.form, {
-		validators: zodClient(deleteSchema),
+		validators: zod4Client(deleteSchema),
 		onSubmit({ formData }) {
 			formData.set('id', page.params.deleteId);
 			return formData;
@@ -129,7 +128,7 @@
 							<FormError errors={$errors.confirm} id="confirm-error" />
 						</Card.Content>
 
-						<Card.Footer class="flex justify-end">
+						<Card.Footer class="flex justify-end pt-6">
 							<Form.Button
 								disabled={$submitting || !isFormValid}
 								aria-busy={$submitting}
