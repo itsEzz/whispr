@@ -16,11 +16,7 @@ async function deleteWhispr(id: string) {
 	}
 }
 
-// TODO this gets called twice when accessing /v/[id]/[pw]
-// on /v/[id] it gets called only once
 export const load: LayoutServerLoad = async ({ params }) => {
-	console.log('=== LOAD FUNCTION CALLED ===');
-
 	const validationResult = idSchema.safeParse(params.id);
 
 	if (!validationResult.success) redirect(303, '/view?redirect-reason=invalid-id');
@@ -38,12 +34,12 @@ export const load: LayoutServerLoad = async ({ params }) => {
 
 	if (isDateInPast(whisprData.expiresAt)) {
 		await deleteWhispr(params.id);
-		redirect(303, '/view?redirect-reason=invalid-id');
+		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 0) {
 		await deleteWhispr(params.id);
-		redirect(303, '/view?redirect-reason=invalid-id');
+		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 1) {

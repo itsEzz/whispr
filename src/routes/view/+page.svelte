@@ -52,8 +52,13 @@
 		if (!redirectReason) return;
 
 		if (redirectReason === 'invalid-id') {
-			toast.error('Whispr not found', {
+			toast.info('Whispr not found', {
 				description: 'The whispr you are looking for does not exist or has expired.',
+				duration: 10000
+			});
+		} else if (redirectReason === 'expired') {
+			toast.info('Whispr expired', {
+				description: 'The whispr you are trying to view has just expired.',
 				duration: 10000
 			});
 		}
