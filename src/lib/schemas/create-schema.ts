@@ -1,6 +1,11 @@
+import {
+	upperCaseRegex,
+	lowerCaseRegex,
+	numberRegex,
+	specialCharacterRegex
+} from '$lib/crypto/pw-strength';
 import type { PasswordOptions } from '$lib/types/password';
 import type { TtlUnits } from '$lib/types/ttl';
-import XRegExp from 'xregexp';
 import { z } from 'zod';
 
 export const ttlUnits: TtlUnits = {
@@ -12,46 +17,26 @@ export const ttlUnits: TtlUnits = {
 };
 
 const passwordConfig: PasswordOptions = {
-	upperCaseRequired: true,
-	lowerCaseRequired: true,
-	numberRequired: true,
-	specialCharacterRequired: true,
-	minLength: 8,
+	upperCaseRequired: false,
+	lowerCaseRequired: false,
+	numberRequired: false,
+	specialCharacterRequired: false,
+	minLength: 1,
 	maxLength: 200
 };
-
-const upperCaseRegex: RegExp = XRegExp('.*\\p{Lu}.*');
-const lowerCaseRegex: RegExp = XRegExp('\\p{Ll}');
-const numberRegex: RegExp = XRegExp('\\p{N}');
-const specialCharacterRegex: RegExp = XRegExp('[\\p{P}\\p{S}]');
 
 export const passwordSchema = z
 	.string({ message: 'Must be a string' })
 	.trim()
+	.min(passwordConfig.minLength, {
+		message: `Must be at least ${passwordConfig.minLength} character${passwordConfig.minLength === 1 ? '' : 's'}`
+	})
+	.max(passwordConfig.maxLength, {
+		message: `Must be at most ${passwordConfig.maxLength} character${passwordConfig.maxLength === 1 ? '' : 's'}`
+	})
 	.or(z.literal(''))
 	.check((ctx) => {
 		if (ctx.value === '') return;
-		if (ctx.value.length < passwordConfig.minLength) {
-			ctx.issues.push({
-				code: 'too_small',
-				minimum: passwordConfig.minLength,
-				origin: 'string',
-				inclusive: true,
-				message: `Must be at least ${passwordConfig.minLength} character${passwordConfig.minLength === 1 ? '' : 's'}`,
-				input: ctx.value
-			});
-		}
-
-		if (ctx.value.length > passwordConfig.maxLength) {
-			ctx.issues.push({
-				code: 'too_big',
-				maximum: passwordConfig.maxLength,
-				origin: 'string',
-				inclusive: true,
-				message: `Must be at most ${passwordConfig.maxLength} characters`,
-				input: ctx.value
-			});
-		}
 
 		if (passwordConfig.upperCaseRequired && !upperCaseRegex.test(ctx.value)) {
 			ctx.issues.push({
