@@ -31,12 +31,14 @@
 	const form = superForm(defaults(zod4(viewPasswordSchema)), {
 		SPA: true,
 		validators: zod4(viewPasswordSchema),
+		invalidateAll: false,
 		onUpdate: async ({ form }) => {
 			if (!form.valid) return;
 			const decryptionResult = await tca(aes.decrypt(whispr.content, form.data.password));
 
 			if (isError(decryptionResult)) {
 				setError(form, 'password', 'Invalid password');
+				form.data.password = '';
 				return;
 			}
 			decryptedContent = decryptionResult.data;
