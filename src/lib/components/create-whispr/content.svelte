@@ -98,6 +98,7 @@
 <Form.Field {form} name="content" class="flex h-full min-h-0 flex-col">
 	<Form.Control>
 		{#snippet children({ props })}
+			<Form.Label class="sr-only">Content</Form.Label>
 			<div
 				class={cn(
 					'border-input dark:bg-input/30 relative mb-0 flex min-h-0 grow flex-col overflow-hidden rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px] sm:max-h-full',
@@ -115,6 +116,7 @@
 						'max-h-96 min-h-96 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full'
 					)}
 					placeholder="Enter your note here or upload a file..."
+					aria-label="Content to encrypt"
 					aria-describedby={$errors.content ? 'content-error' : undefined}
 				/>
 				<div class="dark:bg-input/30 flex flex-shrink-0 items-center bg-transparent p-3">

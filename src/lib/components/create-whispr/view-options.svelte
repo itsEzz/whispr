@@ -35,18 +35,19 @@
 						value="Unlimited"
 						class="text-muted-foreground"
 						disabled
-						aria-label="Unlimited views"
+						aria-label="Unlimited views selected"
+					/>
+				{:else}
+					<Input
+						{...props}
+						{...$constraints.views}
+						bind:value={$formData.views}
+						disabled={$submitting}
+						type="number"
+						placeholder="Number of allowed views"
+						aria-describedby={$errors.views ? 'views-error' : undefined}
 					/>
 				{/if}
-				<Input
-					{...props}
-					{...$constraints.views}
-					bind:value={$formData.views}
-					disabled={$submitting}
-					type="number"
-					aria-describedby={$errors.views ? 'views-error' : undefined}
-					class={cn($formData.unlimitedViews && 'hidden')}
-				/>
 			{/snippet}
 		</Form.Control>
 		<FormError errors={$errors.views} id="views-error" />
