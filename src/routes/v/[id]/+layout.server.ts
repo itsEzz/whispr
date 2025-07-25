@@ -1,6 +1,7 @@
 import { idSchema } from '$lib/schemas/view-schema';
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
+import { rateLimiter } from '$lib/server/rate-limiter';
 import type { ViewWhispr } from '$lib/types/view-whispr';
 import { isDateInPast } from '$lib/utils/date-helpers';
 import { isError, tca } from '@itsezz/try-catch';
@@ -16,12 +17,22 @@ async function deleteWhispr(id: string) {
 	}
 }
 
-export const load: LayoutServerLoad = async ({ params }) => {
-	const validationResult = idSchema.safeParse(params.id);
+export const load: LayoutServerLoad = async (event) => {
+	const status = await rateLimiter.check(event);
+	if (status.limited) {
+		error(
+			429,
+			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
+		);
+	}
+
+	const validationResult = idSchema.safeParse(event.params.id);
 
 	if (!validationResult.success) redirect(303, '/view?redirect-reason=invalid-id');
 
-	const whispr = await tca(db.select().from(whispr_table).where(eq(whispr_table.id, params.id)));
+	const whispr = await tca(
+		db.select().from(whispr_table).where(eq(whispr_table.id, event.params.id))
+	);
 
 	if (isError(whispr)) {
 		console.error('Database connection error while retrieving whispr:', whispr.error);
@@ -33,24 +44,24 @@ export const load: LayoutServerLoad = async ({ params }) => {
 	const whisprData = whispr.data[0];
 
 	if (isDateInPast(whisprData.expiresAt)) {
-		await deleteWhispr(params.id);
+		await deleteWhispr(event.params.id);
 		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 0) {
-		await deleteWhispr(params.id);
+		await deleteWhispr(event.params.id);
 		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 1) {
-		await deleteWhispr(params.id);
+		await deleteWhispr(event.params.id);
 		whisprData.views = 0;
 	} else if (!whisprData.unlimitedViews && whisprData.views > 1) {
 		const updatedWhispr = await tca(
 			db
 				.update(whispr_table)
 				.set({ views: whisprData.views - 1 })
-				.where(eq(whispr_table.id, params.id))
+				.where(eq(whispr_table.id, event.params.id))
 		);
 
 		if (isError(updatedWhispr)) {

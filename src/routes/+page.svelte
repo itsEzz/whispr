@@ -58,6 +58,28 @@
 			}
 			createdWhispr = result.data.response;
 		},
+		onError({ result }) {
+			if (result.status === 429) {
+				try {
+					const errorData = JSON.parse(result.error.message);
+					toast.error(errorData.title || 'Rate limit exceeded', {
+						description:
+							errorData.message ||
+							`Too many requests. Please wait ${errorData.retryAfter || 60} seconds before trying again.`,
+						duration: 8000
+					});
+				} catch {
+					toast.error('Rate limit exceeded', {
+						description: 'Too many requests. Please wait before trying again.',
+						duration: 8000
+					});
+				}
+			} else {
+				toast.error('Something went wrong', {
+					description: 'Please try again in a moment.'
+				});
+			}
+		},
 		taintedMessage: () => {
 			return new Promise(
 				(resolve) => (openNavigateAwayDialog = { open: true, onConfirm: () => resolve(true) })

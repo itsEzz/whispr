@@ -1,6 +1,7 @@
 import { deleteIdSchema, deleteSchema } from '$lib/schemas/delete-schema';
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
+import { rateLimiter } from '$lib/server/rate-limiter';
 import { isError, tca } from '@itsezz/try-catch';
 import { error, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -8,8 +9,16 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
-	const { deleteId } = params;
+export const load: PageServerLoad = async (event) => {
+	const status = await rateLimiter.check(event);
+	if (status.limited) {
+		error(
+			429,
+			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
+		);
+	}
+
+	const { deleteId } = event.params;
 
 	const form = await superValidate(
 		{
@@ -57,8 +66,20 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
-		const form = await superValidate(request, zod4(deleteSchema));
+	default: async (event) => {
+		const status = await rateLimiter.check(event);
+		if (status.limited) {
+			const form = await superValidate(event.request, zod4(deleteSchema));
+			return fail(429, {
+				form,
+				error: {
+					title: 'Rate limit exceeded',
+					description: `Too many requests. Please wait ${status.retryAfter} seconds before trying to delete again.`
+				}
+			});
+		}
+
+		const form = await superValidate(event.request, zod4(deleteSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form,

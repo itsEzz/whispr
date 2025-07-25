@@ -42,6 +42,28 @@
 			return new Promise(
 				(resolve) => (openNavigateAwayDialog = { open: true, onConfirm: () => resolve(true) })
 			);
+		},
+		onError({ result }) {
+			if (result.status === 429) {
+				try {
+					const errorData = JSON.parse(result.error.message);
+					toast.error(errorData.title || 'Rate limit exceeded', {
+						description:
+							errorData.message ||
+							`Too many requests. Please wait ${errorData.retryAfter || 60} seconds before trying again.`,
+						duration: 8000
+					});
+				} catch {
+					toast.error('Rate limit exceeded', {
+						description: 'Too many requests. Please wait before trying again.',
+						duration: 8000
+					});
+				}
+			} else {
+				toast.error('Something went wrong', {
+					description: 'Please try again in a moment.'
+				});
+			}
 		}
 	});
 
@@ -56,17 +78,24 @@
 		if (redirectReason === 'invalid-id') {
 			toast.info('Whispr not found', {
 				description: 'The whispr you are looking for does not exist or has expired.',
-				duration: 10000
+				duration: 5000
 			});
 		} else if (redirectReason === 'expired') {
 			toast.info('Whispr expired', {
 				description: 'The whispr you are trying to view has just expired.',
-				duration: 10000
+				duration: 5000
+			});
+		} else if (redirectReason === 'rate-limited') {
+			const retryAfter = page.url.searchParams.get('retry-after') || '60';
+			toast.error('Rate limit exceeded', {
+				description: `Too many requests. Please wait ${retryAfter} seconds before trying again.`,
+				duration: 8000
 			});
 		}
 
 		const url = new URL(window.location.href);
 		url.searchParams.delete('redirect-reason');
+		url.searchParams.delete('retry-after');
 		goto(url.toString(), { replaceState: true, keepFocus: true, noScroll: true });
 	});
 </script>

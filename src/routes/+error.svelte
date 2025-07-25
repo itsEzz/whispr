@@ -2,15 +2,41 @@
 	import { page } from '$app/state';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
+	import type { ErrorPageConfig } from '$lib/types/error';
 	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import Home from '@lucide/svelte/icons/home';
+	import Pause from '@lucide/svelte/icons/pause';
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import SearchX from '@lucide/svelte/icons/search-x';
 	import SvelteSeo from 'svelte-seo';
 
 	// Variables & States
 	const is404 = page.status === 404;
+	const is429 = page.status === 429;
+
+	const config: ErrorPageConfig = {
+		seo: {
+			title: is404
+				? 'Whispr - Page Not Found'
+				: is429
+					? 'Whispr - Rate Limit Exceeded'
+					: 'Whispr - Error',
+			description: is404
+				? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
+				: is429
+					? ''
+					: 'An error occurred while processing your request. Please try again or return to the main page.'
+		},
+		icon: is404 ? SearchX : is429 ? Pause : AlertTriangle,
+		iconClass: !is404 && !is429 ? 'text-destructive' : undefined,
+		title: is404 ? 'Page Not Found' : is429 ? 'Too Many Requests' : 'Something Went Wrong',
+		description: is404
+			? "The page you're looking for doesn't exist or has been moved. Please check the URL for any typos."
+			: is429
+				? "You've made too many requests in a short period. Please wait a moment before trying again. This helps protect the service from abuse and ensures it remains available for everyone."
+				: "If you continue to experience issues, try refreshing the page, contacting the site's	administrator or opening an issue in the GitHub repository."
+	};
 
 	// Handler Functions
 	function handleClickRefreshPage() {
@@ -27,22 +53,16 @@
 </script>
 
 <SvelteSeo
-	title={is404 ? 'Whispr - Page Not Found' : 'Whispr - Error'}
-	description={is404
-		? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
-		: 'An error occurred while processing your request. Please try again or return to the main page.'}
+	title={config.seo.title}
+	description={config.seo.description}
 	openGraph={{
-		title: is404 ? 'Whispr - Page Not Found' : 'Whispr - Error',
-		description: is404
-			? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
-			: 'An error occurred while processing your request. Please try again or return to the main page.',
+		title: config.seo.title,
+		description: config.seo.description,
 		type: 'website'
 	}}
 	twitter={{
-		title: is404 ? 'Whispr - Page Not Found' : 'Whispr - Error',
-		description: is404
-			? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
-			: 'An error occurred while processing your request. Please try again or return to the main page.'
+		title: config.seo.title,
+		description: config.seo.description
 	}}
 />
 
@@ -51,44 +71,28 @@
 		<Card.Root class="w-full max-w-lg">
 			<Card.Header class="text-center">
 				<div class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center rounded-full">
-					{#if is404}
-						<SearchX size={40} aria-hidden="true" />
-					{:else}
-						<AlertTriangle size={40} class="text-destructive" aria-hidden="true" />
-					{/if}
+					<config.icon size={40} class={config.iconClass} aria-hidden="true" />
 				</div>
 				<Card.Title class="text-2xl" id="error-heading">
-					{#if is404}
-						Page Not Found
-					{:else}
-						Something Went Wrong
-					{/if}
+					{config.title}
 				</Card.Title>
 			</Card.Header>
 
 			<Card.Content class="text-center" aria-describedby="error-heading">
 				<div class="space-y-4">
 					<p class="text-muted-foreground text-sm">
-						{#if is404}
-							The page you're looking for doesn't exist or has been moved. <br />
-							Please check the URL for any typos.
-						{:else}
-							If you continue to experience issues, try refreshing the page, contacting the site's
-							administrator or opening an issue in the GitHub repository.
-						{/if}
+						{config.description}
 					</p>
 
-					{#if !is404}
-						<div class="bg-muted/20 rounded-lg border p-3">
-							<p class="text-muted-foreground font-mono text-xs">
-								Error Code: {page.status}
-								{#if page.error?.message}
-									<br />
-									Message: {page.error?.message}
-								{/if}
-							</p>
-						</div>
-					{/if}
+					<div class="bg-muted/20 rounded-lg border p-3">
+						<p class="text-muted-foreground font-mono text-xs">
+							Error Code: {page.status}
+							{#if page.error?.message}
+								<br />
+								Message: {page.error?.message}
+							{/if}
+						</p>
+					</div>
 
 					<p class="text-muted-foreground text-xs">
 						Need help? Visit the

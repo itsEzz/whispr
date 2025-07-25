@@ -1,5 +1,6 @@
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
+import { rateLimiter } from '$lib/server/rate-limiter';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
 import { isError, tca } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
@@ -26,8 +27,19 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
-		const form = await superValidate(request, zod4(createSchema));
+	default: async (event) => {
+		const status = await rateLimiter.check(event);
+		const form = await superValidate(event.request, zod4(createSchema));
+		if (status.limited) {
+			return fail(429, {
+				form,
+				error: {
+					title: 'Rate limit exceeded',
+					description: `Too many requests. Please wait ${status.retryAfter} seconds before creating another whispr.`
+				}
+			});
+		}
+
 		if (!form.valid) {
 			return fail(400, {
 				form,
