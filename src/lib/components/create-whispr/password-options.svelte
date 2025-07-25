@@ -65,14 +65,14 @@
 	}
 </script>
 
-{#snippet passwordStrengthIndicator(ok: boolean, label: string, fullColSpan: boolean = false)}
-	<div class={cn('flex items-center gap-1', fullColSpan && 'col-span-full')}>
+{#snippet passwordStrengthIndicator(ok: boolean, label: string)}
+	<div class="flex items-center gap-1">
 		{#if ok}
-			<Check class="size-4 text-green-600" aria-hidden="true" />
+			<Check class="size-4 text-green-600 dark:text-green-500" aria-hidden="true" />
 		{:else}
 			<X class="text-muted-foreground size-4" aria-hidden="true" />
 		{/if}
-		<span class={ok ? 'text-green-600' : 'text-muted-foreground'}>
+		<span class={ok ? 'text-green-600 dark:text-green-500' : 'text-muted-foreground'}>
 			{label}
 		</span>
 	</div>
@@ -170,11 +170,8 @@
 									{@render passwordStrengthIndicator(passwordStrength.hasUppercase, 'Uppercase')}
 									{@render passwordStrengthIndicator(passwordStrength.hasNumber, 'Number')}
 									{@render passwordStrengthIndicator(passwordStrength.hasSpecial, 'Special')}
-									{@render passwordStrengthIndicator(
-										passwordStrength.score >= 3,
-										'At least good or better',
-										true
-									)}
+									{@render passwordStrengthIndicator(passwordStrength.score >= 3, 'Good')}
+									{@render passwordStrengthIndicator(passwordStrength.score >= 4, 'Strong')}
 								</div>
 							</div>
 
