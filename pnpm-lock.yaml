@@ -114,6 +114,9 @@ importers:
       svelte-check:
         specifier: ^4.3.0
         version: 4.3.0(picomatch@4.0.3)(svelte@5.36.16)(typescript@5.8.3)
+      svelte-seo:
+        specifier: ^1.6.1
+        version: 1.6.1
       svelte-sonner:
         specifier: ^1.0.5
         version: 1.0.5(svelte@5.36.16)
@@ -2098,6 +2101,9 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
+  schema-dts@1.1.5:
+    resolution: {integrity: sha512-RJr9EaCmsLzBX2NDiO5Z3ux2BVosNZN5jo0gWgsyKvxKIUL5R3swNvoorulAeL9kLB0iTSX7V6aokhla2m7xbg==}
+
   semver@7.7.2:
     resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
     engines: {node: '>=10'}
@@ -2182,6 +2188,9 @@ packages:
     peerDependenciesMeta:
       svelte:
         optional: true
+
+  svelte-seo@1.6.1:
+    resolution: {integrity: sha512-vTKvOA0rl3HVhgbyoMhwz0P1s+18ldOT+lHlTlrQn7Mn0SBx7Ia7MB+llF4O/mYoiV5idmNu8i3xWsam8COsbw==}
 
   svelte-sonner@1.0.5:
     resolution: {integrity: sha512-9dpGPFqKb/QWudYqGnEz93vuY+NgCEvyNvxoCLMVGw6sDN/3oVeKV1xiEirW2E1N3vJEyj5imSBNOGltQHA7mg==}
@@ -4058,6 +4067,8 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
+  schema-dts@1.1.5: {}
+
   semver@7.7.2: {}
 
   seq-queue@0.0.5: {}
@@ -4135,6 +4146,10 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.6)
     optionalDependencies:
       svelte: 5.36.16
+
+  svelte-seo@1.6.1:
+    dependencies:
+      schema-dts: 1.1.5
 
   svelte-sonner@1.0.5(svelte@5.36.16):
     dependencies:

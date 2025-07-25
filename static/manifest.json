@@ -1,0 +1,71 @@
+{
+	"name": "Whispr - Secure Message Sharing",
+	"short_name": "Whispr",
+	"description": "Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.",
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"categories": ["productivity", "security", "utilities"],
+	"lang": "en",
+	"dir": "ltr",
+	"icons": [
+		{ "src": "/favicon.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+		{
+			"src": "/icons/logo-72-72.png",
+			"sizes": "72x72",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/logo-96-96.png",
+			"sizes": "96x96",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/logo-144-144.png",
+			"sizes": "144x144",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{ "src": "/icons/logo-180-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+		{
+			"src": "/icons/logo-192-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/logo-512-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Create Whispr",
+			"short_name": "Create",
+			"description": "Create a new encrypted message",
+			"url": "/",
+			"icons": [
+				{
+					"src": "/favicon.png",
+					"sizes": "128x128"
+				}
+			]
+		},
+		{
+			"name": "View Whispr",
+			"short_name": "View",
+			"description": "View an encrypted message",
+			"url": "/view",
+			"icons": [
+				{
+					"src": "/favicon.png",
+					"sizes": "128x128"
+				}
+			]
+		}
+	]
+}

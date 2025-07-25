@@ -7,6 +7,7 @@
 	import Home from '@lucide/svelte/icons/home';
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import SearchX from '@lucide/svelte/icons/search-x';
+	import SvelteSeo from 'svelte-seo';
 
 	// Variables & States
 	const is404 = page.status === 404;
@@ -24,6 +25,26 @@
 		}
 	}
 </script>
+
+<SvelteSeo
+	title={is404 ? 'Whispr - Page Not Found' : 'Whispr - Error'}
+	description={is404
+		? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
+		: 'An error occurred while processing your request. Please try again or return to the main page.'}
+	openGraph={{
+		title: is404 ? 'Whispr - Page Not Found' : 'Whispr - Error',
+		description: is404
+			? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
+			: 'An error occurred while processing your request. Please try again or return to the main page.',
+		type: 'website'
+	}}
+	twitter={{
+		title: is404 ? 'Whispr - Page Not Found' : 'Whispr - Error',
+		description: is404
+			? 'The page you are looking for could not be found. Return to Whispr to create or view secure messages.'
+			: 'An error occurred while processing your request. Please try again or return to the main page.'
+	}}
+/>
 
 <div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">

@@ -8,9 +8,11 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
+	import { getFullUrl } from '$lib/utils/seo.js';
 	import Eye from '@lucide/svelte/icons/eye';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import { toast } from 'svelte-sonner';
+	import SvelteSeo from 'svelte-seo';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import type { PageProps } from './$types.js';
@@ -68,6 +70,38 @@
 		goto(url.toString(), { replaceState: true, keepFocus: true, noScroll: true });
 	});
 </script>
+
+<SvelteSeo
+	title="View Whispr - Access Secure Message"
+	description="Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration."
+	keywords="view secure message, access encrypted message, whispr id, decrypt message, secure viewing, temporary message access"
+	canonical={getFullUrl('/view')}
+	openGraph={{
+		title: 'View Whispr - Access Secure Message',
+		description:
+			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
+		url: getFullUrl('/view'),
+		type: 'website'
+	}}
+	twitter={{
+		title: 'View Whispr - Access Secure Message',
+		description:
+			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.'
+	}}
+	jsonLd={{
+		'@context': 'https://schema.org',
+		'@type': 'WebPage',
+		name: 'View Whispr',
+		description:
+			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
+		url: getFullUrl('/view'),
+		isPartOf: {
+			'@type': 'WebSite',
+			name: 'Whispr',
+			url: getFullUrl('/')
+		}
+	}}
+/>
 
 <ConfirmNavigateAway
 	bind:open={openNavigateAwayDialog.open}

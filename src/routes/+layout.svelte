@@ -5,6 +5,7 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
+	import { getBaseUrl } from '$lib/utils/seo.js';
 	import Eye from '@lucide/svelte/icons/eye';
 	import Menu from '@lucide/svelte/icons/menu';
 	import MessageSquareLock from '@lucide/svelte/icons/message-square-lock';
@@ -13,6 +14,7 @@
 	import Sun from '@lucide/svelte/icons/sun';
 	import { mode, ModeWatcher, setMode } from 'mode-watcher';
 	import { type Snippet } from 'svelte';
+	import SvelteSeo from 'svelte-seo';
 	import '../app.css';
 
 	// Props
@@ -43,6 +45,58 @@
 </script>
 
 <ModeWatcher />
+
+<SvelteSeo
+	title="Whispr - Secure Message Sharing"
+	description="Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings."
+	keywords="secure messaging, encrypted messages, temporary sharing, password protection, configurable expiration, privacy, security"
+	applicationName="Whispr"
+	canonical={getBaseUrl()}
+	manifest="/manifest.json"
+	openGraph={{
+		title: 'Whispr - Secure Message Sharing',
+		description:
+			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
+		url: getBaseUrl(),
+		type: 'website',
+		site_name: 'Whispr',
+		images: getBaseUrl()
+			? [
+					{
+						url: `${getBaseUrl()}/og-image.png`,
+						width: 1200,
+						height: 630,
+						alt: 'Whispr - Secure Message Sharing'
+					}
+				]
+			: undefined
+	}}
+	twitter={{
+		card: 'summary_large_image',
+		title: 'Whispr - Secure Message Sharing',
+		description:
+			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
+		image: getBaseUrl() ? `${getBaseUrl()}/og-image.png` : undefined,
+		imageAlt: 'Whispr - Secure Message Sharing'
+	}}
+	jsonLd={{
+		'@context': 'https://schema.org',
+		'@type': 'WebApplication',
+		name: 'Whispr',
+		description:
+			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
+		url: getBaseUrl(),
+		applicationCategory: 'SecurityApplication',
+		operatingSystem: 'Web Browser',
+		browserRequirements: 'Requires JavaScript. Requires HTML5.',
+		permissions: 'no special permissions required',
+		author: {
+			'@type': 'Person',
+			name: 'Adrian Gast',
+			url: 'https://adriangast.de'
+		}
+	}}
+/>
 
 <!-- Skip to content link for keyboard users -->
 <a

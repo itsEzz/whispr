@@ -10,10 +10,12 @@
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
+	import { getFullUrl } from '$lib/utils/seo.js';
 	import { isError, tc, tca } from '@itsezz/try-catch';
 	import Eraser from '@lucide/svelte/icons/eraser';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import Send from '@lucide/svelte/icons/send';
+	import SvelteSeo from 'svelte-seo';
 	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
@@ -126,6 +128,38 @@
 		randomPassword = null;
 	}
 </script>
+
+<SvelteSeo
+	title="Create Whispr - Secure Message Sharing"
+	description="Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection."
+	keywords="create secure message, encrypted text, password protected message, configurable expiration, temporary sharing, secure communication"
+	canonical={getFullUrl('/')}
+	openGraph={{
+		title: 'Create Whispr - Secure Message Sharing',
+		description:
+			'Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection.',
+		url: getFullUrl('/'),
+		type: 'website'
+	}}
+	twitter={{
+		title: 'Create Whispr - Secure Message Sharing',
+		description:
+			'Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection.'
+	}}
+	jsonLd={{
+		'@context': 'https://schema.org',
+		'@type': 'WebPage',
+		name: 'Create Whispr',
+		description:
+			'Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection.',
+		url: getFullUrl('/'),
+		isPartOf: {
+			'@type': 'WebSite',
+			name: 'Whispr',
+			url: getFullUrl('/')
+		}
+	}}
+/>
 
 <ConfirmReset bind:open={openResetDialog} onConfirm={handleClickResetForm} />
 

@@ -15,6 +15,7 @@
 	import Shredder from '@lucide/svelte/icons/shredder';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import { toast } from 'svelte-sonner';
+	import SvelteSeo from 'svelte-seo';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import type { PageProps } from './$types';
@@ -27,7 +28,9 @@
 	const form = superForm(data.form, {
 		validators: zod4Client(deleteSchema),
 		onSubmit({ formData }) {
-			formData.set('id', page.params.deleteId);
+			if (page.params.deleteId) {
+				formData.set('id', page.params.deleteId);
+			}
 			return formData;
 		},
 		onUpdate({ result }) {
@@ -50,6 +53,14 @@
 		goto('/');
 	}
 </script>
+
+<SvelteSeo
+	title="Delete Whispr - Secure Message Management"
+	description="Delete secure message."
+	noindex={true}
+	nofollow={true}
+	nositelinkssearchbox={true}
+/>
 
 <DialogDrawer
 	open={deleted}
@@ -152,7 +163,7 @@
 						>
 							<SearchX size={40} aria-hidden="true" />
 						</div>
-						<Card.Title id="error-heading">Whispr Not Found</Card.Title>
+						<Card.Title class="text-2xl" id="error-heading">Whispr Not Found</Card.Title>
 					</Card.Header>
 
 					<Card.Content class="text-center">

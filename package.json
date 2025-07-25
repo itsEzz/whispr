@@ -50,6 +50,7 @@
 		"qrcode": "^1.5.4",
 		"svelte": "^5.36.16",
 		"svelte-check": "^4.3.0",
+		"svelte-seo": "^1.6.1",
 		"svelte-sonner": "^1.0.5",
 		"sveltekit-superforms": "^2.27.1",
 		"tailwind-merge": "^3.3.1",
