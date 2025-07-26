@@ -14,9 +14,10 @@
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
+		disabled?: boolean;
 	}
 
-	let { form }: Props = $props();
+	let { form, disabled = false }: Props = $props();
 
 	// Variables & States
 	const { form: formData, errors, constraints, submitting } = form;
@@ -48,7 +49,7 @@
 							size="sm"
 							onclick={() => handleClickTtlPreset(preset)}
 							class="min-w-[calc(50%-0.25rem)] flex-1 sm:min-w-[calc(25%-0.375rem)]"
-							disabled={$submitting}
+							disabled={$submitting || disabled}
 							aria-pressed={$formData.ttlValue === preset.value &&
 								$formData.ttlUnit === preset.unit}
 						>
@@ -71,7 +72,7 @@
 						{...props}
 						{...$constraints.ttlValue}
 						bind:value={$formData.ttlValue}
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						type="number"
 						aria-describedby={$errors.ttlValue ? 'ttl-value-error' : undefined}
 						class="w-full rounded-none border-0 focus-visible:ring-0"
@@ -86,7 +87,7 @@
 									{...props}
 									{...$constraints.ttlUnit}
 									bind:value={$formData.ttlUnit}
-									disabled={$submitting}
+									disabled={$submitting || disabled}
 									type="single"
 								>
 									<Select.Trigger
@@ -131,7 +132,7 @@
 						{...props}
 						{...$constraints.showTtl}
 						bind:checked={$formData.showTtl}
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						aria-describedby={$errors.showTtl ? 'show-ttl-error' : undefined}
 					/>
 					<Form.Label class="cursor-pointer">Show expiration date to recipients</Form.Label>

@@ -17,9 +17,15 @@
 		form: SuperForm<Infer<CreateSchema>>;
 		password: string;
 		passwordOptionsComponent: PasswordComponent;
+		disabled?: boolean;
 	}
 
-	let { form, password = $bindable(), passwordOptionsComponent }: Props = $props();
+	let {
+		form,
+		password = $bindable(),
+		passwordOptionsComponent,
+		disabled = false
+	}: Props = $props();
 
 	// Variables & States
 	const { errors, submitting } = form;
@@ -56,13 +62,17 @@
 			role="region"
 			aria-label="Whispr options"
 		>
-			<PasswordOptions bind:password bind:this={passwordOptionsComponent} disabled={$submitting} />
-			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<ViewOptions {form} />
-			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<TtlOptions {form} />
-			<div class="mb-2 mt-4 h-px w-full bg-muted-foreground/20" aria-hidden="true"></div>
-			<AdditionalOptions {form} />
+			<PasswordOptions
+				bind:password
+				bind:this={passwordOptionsComponent}
+				disabled={$submitting || disabled}
+			/>
+			<div class="bg-muted-foreground/20 mt-4 mb-2 h-px w-full" aria-hidden="true"></div>
+			<ViewOptions {form} {disabled} />
+			<div class="bg-muted-foreground/20 mt-4 mb-2 h-px w-full" aria-hidden="true"></div>
+			<TtlOptions {form} {disabled} />
+			<div class="bg-muted-foreground/20 mt-4 mb-2 h-px w-full" aria-hidden="true"></div>
+			<AdditionalOptions {form} {disabled} />
 		</Card.Content>
 	</Card.Root>
 {/snippet}

@@ -10,9 +10,10 @@
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
+		disabled?: boolean;
 	}
 
-	let { form }: Props = $props();
+	let { form, disabled = false }: Props = $props();
 
 	// Variables & States
 	const { form: formData, errors, constraints, submitting } = form;
@@ -31,7 +32,7 @@
 							{...props}
 							{...$constraints.showCopyButton}
 							bind:checked={$formData.showCopyButton}
-							disabled={$submitting}
+							disabled={$submitting || disabled}
 							aria-describedby={$errors.showCopyButton ? 'show-copy-button-error' : undefined}
 						/>
 						<Form.Label class="cursor-pointer">Show copy button</Form.Label>
@@ -48,7 +49,7 @@
 							{...props}
 							{...$constraints.showDownloadButton}
 							bind:checked={$formData.showDownloadButton}
-							disabled={$submitting}
+							disabled={$submitting || disabled}
 							aria-describedby={$errors.showDownloadButton
 								? 'show-download-button-error'
 								: undefined}

@@ -15,9 +15,10 @@
 	interface Props {
 		whispr: ViewWhispr;
 		content: string;
+		disabled?: boolean;
 	}
 
-	let { whispr, content }: Props = $props();
+	let { whispr, content, disabled = false }: Props = $props();
 
 	// Variables & States
 	let showFooter = $derived(
@@ -70,7 +71,7 @@
 					>
 						<div class="flex flex-wrap items-center justify-center gap-2">
 							{#if whispr.unlimitedViews || whispr.views !== undefined}
-								<PopoverBadge variant="outline" id="views-badge">
+								<PopoverBadge variant="outline" id="views-badge" {disabled}>
 									{#snippet content()}
 										<Eye size={16} aria-hidden="true" />
 										{#if whispr.unlimitedViews === true}
@@ -91,7 +92,7 @@
 								</PopoverBadge>
 							{/if}
 							{#if whispr.expiresAt}
-								<PopoverBadge variant="outline" id="expiration-badge">
+								<PopoverBadge variant="outline" id="expiration-badge" {disabled}>
 									{#snippet content()}
 										<CalendarX size={16} aria-hidden="true" />
 										<span>{formattedExpirationDate}</span>
@@ -114,6 +115,7 @@
 										copyFailedText="Copy failed"
 										copyFn={handleClickCopyContent}
 										aria-label="Copy whispr content to clipboard"
+										{disabled}
 									/>
 								{/if}
 
@@ -122,6 +124,7 @@
 										size="sm"
 										onclick={handleClickDownloadContent}
 										aria-label="Download whispr content as text file"
+										{disabled}
 									>
 										Download
 										<Download aria-hidden="true" />

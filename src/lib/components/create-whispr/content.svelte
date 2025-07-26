@@ -17,9 +17,10 @@
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
+		disabled?: boolean;
 	}
 
-	let { form }: Props = $props();
+	let { form, disabled = false }: Props = $props();
 
 	// Variables & States
 	let fileInput: HTMLInputElement;
@@ -116,7 +117,7 @@
 					{...props}
 					{...$constraints.content}
 					bind:value={$formData.content}
-					disabled={$submitting}
+					disabled={$submitting || disabled}
 					class={cn(
 						'max-h-96 min-h-96 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full'
 					)}
@@ -128,7 +129,7 @@
 					<Button
 						size="sm"
 						variant="ghost"
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						onclick={handleClickFileUpload}
 						type="button"
 						class="text-muted-foreground hover:text-foreground gap-2"
@@ -138,7 +139,7 @@
 						<Upload />
 					</Button>
 					<div class="ml-auto gap-1.5">
-						<PopoverBadge variant="outline" id="views-badge">
+						<PopoverBadge variant="outline" id="views-badge" disabled>
 							{#snippet content()}
 								<Text size={16} aria-hidden="true" />
 								{readableLength} character{$formData.content.length !== 1 ? 's' : ''}

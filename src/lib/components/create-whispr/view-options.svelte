@@ -10,9 +10,10 @@
 	// Props
 	interface Props {
 		form: SuperForm<Infer<CreateSchema>>;
+		disabled?: boolean;
 	}
 
-	let { form }: Props = $props();
+	let { form, disabled = false }: Props = $props();
 
 	// Variables & States
 	const { form: formData, errors, constraints, submitting } = form;
@@ -41,7 +42,7 @@
 						{...props}
 						{...$constraints.views}
 						bind:value={$formData.views}
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						type="number"
 						placeholder="Number of allowed views"
 						aria-describedby={$errors.views ? 'views-error' : undefined}
@@ -59,7 +60,7 @@
 						{...props}
 						{...$constraints.showViews}
 						bind:checked={$formData.showViews}
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						aria-describedby={$errors.showViews ? 'show-views-error' : undefined}
 					/>
 					<Form.Label class="cursor-pointer">Show remaining views to recipients</Form.Label>
@@ -76,7 +77,7 @@
 						{...props}
 						{...$constraints.unlimitedViews}
 						bind:checked={$formData.unlimitedViews}
-						disabled={$submitting}
+						disabled={$submitting || disabled}
 						aria-describedby={$errors.unlimitedViews ? 'unlimited-views-error' : undefined}
 						onCheckedChange={onUnlimitedViewsChange}
 					/>

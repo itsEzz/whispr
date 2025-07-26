@@ -11,6 +11,7 @@
 		class?: string;
 		popoverContent: string | Snippet;
 		align?: 'start' | 'center' | 'end';
+		disabled?: boolean;
 		label?: string;
 		id?: string;
 	}
@@ -21,6 +22,7 @@
 		class: classes,
 		popoverContent,
 		align = 'center',
+		disabled = false,
 		label = 'More information',
 		id = 'default'
 	}: Props = $props();
@@ -33,6 +35,7 @@
 
 <Popover.Root bind:open>
 	<Popover.Trigger
+		{disabled}
 		aria-label={label}
 		aria-expanded={open}
 		aria-controls={popoverId}

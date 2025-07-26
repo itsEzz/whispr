@@ -16,9 +16,10 @@
 	interface Props {
 		whispr: ViewWhispr;
 		encodedUrlPassword?: string;
+		disabled?: boolean;
 	}
 
-	let { whispr, encodedUrlPassword }: Props = $props();
+	let { whispr, encodedUrlPassword, disabled = false }: Props = $props();
 
 	// Variables & States
 	let loading = $state<boolean>(true);
@@ -78,7 +79,7 @@
 />
 
 {#if !decryptedContent}
-	<DecryptWhispr {form} {loading} />
+	<DecryptWhispr {form} {loading} {disabled} />
 {:else}
-	<DecryptedContent {whispr} content={decryptedContent} />
+	<DecryptedContent {whispr} content={decryptedContent} {disabled} />
 {/if}

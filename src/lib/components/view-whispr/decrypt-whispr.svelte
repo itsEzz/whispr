@@ -17,9 +17,10 @@
 	interface Props {
 		form: SuperForm<Infer<ViewPasswordSchema>>;
 		loading: boolean;
+		disabled?: boolean;
 	}
 
-	let { form, loading }: Props = $props();
+	let { form, loading, disabled = false }: Props = $props();
 
 	// Variables & States
 	const { form: formData, errors, enhance, constraints, submitting, allErrors, submit } = form;
@@ -64,7 +65,7 @@
 											{...props}
 											{...$constraints.password}
 											bind:value={$formData.password}
-											disabled={$submitting}
+											disabled={$submitting || disabled}
 											type={showPassword ? 'text' : 'password'}
 											placeholder="Enter password"
 											aria-describedby={$errors.password ? 'password-error' : undefined}
@@ -74,7 +75,7 @@
 										/>
 										<div>
 											<Button
-												disabled={$submitting}
+												disabled={$submitting || disabled}
 												variant="secondary"
 												size="icon"
 												aria-label={showPassword ? 'Hide password' : 'Show password'}
@@ -100,19 +101,23 @@
 				</form>
 			</Card.Content>
 			<Card.Footer class="justify-end">
-				<Form.Button
-					disabled={$submitting || !isFormValid || loading}
-					aria-label={$submitting ? 'Decrypting Whispr...' : 'Decrypt Whispr'}
-					onclick={submit}
-				>
-					{#if $submitting || loading}
-						Decrypting Whispr...
-						<LoaderCircle class="animate-spin" aria-hidden="true" />
-					{:else}
-						Decrypt Whispr
-						<LockOpen aria-hidden="true" />
-					{/if}
-				</Form.Button>
+				{#if loading}
+					<Skeleton class="h-9 w-36" />
+				{:else}
+					<Form.Button
+						disabled={$submitting || !isFormValid || loading || disabled}
+						aria-label={$submitting ? 'Decrypting Whispr...' : 'Decrypt Whispr'}
+						onclick={submit}
+					>
+						{#if $submitting || loading}
+							Decrypting Whispr...
+							<LoaderCircle class="animate-spin" aria-hidden="true" />
+						{:else}
+							Decrypt Whispr
+							<LockOpen aria-hidden="true" />
+						{/if}
+					</Form.Button>
+				{/if}
 			</Card.Footer>
 		</Card.Root>
 	</div>
