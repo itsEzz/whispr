@@ -104,11 +104,10 @@
 							copyFn={handleCopyErrorDetails}
 							variant="ghost"
 							size="sm"
-							class="absolute top-1 right-1 size-6 p-0"
+							class="absolute top-1 right-1"
 							aria-label="Copy error details"
 						/>
-						<!-- TODO check if pr-8 is enough -->
-						<p class="text-muted-foreground pr-8 font-mono text-xs">
+						<p class="text-muted-foreground font-mono text-xs">
 							{#each errorDetails as detail}
 								{detail}<br />
 							{/each}
