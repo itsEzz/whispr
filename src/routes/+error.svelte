@@ -35,7 +35,7 @@
 			? "The page you're looking for doesn't exist or has been moved. Please check the URL for any typos."
 			: is429
 				? "You've made too many requests in a short period. Please wait a moment before trying again. This helps protect the service from abuse and ensures it remains available for everyone."
-				: "If you continue to experience issues, try refreshing the page, contacting the site's	administrator or opening an issue in the GitHub repository."
+				: 'If you continue to experience issues, try refreshing the page, contacting the site administrator or opening an issue in the GitHub repository.'
 	};
 
 	// Handler Functions
