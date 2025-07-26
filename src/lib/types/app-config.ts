@@ -1,0 +1,31 @@
+import type { Rate } from 'sveltekit-rate-limiter/server';
+
+export interface ServerAppConfig {
+	DATABASE_URL: string;
+	RATE_LIMITER_IP: Rate | Rate[];
+	RATE_LIMITER_IPUA: Rate | Rate[];
+}
+
+export interface ClientAppConfig {
+	PUBLIC_BASE_URL?: string;
+	PUBLIC_CONTENT_MIN_LENGTH: number;
+	PUBLIC_CONTENT_MAX_LENGTH: number;
+	PUBLIC_PASSWORD_MIN_LENGTH: number;
+	PUBLIC_PASSWORD_MAX_LENGTH: number;
+	PUBLIC_PASSWORD_UPPER_CASE_REQUIRED: boolean;
+	PUBLIC_PASSWORD_LOWER_CASE_REQUIRED: boolean;
+	PUBLIC_PASSWORD_NUMBER_REQUIRED: boolean;
+	PUBLIC_PASSWORD_SPECIAL_CHARACTER_REQUIRED: boolean;
+	PUBLIC_VIEWS_MIN: number;
+	PUBLIC_VIEWS_MAX: number;
+	PUBLIC_VIEWS_DEFAULT: number;
+	PUBLIC_VIEWS_SHOW_RECIPIENTS_DEFAULT: boolean;
+	PUBLIC_VIEWS_UNLIMITED_DEFAULT: boolean;
+	PUBLIC_EXPIRES_IN_MAX_VALUE: number;
+	PUBLIC_EXPIRES_IN_MAX_UNIT: 'minutes' | 'hours' | 'days' | 'weeks' | 'months';
+	PUBLIC_EXPIRES_IN_VALUE_DEFAULT: number;
+	PUBLIC_EXPIRES_IN_UNIT_DEFAULT: 'minutes' | 'hours' | 'days' | 'weeks' | 'months';
+	PUBLIC_EXPIRES_IN_SHOW_RECIPIENTS_DEFAULT: boolean;
+	PUBLIC_SHOW_COPY_BUTTON_DEFAULT: boolean;
+	PUBLIC_SHOW_DOWNLOAD_BUTTON_DEFAULT: boolean;
+}
