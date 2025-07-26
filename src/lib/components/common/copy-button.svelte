@@ -55,7 +55,8 @@
 				? 'Copied to clipboard'
 				: 'Copy failed')}
 	aria-live="polite"
-	aria-disabled={copyStatus !== 'idle'}
+	disabled={buttonProps.disabled || copyStatus !== 'idle'}
+	aria-disabled={buttonProps.disabled || copyStatus !== 'idle'}
 >
 	{#if buttonText}
 		<span>{buttonText}</span>
