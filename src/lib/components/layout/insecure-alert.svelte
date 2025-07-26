@@ -18,8 +18,6 @@
 	onMount(() => {
 		if (browser && !window.isSecureContext) isInsecureConnection = true;
 	});
-
-	$inspect(isInsecureConnection);
 </script>
 
 {#if isInsecureConnection}
