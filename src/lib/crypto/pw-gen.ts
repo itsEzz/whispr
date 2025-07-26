@@ -1,3 +1,5 @@
+import { lowerCaseRegex, numberRegex, specialCharacterRegex, upperCaseRegex } from './pw-strength';
+
 class PasswordGenerator {
 	private readonly RANDOM_BATCH_SIZE: number = 256;
 	private readonly MAX_RECURSION_COUNT: number = 200;
@@ -7,10 +9,10 @@ class PasswordGenerator {
 	private readonly specialCharacters: string = '!@#$%^&*()+_-=}{[]|:;"/?.><,`~\'';
 	private readonly similarCharacters: RegExp = /[ilLI|`oO0]/g;
 	private readonly passwordRules: { name: string; rule: RegExp }[] = [
-		{ name: 'lowercase', rule: /[a-z]/ },
-		{ name: 'uppercase', rule: /[A-Z]/ },
-		{ name: 'numbers', rule: /[0-9]/ },
-		{ name: 'specialCharacters', rule: /[!@#$%^&*()+_\-=}{[\]|:;"/?.><,`~]/ }
+		{ name: 'lowercase', rule: lowerCaseRegex },
+		{ name: 'uppercase', rule: upperCaseRegex },
+		{ name: 'numbers', rule: numberRegex },
+		{ name: 'specialCharacters', rule: specialCharacterRegex }
 	];
 	private randIndex?: number;
 	private randArray?: Uint8Array;
