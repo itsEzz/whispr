@@ -23,11 +23,11 @@
 {#if isInsecureConnection}
 	<div class="container mx-auto px-4 pt-4">
 		<Alert.Root
-			class="border-orange-300/30 bg-orange-500/10 dark:border-orange-400/30 dark:bg-orange-400/10"
+			class="border-orange-300/30 bg-orange-500/10 text-orange-700 dark:border-orange-400/30 dark:bg-orange-400/10 dark:text-orange-300 [&>svg]:text-current"
 		>
 			<ShieldAlert aria-hidden="true" />
 			<Alert.Title>Insecure Connection</Alert.Title>
-			<Alert.Description>
+			<Alert.Description class="text-orange-700 dark:text-orange-300">
 				This site is not using HTTPS encryption. Your data may be visible to others and could be
 				intercepted or modified during transmission. While you can still use this service, be aware
 				that:
