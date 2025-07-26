@@ -10,11 +10,11 @@ function formatValidationError(error: z.ZodError): string {
 		return `- ${path}: ${err.message}`;
 	});
 
-	return `❌ Environment Validation Failed:\n${errorMessages.join('\n')}\n\nPlease check your .env file and ensure all required variables are set with valid values.`;
+	return `❌ [Config] Environment Validation Failed:\n${errorMessages.join('\n')}\n\nPlease check your .env file and ensure all required variables are set with valid values.`;
 }
 
 export function validateEnv() {
-	console.log('🔍 Validating environment variables...');
+	console.info('💬 [Config] Validating environment variables...');
 	const result = tc(() => {
 		serverEnvSchema.parse(privateEnv.env);
 		clientEnvSchema.parse(publicEnv.env);
@@ -27,9 +27,9 @@ export function validateEnv() {
 		}
 
 		console.error(
-			`❌ Environment Validation Error: ${result.error instanceof Error ? result.error.message : String(result.error)}`
+			`❌ [Config] Environment Validation Error: ${result.error instanceof Error ? result.error.message : String(result.error)}`
 		);
 		process.exit(1);
 	}
-	console.log('✅ Environment variables are valid');
+	console.info('✅ [Config] Environment variables are valid');
 }
