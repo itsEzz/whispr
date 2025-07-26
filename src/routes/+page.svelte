@@ -60,20 +60,20 @@
 		},
 		onError({ result }) {
 			if (result.status === 429) {
-				try {
-					const errorData = JSON.parse(result.error.message);
-					toast.error(errorData.title || 'Rate limit exceeded', {
-						description:
-							errorData.message ||
-							`Too many requests. Please wait ${errorData.retryAfter || 60} seconds before trying again.`,
-						duration: 8000
-					});
-				} catch {
+				const parseResult = tc(() => JSON.parse(result.error.message));
+				if (isError(parseResult)) {
 					toast.error('Rate limit exceeded', {
 						description: 'Too many requests. Please wait before trying again.',
 						duration: 8000
 					});
+					return;
 				}
+				toast.error(parseResult.data.title || 'Rate limit exceeded', {
+					description:
+						parseResult.data.message ||
+						`Too many requests. Please wait ${parseResult.data.retryAfter || 60} seconds before trying again.`,
+					duration: 8000
+				});
 			} else {
 				toast.error('Something went wrong', {
 					description: 'Please try again in a moment.'

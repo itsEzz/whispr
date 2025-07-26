@@ -6,6 +6,7 @@
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import { getPasswordStrength } from '$lib/crypto/pw-strength';
 	import { cn } from '$lib/utils';
+	import { isError, tc } from '@itsezz/try-catch';
 	import Check from '@lucide/svelte/icons/check';
 	import Dices from '@lucide/svelte/icons/dices';
 	import Eye from '@lucide/svelte/icons/eye';
@@ -38,21 +39,24 @@
 
 	async function handleGeneratePassword() {
 		loading = true;
-		try {
-			password = passwordGenerator.generate(30);
+		const result = tc(() => passwordGenerator.generate(30));
 
-			const passwordInput = document.getElementById('whispr-password');
-			if (passwordInput) {
-				passwordInput.focus();
-				showPassword = true;
-			}
-		} catch (error) {
+		if (isError(result)) {
 			toast.error('Password generation failed', {
 				description: "We're having trouble creating a password."
 			});
-		} finally {
 			loading = false;
+			return;
 		}
+
+		password = result.data;
+
+		const passwordInput = document.getElementById('whispr-password');
+		if (passwordInput) {
+			passwordInput.focus();
+			showPassword = true;
+		}
+		loading = false;
 	}
 
 	// Functions

@@ -9,10 +9,11 @@
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
 	import { getFullUrl } from '$lib/utils/seo.js';
+	import { isError, tc } from '@itsezz/try-catch';
 	import Eye from '@lucide/svelte/icons/eye';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
-	import { toast } from 'svelte-sonner';
 	import SvelteSeo from 'svelte-seo';
+	import { toast } from 'svelte-sonner';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import type { PageProps } from './$types.js';
@@ -45,20 +46,20 @@
 		},
 		onError({ result }) {
 			if (result.status === 429) {
-				try {
-					const errorData = JSON.parse(result.error.message);
-					toast.error(errorData.title || 'Rate limit exceeded', {
-						description:
-							errorData.message ||
-							`Too many requests. Please wait ${errorData.retryAfter || 60} seconds before trying again.`,
-						duration: 8000
-					});
-				} catch {
+				const parseResult = tc(() => JSON.parse(result.error.message));
+				if (isError(parseResult)) {
 					toast.error('Rate limit exceeded', {
 						description: 'Too many requests. Please wait before trying again.',
 						duration: 8000
 					});
+					return;
 				}
+				toast.error(parseResult.data.title || 'Rate limit exceeded', {
+					description:
+						parseResult.data.message ||
+						`Too many requests. Please wait ${parseResult.data.retryAfter || 60} seconds before trying again.`,
+					duration: 8000
+				});
 			} else {
 				toast.error('Something went wrong', {
 					description: 'Please try again in a moment.'
