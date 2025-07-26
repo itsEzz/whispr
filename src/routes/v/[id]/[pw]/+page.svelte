@@ -9,7 +9,7 @@
 </script>
 
 <SvelteSeo
-	title="Secure Message - Whispr"
+	title="Whispr - View Secure Message"
 	description="Viewing encrypted message content."
 	noindex={true}
 	nofollow={true}
