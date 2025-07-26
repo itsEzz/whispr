@@ -140,7 +140,7 @@
 						<Eye class="mr-2" aria-hidden="true" /> View Whispr
 					</div>
 				</Card.Title>
-				<Card.Description>Provide your Whispr ID to view the secure content.</Card.Description>
+				<Card.Description>Provide your Whispr ID to view the secure message.</Card.Description>
 			</Card.Header>
 
 			<Card.Content>
