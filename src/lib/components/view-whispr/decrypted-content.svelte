@@ -72,7 +72,7 @@
 							{#if whispr.unlimitedViews || whispr.views !== undefined}
 								<PopoverBadge variant="outline" id="views-badge">
 									{#snippet content()}
-										<Eye size={20} aria-hidden="true" />
+										<Eye size={16} aria-hidden="true" />
 										{#if whispr.unlimitedViews === true}
 											Unlimited views
 										{:else}
@@ -93,7 +93,7 @@
 							{#if whispr.expiresAt}
 								<PopoverBadge variant="outline" id="expiration-badge">
 									{#snippet content()}
-										<CalendarX size={20} aria-hidden="true" />
+										<CalendarX size={16} aria-hidden="true" />
 										<span>{formattedExpirationDate}</span>
 									{/snippet}
 									{#snippet popoverContent()}
