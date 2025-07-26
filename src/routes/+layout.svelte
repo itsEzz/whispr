@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { version } from '$app/environment';
 	import { page } from '$app/state';
+	import InsecureAlert from '$lib/components/layout/insecure-alert.svelte';
+	import ServiceIssueAlert from '$lib/components/layout/service-issue-alert.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
@@ -13,16 +15,12 @@
 	import Moon from '@lucide/svelte/icons/moon';
 	import Sun from '@lucide/svelte/icons/sun';
 	import { mode, ModeWatcher, setMode } from 'mode-watcher';
-	import { type Snippet } from 'svelte';
 	import SvelteSeo from 'svelte-seo';
 	import '../app.css';
+	import type { LayoutProps } from './$types';
 
 	// Props
-	interface Props {
-		children: Snippet<[]>;
-	}
-
-	let { children }: Props = $props();
+	let { children, data }: LayoutProps = $props();
 
 	// Variables & States
 	let mobileNavOpen = $state<boolean>(false);
@@ -302,6 +300,8 @@
 	</header>
 
 	<main id="main-content" class="flex-1" tabindex="-1">
+		<ServiceIssueAlert show={!data.schedulerStatus} />
+		<InsecureAlert />
 		{@render children()}
 	</main>
 
