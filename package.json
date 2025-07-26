@@ -1,8 +1,39 @@
 {
 	"name": "whispr",
-	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"description": "Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.",
 	"type": "module",
+	"private": true,
+	"author": "@itsEzz",
+	"license": "MIT",
+	"homepage": "https://github.com/itsEzz/whispr#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/itsEzz/whispr.git"
+	},
+	"bugs": {
+		"url": "https://github.com/itsEzz/whispr/issues"
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"encryption",
+		"secure-messaging",
+		"privacy",
+		"temporary-messages",
+		"password-protection",
+		"self-destructing-messages",
+		"security",
+		"web-app",
+		"typescript",
+		"tailwindcss",
+		"drizzle-orm"
+	],
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0"
+	},
+	"packageManager": "pnpm@9.0.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -14,7 +45,8 @@
 		"lint": "prettier --check . && eslint .",
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"db:drop": "drizzle-kit drop"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.3.1",
