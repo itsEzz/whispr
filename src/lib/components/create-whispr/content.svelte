@@ -139,7 +139,7 @@
 						<Upload />
 					</Button>
 					<div class="ml-auto gap-1.5">
-						<PopoverBadge variant="outline" id="views-badge" disabled>
+						<PopoverBadge variant="outline" id="views-badge" {disabled}>
 							{#snippet content()}
 								<Text size={16} aria-hidden="true" />
 								{readableLength} character{$formData.content.length !== 1 ? 's' : ''}
@@ -153,7 +153,7 @@
 												$formData.content.length >= maxLength
 													? 'bg-destructive'
 													: $formData.content.length > maxLength * 0.9
-														? 'text-yellow-600 dark:text-yellow-500'
+														? 'bg-yellow-600 dark:bg-yellow-500'
 														: 'bg-primary'
 											)}
 											style="width: {Math.min(($formData.content.length / maxLength) * 100, 100)}%"
