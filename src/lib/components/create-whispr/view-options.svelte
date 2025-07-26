@@ -2,6 +2,7 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input';
 	import { Switch } from '$lib/components/ui/switch';
+	import { cn } from '$lib/utils';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';
@@ -37,17 +38,17 @@
 						disabled
 						aria-label="Unlimited views selected"
 					/>
-				{:else}
-					<Input
-						{...props}
-						{...$constraints.views}
-						bind:value={$formData.views}
-						disabled={$submitting || disabled}
-						type="number"
-						placeholder="Number of allowed views"
-						aria-describedby={$errors.views ? 'views-error' : undefined}
-					/>
 				{/if}
+				<Input
+					{...props}
+					{...$constraints.views}
+					bind:value={$formData.views}
+					disabled={$submitting || disabled}
+					type="number"
+					placeholder="Number of allowed views"
+					aria-describedby={$errors.views ? 'views-error' : undefined}
+					class={cn($formData.unlimitedViews && 'hidden')}
+				/>
 			{/snippet}
 		</Form.Control>
 		<FormError errors={$errors.views} id="views-error" />
