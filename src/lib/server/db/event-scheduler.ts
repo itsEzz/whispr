@@ -1,78 +1,146 @@
-import { isError, tc, tca } from '@itsezz/try-catch';
-import { db } from './index';
-import { sql } from 'drizzle-orm';
 import type {
 	EventSchedulerResult,
 	EventSchedulerStatus,
-	InformationSchemaEvents
+	InformationSchemaEvents,
+	ValidationCache
 } from '$lib/types/database';
 import { isDateInPast } from '$lib/utils/date-helpers';
+import { isError, tc, tca } from '@itsezz/try-catch';
+import { sql } from 'drizzle-orm';
+import type pino from 'pino';
+import { createChildLogger } from '../logger';
+import { db } from './index';
 
+/**
+ * Database Event Scheduler manager for MySQL/MariaDB event scheduling.
+ * Handles initialization, validation, and management of database cleanup events.
+ */
 export class DbEventScheduler {
-	async initializeEventScheduler() {
-		console.info('💬 [DB Event Scheduler] Checking db event scheduler status...');
-		const schedulerStatus = await this.isDbSchedulerEnabled();
-		console.info(`💬 [DB Event Scheduler] Status: ${schedulerStatus}`);
+	private logger: pino.Logger;
+	private validationCache: ValidationCache | null = null;
+	private readonly CACHE_DURATION_MS = 5 * 60 * 1000; // 5 minutes
 
-		if (schedulerStatus !== 'OK') {
-			console.info('🔧 [DB Event Scheduler] Trying to enable db event scheduler...');
-			const enableStatus = await this.enableDbScheduler();
-			console.info(`💬 [DB Event Scheduler] Status: ${schedulerStatus}`);
-
-			if (enableStatus !== 'OK') {
-				console.error(
-					'❌ [DB Event Scheduler] Failed to enable db event scheduler. Whispr requires this feature to function correctly. Please check your database configuration and try again.'
-				);
-				throw new Error('Failed to enable db event scheduler');
-			}
-		}
-
-		console.info('💬 [DB Event Scheduler] Checking if cleanup event exists...');
-		const eventStatus = await this.eventExists();
-		console.info(`💬 [DB Event Scheduler] Status: ${eventStatus}`);
-
-		if (eventStatus !== 'OK') {
-			console.info(
-				"🔧 [DB Event Scheduler] Cleanup event either doesn't exist or an error occurred. Trying to drop cleanup event..."
-			);
-			const dropStatus = await this.dropEvent();
-			console.info(`💬 [DB Event Scheduler] Status: ${dropStatus}`);
-
-			if (dropStatus !== 'OK')
-				console.error('❌ [DB Event Scheduler] Failed to drop cleanup event.');
-
-			console.info('🔧 [DB Event Scheduler] Trying to create cleanup event...');
-			const createStatus = await this.createEvent();
-			console.info(`💬 [DB Event Scheduler] Status: ${createStatus}`);
-
-			if (createStatus !== 'OK') {
-				console.error(
-					'❌ [DB Event Scheduler] Failed to create cleanup event. Whispr requires this cleanup event to function correctly. Please check your database configuration and try again.'
-				);
-				throw new Error('Failed to create cleanup event');
-			}
-		}
-
-		console.info('✅ [DB Event Scheduler] Event scheduler initialized successfully');
+	/**
+	 * Creates a new DbEventScheduler instance.
+	 */
+	constructor() {
+		this.logger = createChildLogger('db-event-scheduler');
 	}
 
-	async isValid(): Promise<boolean> {
+	/**
+	 * Initializes the database event scheduler by checking and enabling the scheduler,
+	 * and ensuring the cleanup event exists and is properly configured.
+	 *
+	 * @throws {Error} Exits the process if critical initialization steps fail
+	 */
+	async initializeEventScheduler() {
+		this.logger.info('Checking db event scheduler status...');
 		const schedulerStatus = await this.isDbSchedulerEnabled();
-		if (schedulerStatus !== 'OK') return false;
+		this.logger.info(`Event scheduler status: ${schedulerStatus}`);
+
+		if (schedulerStatus !== 'OK') {
+			this.logger.info('Trying to enable db event scheduler...');
+			const enableStatus = await this.enableDbScheduler();
+			this.logger.info(`Enable status: ${enableStatus}`);
+
+			if (enableStatus !== 'OK') {
+				this.logger.error(
+					'Failed to enable db event scheduler. Whispr requires this feature to function correctly.'
+				);
+				process.exit(1);
+			}
+		}
+
+		this.logger.info('Checking if cleanup event exists...');
+		const eventStatus = await this.eventExists();
+		this.logger.info(`Event status: ${eventStatus}`);
+
+		if (eventStatus !== 'OK') {
+			this.logger.info('Cleanup event needs to be recreated. Dropping existing event...');
+			const dropStatus = await this.dropEvent();
+			this.logger.info(`Drop status: ${dropStatus}`);
+
+			if (dropStatus !== 'OK') this.logger.error('Failed to drop cleanup event.');
+
+			this.logger.info('Creating cleanup event...');
+			const createStatus = await this.createEvent();
+			this.logger.info(`Create status: ${createStatus}`);
+
+			if (createStatus !== 'OK') {
+				this.logger.error(
+					'Failed to create cleanup event. Whispr requires this cleanup event to function correctly.'
+				);
+				process.exit(1);
+			}
+		}
+
+		this.logger.info('Event scheduler initialized successfully');
+		this.clearValidationCache();
+	}
+
+	/**
+	 * Validates that the database event scheduler is enabled and the cleanup event exists.
+	 * Uses caching to reduce database queries - cache is valid for 5 minutes.
+	 *
+	 * @returns {Promise<boolean>} True if both scheduler is enabled and cleanup event exists
+	 */
+	async isValid(): Promise<boolean> {
+		const now = Date.now();
+
+		if (this.validationCache && now - this.validationCache.timestamp < this.CACHE_DURATION_MS)
+			return this.validationCache.isValid;
+
+		const schedulerStatus = await this.isDbSchedulerEnabled();
+		if (schedulerStatus !== 'OK') {
+			this.logger.warn('Database event scheduler validation failed - scheduler not enabled');
+			this.updateValidationCache(false);
+			return false;
+		}
 
 		const eventStatus = await this.eventExists();
-		if (eventStatus !== 'OK') return false;
+		if (eventStatus !== 'OK') {
+			this.logger.warn(
+				'Database event scheduler validation failed - cleanup event not found or invalid'
+			);
+			this.updateValidationCache(false);
+			return false;
+		}
 
+		this.updateValidationCache(true);
 		return true;
 	}
 
+	/**
+	 * Clears the validation cache, forcing the next isValid() call to query the database.
+	 */
+	private clearValidationCache(): void {
+		this.validationCache = null;
+	}
+
+	/**
+	 * Updates the validation cache with a new result and timestamp.
+	 *
+	 * @param {boolean} isValid - The validation result to cache
+	 */
+	private updateValidationCache(isValid: boolean): void {
+		this.validationCache = {
+			isValid,
+			timestamp: Date.now()
+		};
+	}
+
+	/**
+	 * Checks if the MySQL/MariaDB event scheduler is enabled.
+	 *
+	 * @returns {Promise<EventSchedulerResult>} 'OK' if enabled, 'NOT_OK' if disabled, 'ERROR' on failure
+	 */
 	private async isDbSchedulerEnabled(): Promise<EventSchedulerResult> {
 		const result = await tca(
 			db.execute<EventSchedulerStatus>(sql.raw('SELECT @@event_scheduler as status;'))
 		);
 
 		if (isError(result)) {
-			console.error('Error checking event scheduler status:', result.error);
+			this.logger.error({ error: result.error }, 'Error checking event scheduler status');
 			return 'ERROR';
 		}
 
@@ -81,17 +149,28 @@ export class DbEventScheduler {
 		return status === 'ON' ? 'OK' : 'NOT_OK';
 	}
 
+	/**
+	 * Enables the MySQL/MariaDB event scheduler globally.
+	 *
+	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
+	 */
 	private async enableDbScheduler(): Promise<EventSchedulerResult> {
 		const result = await tca(db.execute(sql.raw('SET GLOBAL event_scheduler = "ON";')));
 
 		if (isError(result)) {
-			console.error('Error enabling event scheduler:', result.error);
+			this.logger.error({ error: result.error }, 'Error enabling event scheduler');
 			return 'ERROR';
 		}
 
 		return 'OK';
 	}
 
+	/**
+	 * Checks if the cleanup event exists and is properly configured.
+	 * Validates the event definition, type, interval, and other properties.
+	 *
+	 * @returns {Promise<EventSchedulerResult>} 'OK' if event exists and is valid, 'NOT_OK' if invalid/missing, 'ERROR' on failure
+	 */
 	private async eventExists(): Promise<EventSchedulerResult> {
 		const result = await tca(
 			db.execute<InformationSchemaEvents>(
@@ -113,7 +192,7 @@ export class DbEventScheduler {
 		);
 
 		if (isError(result)) {
-			console.error('Error checking if event exists:', result.error);
+			this.logger.error({ error: result.error }, 'Error checking if event exists');
 			return 'ERROR';
 		}
 
@@ -141,6 +220,11 @@ export class DbEventScheduler {
 		return 'NOT_OK';
 	}
 
+	/**
+	 * Drops the cleanup event if it exists.
+	 *
+	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
+	 */
 	private async dropEvent(): Promise<EventSchedulerResult> {
 		const result = await tca(
 			db.execute(
@@ -151,13 +235,19 @@ export class DbEventScheduler {
 		);
 
 		if (isError(result)) {
-			console.error('Error dropping event:', result.error);
+			this.logger.error({ error: result.error }, 'Error dropping event');
 			return 'ERROR';
 		}
 
 		return 'OK';
 	}
 
+	/**
+	 * Creates the cleanup event that removes expired whisprs from the database.
+	 * The event runs every minute and deletes records where expires_at < current timestamp.
+	 *
+	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
+	 */
 	private async createEvent(): Promise<EventSchedulerResult> {
 		const result = await tca(
 			db.execute(
@@ -174,7 +264,7 @@ export class DbEventScheduler {
 		);
 
 		if (isError(result)) {
-			console.error('Error creating event:', result.error);
+			this.logger.error({ error: result.error }, 'Error creating event');
 			return 'ERROR';
 		}
 

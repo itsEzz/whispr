@@ -3,6 +3,7 @@ import { createSchema } from '$lib/schemas/create-schema';
 import { db } from '$lib/server/db';
 import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
+import { createChildLogger } from '$lib/server/logger.js';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
 import { clientAppConfig } from '$lib/utils/client-app-config';
@@ -12,6 +13,8 @@ import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
+
+const logger = createChildLogger('routes.create');
 
 export const load: PageServerLoad = async () => {
 	const form = await superValidate(
@@ -32,6 +35,8 @@ export const load: PageServerLoad = async () => {
 
 export const actions = {
 	default: async (event) => {
+		const correlationId = event.locals.correlationId;
+
 		const status = await rateLimiter.check(event);
 		const form = await superValidate(event.request, zod4(createSchema));
 		if (status.limited) {
@@ -84,12 +89,12 @@ export const actions = {
 		);
 
 		if (isError(whisprId) || whisprId.data.length === 0) {
-			console.error('Failed to create whispr in database', whisprId.error);
+			logger.error({ correlationId, error: whisprId.error }, 'Failed to create whispr in database');
 			return fail(500, {
 				form,
 				error: {
 					title: 'Failed to create whispr',
-					description: "We couldn't save your whispr right now. Please try again in a few moments."
+					description: `We couldn't save your whispr right now. Please try again in a few moments. Reference ID: ${correlationId}`
 				}
 			});
 		}
@@ -99,13 +104,15 @@ export const actions = {
 		);
 
 		if (isError(whispr) || whispr.data.length === 0) {
-			console.error('Failed to retrieve whispr from database', whispr.error);
+			logger.error(
+				{ correlationId, error: whispr.error },
+				'Failed to retrieve whispr from database'
+			);
 			return fail(500, {
 				form,
 				error: {
 					title: 'Failed to retrieve whispr',
-					description:
-						"Your whispr was created but we couldn't retrieve its details. Please try again in a few moments."
+					description: `Your whispr was created but we couldn't retrieve its details. Please try again in a few moments. Reference ID: ${correlationId}`
 				}
 			});
 		}

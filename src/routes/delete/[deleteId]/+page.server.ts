@@ -2,6 +2,7 @@ import { deleteIdSchema, deleteSchema } from '$lib/schemas/delete-schema';
 import { db } from '$lib/server/db';
 import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
+import { createChildLogger } from '$lib/server/logger.js';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import { isError, tca } from '@itsezz/try-catch';
 import { error, fail } from '@sveltejs/kit';
@@ -10,7 +11,11 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 
+const logger = createChildLogger('routes.delete');
+
 export const load: PageServerLoad = async (event) => {
+	const correlationId = event.locals.correlationId;
+
 	const status = await rateLimiter.check(event);
 	if (status.limited) {
 		error(
@@ -49,7 +54,10 @@ export const load: PageServerLoad = async (event) => {
 	);
 
 	if (isError(foundWhispr)) {
-		console.error('Database error while retrieving whispr:', foundWhispr.error);
+		logger.error(
+			{ correlationId, error: foundWhispr.error },
+			'Database error while retrieving whispr'
+		);
 		error(500, 'Database connection error while retrieving whispr information');
 	}
 
@@ -71,6 +79,8 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions = {
 	default: async (event) => {
+		const correlationId = event.locals.correlationId;
+
 		const status = await rateLimiter.check(event);
 		if (status.limited) {
 			const form = await superValidate(event.request, zod4(deleteSchema));
@@ -99,12 +109,15 @@ export const actions = {
 		);
 
 		if (isError(deletedWhispr)) {
-			console.error('Database error while deleting whispr:', deletedWhispr.error);
+			logger.error(
+				{ correlationId, error: deletedWhispr.error },
+				'Database error while deleting whispr'
+			);
 			return fail(500, {
 				form,
 				error: {
 					title: 'Unable to delete whispr',
-					description: 'Something went wrong while trying to delete your whispr. Please try again.'
+					description: `Something went wrong while trying to delete your whispr. Please try again. Reference ID: ${correlationId}`
 				}
 			});
 		}

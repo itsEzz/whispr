@@ -2,6 +2,7 @@ import { idSchema } from '$lib/schemas/view-schema';
 import { db } from '$lib/server/db';
 import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
+import { createChildLogger } from '$lib/server/logger.js';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import type { ViewWhispr } from '$lib/types/view-whispr';
 import { isDateInPast } from '$lib/utils/date-helpers';
@@ -10,15 +11,22 @@ import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import type { LayoutServerLoad } from './$types';
 
-async function deleteWhispr(id: string) {
+const logger = createChildLogger('routes.view');
+
+async function deleteWhispr(id: string, correlationId: string) {
 	const deleteResult = await tca(db.delete(whispr_table).where(eq(whispr_table.id, id)));
 	if (isError(deleteResult)) {
-		console.error('Database connection error while deleting whispr:', deleteResult.error);
+		logger.error(
+			{ correlationId, error: deleteResult.error },
+			'Database connection error while deleting whispr'
+		);
 		error(500, 'Database connection error while deleting whispr');
 	}
 }
 
 export const load: LayoutServerLoad = async (event) => {
+	const correlationId = event.locals.correlationId;
+
 	const status = await rateLimiter.check(event);
 	if (status.limited) {
 		error(
@@ -40,7 +48,10 @@ export const load: LayoutServerLoad = async (event) => {
 	);
 
 	if (isError(whispr)) {
-		console.error('Database connection error while retrieving whispr:', whispr.error);
+		logger.error(
+			{ correlationId, error: whispr.error },
+			'Database connection error while retrieving whispr'
+		);
 		error(500, 'Database connection error while retrieving whispr');
 	}
 
@@ -49,17 +60,17 @@ export const load: LayoutServerLoad = async (event) => {
 	const whisprData = whispr.data[0];
 
 	if (isDateInPast(whisprData.expiresAt)) {
-		await deleteWhispr(event.params.id);
+		await deleteWhispr(event.params.id, correlationId);
 		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 0) {
-		await deleteWhispr(event.params.id);
+		await deleteWhispr(event.params.id, correlationId);
 		redirect(303, '/view?redirect-reason=expired');
 	}
 
 	if (!whisprData.unlimitedViews && whisprData.views === 1) {
-		await deleteWhispr(event.params.id);
+		await deleteWhispr(event.params.id, correlationId);
 		whisprData.views = 0;
 	} else if (!whisprData.unlimitedViews && whisprData.views > 1) {
 		const updatedWhispr = await tca(
@@ -70,7 +81,10 @@ export const load: LayoutServerLoad = async (event) => {
 		);
 
 		if (isError(updatedWhispr)) {
-			console.error('Database connection error while updating whispr:', updatedWhispr.error);
+			logger.error(
+				{ correlationId, error: updatedWhispr.error },
+				'Database connection error while updating whispr'
+			);
 			error(500, 'Database connection error while updating whispr');
 		}
 

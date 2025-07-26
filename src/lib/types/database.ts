@@ -13,3 +13,8 @@ export interface InformationSchemaEvents {
 }
 
 export type EventSchedulerResult = 'OK' | 'NOT_OK' | 'ERROR';
+
+export interface ValidationCache {
+	isValid: boolean;
+	timestamp: number;
+}

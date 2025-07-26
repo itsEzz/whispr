@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import CopyButton from '$lib/components/common/copy-button.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import type { ErrorPageConfig } from '$lib/types/error';
+	import { copyText } from '$lib/utils/copy.js';
 	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import Home from '@lucide/svelte/icons/home';
@@ -10,10 +12,19 @@
 	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import SearchX from '@lucide/svelte/icons/search-x';
 	import SvelteSeo from 'svelte-seo';
+	import type { PageProps } from './$types';
+
+	// Props
+	let { data }: PageProps = $props();
 
 	// Variables & States
 	const is404 = page.status === 404;
 	const is429 = page.status === 429;
+	const errorDetails: string[] = [
+		`Error Code: ${page.status}`,
+		`Message: ${page.error?.message ?? 'N/A'}`,
+		`Correlation ID: ${data.correlationId}`
+	];
 
 	const config: ErrorPageConfig = {
 		seo: {
@@ -50,6 +61,10 @@
 			window.location.href = '/';
 		}
 	}
+
+	async function handleCopyErrorDetails(): Promise<boolean> {
+		return await copyText(errorDetails.join('\n'));
+	}
 </script>
 
 <SvelteSeo
@@ -84,13 +99,19 @@
 						{config.description}
 					</p>
 
-					<div class="bg-muted/20 rounded-lg border p-3">
-						<p class="text-muted-foreground font-mono text-xs">
-							Error Code: {page.status}
-							{#if page.error?.message}
-								<br />
-								Message: {page.error?.message}
-							{/if}
+					<div class="bg-muted/20 relative rounded-lg border p-3">
+						<CopyButton
+							copyFn={handleCopyErrorDetails}
+							variant="ghost"
+							size="sm"
+							class="absolute top-1 right-1 size-6 p-0"
+							aria-label="Copy error details"
+						/>
+						<!-- TODO check if pr-8 is enough -->
+						<p class="text-muted-foreground pr-8 font-mono text-xs">
+							{#each errorDetails as detail}
+								{detail}<br />
+							{/each}
 						</p>
 					</div>
 
