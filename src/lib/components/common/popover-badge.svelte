@@ -10,6 +10,7 @@
 		variant?: BadgeVariant;
 		class?: string;
 		popoverContent: string | Snippet;
+		align?: 'start' | 'center' | 'end';
 		label?: string;
 		id?: string;
 	}
@@ -19,6 +20,7 @@
 		variant,
 		class: classes,
 		popoverContent,
+		align = 'center',
 		label = 'More information',
 		id = 'default'
 	}: Props = $props();
@@ -47,6 +49,7 @@
 	<Popover.Content
 		class="mx-2 w-fit max-w-[min(500px,calc(100vw-2rem))] p-2"
 		id={popoverId}
+		{align}
 		role="tooltip"
 		aria-live="polite"
 	>
