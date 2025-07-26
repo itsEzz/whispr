@@ -59,24 +59,17 @@
 			createdWhispr = result.data.response;
 		},
 		onError({ result }) {
+			const parseError = tc(() => JSON.parse(result.error.message));
 			if (result.status === 429) {
-				const parseResult = tc(() => JSON.parse(result.error.message));
-				if (isError(parseResult)) {
-					toast.error('Rate limit exceeded', {
-						description: 'Too many requests. Please wait before trying again.',
-						duration: 8000
-					});
-					return;
-				}
-				toast.error(parseResult.data.title || 'Rate limit exceeded', {
+				toast.error(parseError.data?.title || 'Rate limit exceeded', {
 					description:
-						parseResult.data.message ||
-						`Too many requests. Please wait ${parseResult.data.retryAfter || 60} seconds before trying again.`,
+						parseError.data?.message ||
+						`Too many requests. Please wait ${parseError.data?.retryAfter || 60} seconds before trying again.`,
 					duration: 8000
 				});
 			} else {
-				toast.error('Something went wrong', {
-					description: 'Please try again in a moment.'
+				toast.error(parseError.data?.title || 'Something went wrong', {
+					description: parseError.data?.message || 'Please try again in a moment.'
 				});
 			}
 		},
@@ -202,21 +195,26 @@
 		<form method="POST" use:enhance aria-labelledby="page-title">
 			<div class="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				<div class="flex flex-col lg:col-span-2">
-					<Content {form} />
+					<Content {form} disabled={!data.schedulerIsValid} />
 				</div>
 				<div class="flex flex-col">
-					<Options {form} bind:password {passwordOptionsComponent} />
+					<Options
+						{form}
+						bind:password
+						{passwordOptionsComponent}
+						disabled={!data.schedulerIsValid}
+					/>
 					<div class="mt-4 flex w-full justify-end gap-2">
 						<Button
 							variant="destructive"
 							onclick={handleClickOpenResetDialog}
-							disabled={!isFormDirty || $submitting}
+							disabled={!isFormDirty || $submitting || !data.schedulerIsValid}
 							aria-label="Reset form"
 						>
 							Reset<Eraser aria-hidden="true" />
 						</Button>
 						<Form.Button
-							disabled={$submitting || !isFormValid}
+							disabled={$submitting || !isFormValid || !data.schedulerIsValid}
 							aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
 						>
 							Create whispr

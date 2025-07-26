@@ -141,7 +141,7 @@
 												{...props}
 												{...$constraints.confirm}
 												bind:checked={$formData.confirm}
-												disabled={$submitting}
+												disabled={$submitting || !data.schedulerIsValid}
 												aria-describedby={$errors.confirm
 													? 'confirm-error confirm-description'
 													: 'confirm-description'}
@@ -164,7 +164,7 @@
 
 						<Card.Footer class="flex justify-end pt-6">
 							<Form.Button
-								disabled={$submitting || !isFormValid}
+								disabled={$submitting || !isFormValid || !data.schedulerIsValid}
 								aria-busy={$submitting}
 								variant="destructive"
 							>

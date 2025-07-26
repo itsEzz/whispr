@@ -1,6 +1,7 @@
 import { ttlUnits } from '$lib/constants/ttl-units';
 import { createSchema } from '$lib/schemas/create-schema';
 import { db } from '$lib/server/db';
+import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
@@ -39,6 +40,16 @@ export const actions = {
 				error: {
 					title: 'Rate limit exceeded',
 					description: `Too many requests. Please wait ${status.retryAfter} seconds before creating another whispr.`
+				}
+			});
+		}
+
+		if (!(await dbEventScheduler.isValid())) {
+			return fail(503, {
+				form,
+				error: {
+					title: 'Service Unavailable',
+					description: 'The whispr service is currently unavailable. Please try again later.'
 				}
 			});
 		}

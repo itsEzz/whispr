@@ -1,5 +1,6 @@
 import { deleteIdSchema, deleteSchema } from '$lib/schemas/delete-schema';
 import { db } from '$lib/server/db';
+import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import { isError, tca } from '@itsezz/try-catch';
@@ -17,6 +18,9 @@ export const load: PageServerLoad = async (event) => {
 			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
 		);
 	}
+
+	if (!(await dbEventScheduler.isValid()))
+		error(503, 'The whispr service is currently unavailable. Please try again later.');
 
 	const { deleteId } = event.params;
 

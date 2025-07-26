@@ -300,7 +300,7 @@
 	</header>
 
 	<main id="main-content" class="flex-1" tabindex="-1">
-		<ServiceIssueAlert show={!data.schedulerStatus} />
+		<ServiceIssueAlert show={!data.schedulerIsValid} />
 		<InsecureAlert />
 		{@render children()}
 	</main>

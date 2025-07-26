@@ -1,4 +1,5 @@
 import { viewSchema } from '$lib/schemas/view-schema';
+import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
@@ -20,6 +21,16 @@ export const actions: Actions = {
 				error: {
 					title: 'Rate limit exceeded',
 					description: `Too many requests. Please wait ${status.retryAfter} seconds before trying to view another whispr.`
+				}
+			});
+		}
+
+		if (!(await dbEventScheduler.isValid())) {
+			return fail(503, {
+				form,
+				error: {
+					title: 'Service Unavailable',
+					description: 'The whispr service is currently unavailable. Please try again later.'
 				}
 			});
 		}

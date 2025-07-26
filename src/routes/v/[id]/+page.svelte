@@ -15,4 +15,4 @@
 	nositelinkssearchbox={true}
 />
 
-<ViewWhispr whispr={data.whispr} />
+<ViewWhispr whispr={data.whispr} disabled={!data.schedulerIsValid} />

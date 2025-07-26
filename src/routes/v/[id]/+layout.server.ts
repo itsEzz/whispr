@@ -1,5 +1,6 @@
 import { idSchema } from '$lib/schemas/view-schema';
 import { db } from '$lib/server/db';
+import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import { whispr_table } from '$lib/server/db/schema';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import type { ViewWhispr } from '$lib/types/view-whispr';
@@ -24,6 +25,10 @@ export const load: LayoutServerLoad = async (event) => {
 			429,
 			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
 		);
+	}
+
+	if (!(await dbEventScheduler.isValid())) {
+		error(503, 'The whispr service is currently unavailable. Please try again later.');
 	}
 
 	const validationResult = idSchema.safeParse(event.params.id);

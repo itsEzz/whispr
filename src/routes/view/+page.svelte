@@ -9,7 +9,7 @@
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
 	import { getFullUrl } from '$lib/utils/seo.js';
-	import { isError, tc } from '@itsezz/try-catch';
+	import { tc } from '@itsezz/try-catch';
 	import Eye from '@lucide/svelte/icons/eye';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import SvelteSeo from 'svelte-seo';
@@ -45,24 +45,17 @@
 			);
 		},
 		onError({ result }) {
+			const parseError = tc(() => JSON.parse(result.error.message));
 			if (result.status === 429) {
-				const parseResult = tc(() => JSON.parse(result.error.message));
-				if (isError(parseResult)) {
-					toast.error('Rate limit exceeded', {
-						description: 'Too many requests. Please wait before trying again.',
-						duration: 8000
-					});
-					return;
-				}
-				toast.error(parseResult.data.title || 'Rate limit exceeded', {
+				toast.error(parseError.data?.title || 'Rate limit exceeded', {
 					description:
-						parseResult.data.message ||
-						`Too many requests. Please wait ${parseResult.data.retryAfter || 60} seconds before trying again.`,
+						parseError.data?.message ||
+						`Too many requests. Please wait ${parseError.data?.retryAfter || 60} seconds before trying again.`,
 					duration: 8000
 				});
 			} else {
-				toast.error('Something went wrong', {
-					description: 'Please try again in a moment.'
+				toast.error(parseError.data?.title || 'Something went wrong', {
+					description: parseError.data?.message || 'Please try again in a moment.'
 				});
 			}
 		}
@@ -160,6 +153,7 @@
 									{...props}
 									{...$constraints.id}
 									bind:value={$formData.id}
+									disabled={$submitting || !data.schedulerIsValid}
 									placeholder="e.g., apple-tree-house"
 									aria-describedby={$errors.id ? 'id-error' : undefined}
 									class={cn($errors.id && 'border-destructive focus-visible:ring-destructive/50')}
@@ -175,7 +169,7 @@
 
 			<Card.Footer class="flex justify-end">
 				<Form.Button
-					disabled={$submitting || !isFormValid}
+					disabled={$submitting || !isFormValid || !data.schedulerIsValid}
 					aria-busy={$submitting}
 					onclick={submit}
 				>

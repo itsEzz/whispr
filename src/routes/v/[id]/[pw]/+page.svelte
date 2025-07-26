@@ -16,4 +16,8 @@
 	nositelinkssearchbox={true}
 />
 
-<ViewWhispr whispr={data.whispr} encodedUrlPassword={page.params.pw} />
+<ViewWhispr
+	whispr={data.whispr}
+	encodedUrlPassword={page.params.pw}
+	disabled={!data.schedulerIsValid}
+/>
