@@ -1,25 +1,27 @@
+import { ttlUnits } from '$lib/constants/ttl-units';
+import { createSchema } from '$lib/schemas/create-schema';
 import { db } from '$lib/server/db';
 import { whispr_table } from '$lib/server/db/schema';
 import { rateLimiter } from '$lib/server/rate-limiter';
 import type { CreatedWhispr } from '$lib/types/created-whispr';
+import { clientAppConfig } from '$lib/utils/client-app-config';
 import { isError, tca } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { createSchema, ttlUnits } from '../lib/schemas/create-schema';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	const form = await superValidate(
 		{
-			views: 10,
-			ttlValue: 1,
-			ttlUnit: 'hours',
-			showViews: true,
-			showTtl: true,
-			showCopyButton: true,
-			showDownloadButton: true
+			views: clientAppConfig.PUBLIC_VIEWS_DEFAULT,
+			ttlValue: clientAppConfig.PUBLIC_EXPIRES_IN_VALUE_DEFAULT,
+			ttlUnit: clientAppConfig.PUBLIC_EXPIRES_IN_UNIT_DEFAULT,
+			showViews: clientAppConfig.PUBLIC_VIEWS_SHOW_RECIPIENTS_DEFAULT,
+			showTtl: clientAppConfig.PUBLIC_EXPIRES_IN_SHOW_RECIPIENTS_DEFAULT,
+			showCopyButton: clientAppConfig.PUBLIC_SHOW_COPY_BUTTON_DEFAULT,
+			showDownloadButton: clientAppConfig.PUBLIC_SHOW_DOWNLOAD_BUTTON_DEFAULT
 		},
 		zod4(createSchema)
 	);

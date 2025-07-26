@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { cn } from '$lib/utils';
+	import { clientAppConfig } from '$lib/utils/client-app-config';
 	import { getAcceptAttribute, validateTextFile } from '$lib/utils/file-validation';
+	import Text from '@lucide/svelte/icons/text';
 	import Upload from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';
 	import FormError from '../common/form-error.svelte';
+	import PopoverBadge from '../common/popover-badge.svelte';
 
 	// Props
 	interface Props {
@@ -22,6 +24,9 @@
 	// Variables & States
 	let fileInput: HTMLInputElement;
 	const { form: formData, errors, constraints, submitting } = form;
+	const readableLength = $derived(getReadableContentLength($formData.content.length));
+	const minLength = clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH;
+	const maxLength = clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH;
 
 	// Handler Functions
 	function handleClickFileUpload() {
@@ -75,7 +80,7 @@
 	}
 
 	// Functions
-	function handleGetReadableContentLength(length: number): string {
+	function getReadableContentLength(length: number): string {
 		if (length < 1000) {
 			return length.toString();
 		} else if (length < 1000000) {
@@ -115,11 +120,11 @@
 					class={cn(
 						'max-h-96 min-h-96 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full'
 					)}
-					placeholder="Enter your note here or upload a file..."
+					placeholder="Enter your message here or upload a file..."
 					aria-label="Content to encrypt"
 					aria-describedby={$errors.content ? 'content-error' : undefined}
 				/>
-				<div class="dark:bg-input/30 flex flex-shrink-0 items-center bg-transparent p-3">
+				<div class="dark:bg-input/30 flex flex-shrink-0 items-center border-t bg-transparent p-3">
 					<Button
 						size="sm"
 						variant="ghost"
@@ -133,18 +138,33 @@
 						<Upload />
 					</Button>
 					<div class="ml-auto gap-1.5">
-						<Badge variant="outline" aria-label="Content length">
-							{handleGetReadableContentLength($formData.content.length)} character{$formData.content
-								.length !== 1
-								? 's'
-								: ''}
-							<span class="sr-only">
-								{handleGetReadableContentLength($formData.content.length)} character{$formData
-									.content.length !== 1
-									? 's'
-									: ''}
-							</span>
-						</Badge>
+						<PopoverBadge variant="outline" id="views-badge">
+							{#snippet content()}
+								<Text size={16} aria-hidden="true" />
+								{readableLength} character{$formData.content.length !== 1 ? 's' : ''}
+							{/snippet}
+							{#snippet popoverContent()}
+								<div class="min-w-48 space-y-2">
+									<div class="bg-muted h-2 w-full overflow-hidden rounded-full">
+										<div
+											class={cn(
+												'h-full transition-all duration-300 ease-out',
+												$formData.content.length >= maxLength
+													? 'bg-destructive'
+													: $formData.content.length > maxLength * 0.9
+														? 'text-yellow-600 dark:text-yellow-500'
+														: 'bg-primary'
+											)}
+											style="width: {Math.min(($formData.content.length / maxLength) * 100, 100)}%"
+										></div>
+									</div>
+									<div class="text-muted-foreground flex justify-between text-xs">
+										<span>Min: {getReadableContentLength(minLength)}</span>
+										<span>Max: {getReadableContentLength(maxLength)}</span>
+									</div>
+								</div>
+							{/snippet}
+						</PopoverBadge>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { env } from '$env/dynamic/public';
+import { clientAppConfig } from './client-app-config';
 
 /**
  * Gets the base URL for the application.
@@ -11,9 +11,8 @@ import { env } from '$env/dynamic/public';
  */
 export function getBaseUrl(): string {
 	// Try to get from environment variable for consistent SEO URLs
-	const envBaseUrl = env.PUBLIC_BASE_URL;
-	if (envBaseUrl) {
-		return envBaseUrl;
+	if (clientAppConfig.PUBLIC_BASE_URL) {
+		return clientAppConfig.PUBLIC_BASE_URL;
 	}
 
 	// Fallback to browser location for development/local testing
