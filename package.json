@@ -44,6 +44,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"db:drop": "drizzle-kit drop"
@@ -55,6 +56,7 @@
 		"@itsezz/try-catch": "^1.1.0",
 		"@lucide/svelte": "^0.515.0",
 		"@sveltejs/adapter-auto": "^4.0.0",
+		"@sveltejs/adapter-node": "^5.2.13",
 		"@sveltejs/kit": "^2.26.1",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
 		"@tailwindcss/vite": "^4.1.11",
