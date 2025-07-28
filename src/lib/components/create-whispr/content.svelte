@@ -119,7 +119,7 @@
 					bind:value={$formData.content}
 					disabled={$submitting || disabled}
 					class={cn(
-						'max-h-96 min-h-96 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full'
+						'max-h-96 min-h-32 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full '
 					)}
 					placeholder="Enter your message here or upload a file..."
 					aria-label="Content to encrypt"

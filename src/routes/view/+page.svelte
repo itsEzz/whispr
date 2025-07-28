@@ -131,57 +131,55 @@
 	onConfirm={openNavigateAwayDialog.onConfirm}
 />
 
-<div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
-	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
-		<Card.Root class="w-full max-w-md">
-			<Card.Header>
-				<Card.Title id="page-title">
-					<div class="flex items-center">
-						<Eye class="mr-2" aria-hidden="true" /> View Whispr
-					</div>
-				</Card.Title>
-				<Card.Description>Provide your Whispr ID to view the secure message.</Card.Description>
-			</Card.Header>
+<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
+	<Card.Root class="w-full max-w-md">
+		<Card.Header>
+			<Card.Title id="page-title">
+				<div class="flex items-center">
+					<Eye class="mr-2" aria-hidden="true" /> View Whispr
+				</div>
+			</Card.Title>
+			<Card.Description>Provide your Whispr ID to view the secure message.</Card.Description>
+		</Card.Header>
 
-			<Card.Content>
-				<form method="POST" use:enhance autocomplete="off">
-					<Form.Field {form} name="id">
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Whispr ID</Form.Label>
-								<Input
-									{...props}
-									{...$constraints.id}
-									bind:value={$formData.id}
-									disabled={$submitting || !data.schedulerIsValid}
-									placeholder="e.g., apple-tree-house"
-									aria-describedby={$errors.id ? 'id-error' : undefined}
-									class={cn($errors.id && 'border-destructive focus-visible:ring-destructive/50')}
-									autocomplete="off"
-									autofocus
-								/>
-							{/snippet}
-						</Form.Control>
-						<FormError errors={$errors.id} id="id-error" />
-					</Form.Field>
-				</form>
-			</Card.Content>
+		<Card.Content>
+			<form method="POST" use:enhance autocomplete="off">
+				<Form.Field {form} name="id">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Whispr ID</Form.Label>
+							<Input
+								{...props}
+								{...$constraints.id}
+								bind:value={$formData.id}
+								disabled={$submitting || !data.schedulerIsValid}
+								placeholder="e.g., apple-tree-house"
+								aria-describedby={$errors.id ? 'id-error' : undefined}
+								class={cn($errors.id && 'border-destructive focus-visible:ring-destructive/50')}
+								autocomplete="off"
+								autofocus
+							/>
+						{/snippet}
+					</Form.Control>
+					<FormError errors={$errors.id} id="id-error" />
+				</Form.Field>
+			</form>
+		</Card.Content>
 
-			<Card.Footer class="flex justify-end">
-				<Form.Button
-					disabled={$submitting || !isFormValid || !data.schedulerIsValid}
-					aria-busy={$submitting}
-					onclick={submit}
-				>
-					{#if $submitting}
-						Loading Whispr...
-						<LoaderCircle class="animate-spin" aria-hidden="true" />
-					{:else}
-						View Whispr
-						<Eye aria-hidden="true" />
-					{/if}
-				</Form.Button>
-			</Card.Footer>
-		</Card.Root>
-	</div>
+		<Card.Footer class="flex justify-end">
+			<Form.Button
+				disabled={$submitting || !isFormValid || !data.schedulerIsValid}
+				aria-busy={$submitting}
+				onclick={submit}
+			>
+				{#if $submitting}
+					Loading Whispr...
+					<LoaderCircle class="animate-spin" aria-hidden="true" />
+				{:else}
+					View Whispr
+					<Eye aria-hidden="true" />
+				{/if}
+			</Form.Button>
+		</Card.Footer>
+	</Card.Root>
 </div>

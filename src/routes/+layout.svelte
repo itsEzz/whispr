@@ -129,7 +129,7 @@
 	</p>
 {/snippet}
 
-<div class="bg-background grid min-h-screen grid-rows-[auto_1fr_auto]">
+<div class="bg-background flex h-screen flex-col">
 	<header
 		class="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-sm"
 	>
@@ -299,15 +299,13 @@
 		</div>
 	</header>
 
-	<main id="main-content" class="flex-1" tabindex="-1">
+	<main id="main-content" class="container flex min-h-0 flex-1 flex-col p-4" tabindex="-1">
 		<ServiceIssueAlert show={!data.schedulerIsValid} />
 		<InsecureAlert />
 		{@render children()}
 	</main>
 
-	<footer class="border-t py-2">
-		<div class="container flex flex-col items-center justify-between gap-2">
-			{@render footer()}
-		</div>
+	<footer class="flex h-14 flex-shrink-0 flex-col items-center justify-between border-t py-2">
+		{@render footer()}
 	</footer>
 </div>

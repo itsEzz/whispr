@@ -189,45 +189,37 @@
 	{randomPassword}
 />
 
-<div class="container mx-auto flex h-full flex-col overflow-hidden p-4">
-	<h1 class="mb-4 px-1 text-2xl font-bold" id="page-title">Create Whispr</h1>
-	<div class="flex-1 overflow-auto p-1">
-		<form method="POST" use:enhance aria-labelledby="page-title">
-			<div class="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				<div class="flex flex-col lg:col-span-2">
-					<Content {form} disabled={!data.schedulerIsValid} />
-				</div>
-				<div class="flex flex-col">
-					<Options
-						{form}
-						bind:password
-						{passwordOptionsComponent}
-						disabled={!data.schedulerIsValid}
-					/>
-					<div class="mt-4 flex w-full justify-end gap-2">
-						<Button
-							variant="destructive"
-							onclick={handleClickOpenResetDialog}
-							disabled={!isFormDirty || $submitting || !data.schedulerIsValid}
-							aria-label="Reset form"
-						>
-							Reset<Eraser aria-hidden="true" />
-						</Button>
-						<Form.Button
-							disabled={$submitting || !isFormValid || !data.schedulerIsValid}
-							aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
-						>
-							Create whispr
-							{#if $submitting}
-								<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
-								<span class="sr-only">Creating whispr...</span>
-							{:else}
-								<Send aria-hidden="true" />
-							{/if}
-						</Form.Button>
-					</div>
-				</div>
+<h1 class="mb-4 text-2xl font-bold" id="page-title">Create Whispr</h1>
+
+<form method="POST" use:enhance aria-labelledby="page-title" class="sm:h-full sm:min-h-0">
+	<div class="grid grid-cols-1 gap-4 sm:h-full sm:grid-cols-2 lg:grid-cols-3">
+		<div class="flex flex-col sm:min-h-0 lg:col-span-2">
+			<Content {form} disabled={!data.schedulerIsValid} />
+		</div>
+		<div class="flex flex-col">
+			<Options {form} bind:password {passwordOptionsComponent} disabled={!data.schedulerIsValid} />
+			<div class="mt-4 flex w-full justify-end gap-2">
+				<Button
+					variant="destructive"
+					onclick={handleClickOpenResetDialog}
+					disabled={!isFormDirty || $submitting || !data.schedulerIsValid}
+					aria-label="Reset form"
+				>
+					Reset<Eraser aria-hidden="true" />
+				</Button>
+				<Form.Button
+					disabled={$submitting || !isFormValid || !data.schedulerIsValid}
+					aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
+				>
+					Create whispr
+					{#if $submitting}
+						<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
+						<span class="sr-only">Creating whispr...</span>
+					{:else}
+						<Send aria-hidden="true" />
+					{/if}
+				</Form.Button>
 			</div>
-		</form>
+		</div>
 	</div>
-</div>
+</form>
