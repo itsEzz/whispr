@@ -96,7 +96,6 @@
 			disabled={disabled || loading}
 			type={showPassword ? 'text' : 'password'}
 			id="whispr-password"
-			name="password"
 			placeholder="Enter a secure password"
 			min={1}
 			max={1000}
