@@ -21,7 +21,7 @@
 </script>
 
 {#if show && !hideSchedulerAlert}
-	<div class="container mx-auto px-4 pt-4">
+	<div class="container mx-auto px-0 pb-2">
 		<Alert.Root
 			class="border-destructive/20 bg-destructive/10 text-destructive [&>svg]:text-current"
 		>

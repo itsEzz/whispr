@@ -21,7 +21,7 @@
 </script>
 
 {#if isInsecureConnection}
-	<div class="container mx-auto px-4 pt-4">
+	<div class="container mx-auto px-0 pb-2">
 		<Alert.Root
 			class="border-orange-300/30 bg-orange-500/10 text-orange-700 dark:border-orange-400/30 dark:bg-orange-400/10 dark:text-orange-300 [&>svg]:text-current"
 		>
