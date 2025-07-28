@@ -72,9 +72,9 @@
 						{#snippet content()}
 							<Eye size={16} aria-hidden="true" />
 							{#if whispr.unlimitedViews === true}
-								Unlimited views
+								Unlimited views left
 							{:else}
-								<span>{whispr.views} {whispr.views === 1 ? 'view' : 'views'}</span>
+								<span>{whispr.views} {whispr.views === 1 ? 'view' : 'views'} left</span>
 							{/if}
 						{/snippet}
 						{#snippet popoverContent()}
