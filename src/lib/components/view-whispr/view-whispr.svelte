@@ -1,5 +1,5 @@
 <script lang="ts">
-	import aes from '$lib/crypto/aes';
+	import aesWorker from '$lib/crypto/aes-worker';
 	import { viewPasswordSchema } from '$lib/schemas/view-schema';
 	import type { ViewWhispr } from '$lib/types/view-whispr';
 	import { isError, tc, tca } from '@itsezz/try-catch';
@@ -35,7 +35,8 @@
 		invalidateAll: false,
 		onUpdate: async ({ form }) => {
 			if (!form.valid) return;
-			const decryptionResult = await tca(aes.decrypt(whispr.content, form.data.password));
+
+			const decryptionResult = await tca(aesWorker.decrypt(whispr.content, form.data.password));
 
 			if (isError(decryptionResult)) {
 				setError(form, 'password', 'Invalid password');

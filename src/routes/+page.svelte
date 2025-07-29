@@ -6,7 +6,7 @@
 	import Options from '$lib/components/create-whispr/options.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
-	import aes from '$lib/crypto/aes';
+	import aesWorker from '$lib/crypto/aes-worker';
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
@@ -39,8 +39,18 @@
 
 	const form = superForm(data.form, {
 		validators: zod4Client(createSchema),
+		resetForm: false,
 		onSubmit: async ({ formData, cancel }) => {
 			const originalContent = formData.get('content')?.toString();
+
+			// Security: Remove password-related fields from form data
+			// This ensures passwords never reach the backend, even if accidentally added
+			for (const [key] of formData.entries()) {
+				if (key.toLowerCase().includes('password') || key.toLowerCase().includes('pwd')) {
+					formData.delete(key);
+				}
+			}
+
 			const content = await getEncryptedContent(originalContent);
 			if (!content) {
 				cancel();
@@ -122,7 +132,8 @@
 			return null;
 		}
 
-		const encryptedContent = await tca(aes.encrypt(content, pwd.data));
+		const encryptedContent = await tca(aesWorker.encrypt(content, pwd.data));
+
 		if (isError(encryptedContent)) {
 			toast.error('Encryption issue', {
 				description: "We're having trouble encrypting your content. Please try again."
@@ -211,11 +222,12 @@
 					disabled={$submitting || !isFormValid || !data.schedulerIsValid}
 					aria-label={$submitting ? 'Creating whispr...' : 'Create whispr'}
 				>
-					Create whispr
 					{#if $submitting}
+						Creating whispr...
 						<LoaderCircle class="animate-spin" aria-hidden="true" role="status" />
 						<span class="sr-only">Creating whispr...</span>
 					{:else}
+						Create whispr
 						<Send aria-hidden="true" />
 					{/if}
 				</Form.Button>
