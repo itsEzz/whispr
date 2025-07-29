@@ -1,8 +1,7 @@
-import { building } from '$app/environment';
 import { dbEventScheduler } from '$lib/server/db/event-scheduler.js';
 import { validateEnv } from '$lib/server/env-validation.js';
 import { getLogger } from '$lib/server/logger.js';
-import type { Handle } from '@sveltejs/kit';
+import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
 import { humanId } from 'human-id';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -15,7 +14,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-if (!building) {
+export const handleError: HandleServerError = async ({ error, event, status, message }) => {
+	const correlationId = event.locals.correlationId;
+
+	const logger = getLogger();
+	logger.error(
+		{ correlationId, path: event.url.pathname, method: event.request.method, status, error },
+		message
+	);
+};
+
+export const init: ServerInit = async () => {
 	const logger = getLogger();
 
 	try {
@@ -27,4 +36,4 @@ if (!building) {
 		logger.error(error, 'App initialization failed');
 		throw error;
 	}
-}
+};
