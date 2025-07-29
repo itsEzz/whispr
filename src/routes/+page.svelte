@@ -202,7 +202,7 @@
 
 <h1 class="mb-4 text-2xl font-bold" id="page-title">Create Whispr</h1>
 
-<form method="POST" use:enhance aria-labelledby="page-title" class="sm:h-full sm:min-h-0">
+<form method="POST" use:enhance aria-labelledby="page-title" class="sm:min-h-0">
 	<div class="grid grid-cols-1 gap-4 sm:h-full sm:grid-cols-2 lg:grid-cols-3">
 		<div class="flex flex-col sm:min-h-0 lg:col-span-2">
 			<Content {form} disabled={!data.schedulerIsValid} />
