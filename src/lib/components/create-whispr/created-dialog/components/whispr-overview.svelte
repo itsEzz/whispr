@@ -6,7 +6,6 @@
 	import Copy from '@lucide/svelte/icons/copy';
 	import Download from '@lucide/svelte/icons/download';
 	import Eye from '@lucide/svelte/icons/eye';
-	import { MediaQuery } from 'svelte/reactivity';
 
 	// Props
 	interface Props {
