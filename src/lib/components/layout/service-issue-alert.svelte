@@ -28,9 +28,9 @@
 			<TriangleAlert aria-hidden="true" />
 			<Alert.Title>Service issue detected</Alert.Title>
 			<Alert.Description class="text-destructive">
-				This instance has a critical configuration issue. All website features are currently
-				disabled until this issue is fixed.<br /> We're sorry for the inconvenience. Please contact the
-				site administrator to resolve this issue.
+				This instance has a critical issue. All website features are currently disabled until this
+				issue is fixed.<br /> We're sorry for the inconvenience. Please contact the site administrator
+				to resolve this issue.
 			</Alert.Description>
 			<Button
 				variant="ghost"
