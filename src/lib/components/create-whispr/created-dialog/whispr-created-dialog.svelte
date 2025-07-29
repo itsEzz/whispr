@@ -7,7 +7,7 @@
 	import DialogDrawer from '../../common/dialog-drawer.svelte';
 	import WhisprAccordion from './components/whispr-accordion.svelte';
 	import WhisprLink from './components/whispr-link.svelte';
-	import WhisprNoPassword from './components/whispr-no-password.svelte';
+	import WhisprNoCustomPassword from './components/whispr-no-custom-password.svelte';
 	import WhisprOverview from './components/whispr-overview.svelte';
 
 	// Props
@@ -50,7 +50,7 @@
 	{#snippet body()}
 		<div class="grid h-full items-start gap-2">
 			{#if randomPassword !== null}
-				<WhisprNoPassword />
+				<WhisprNoCustomPassword />
 			{/if}
 
 			<WhisprOverview {createdWhispr} />
