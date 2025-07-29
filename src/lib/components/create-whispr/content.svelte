@@ -62,22 +62,28 @@
 
 		reader.onload = (e) => {
 			const content = e.target?.result as string;
-			if (content) {
+			if (content.length > maxLength) {
+				const truncatedContent = content.substring(0, maxLength);
+				$formData.content = truncatedContent;
+				toast.success('File uploaded successfully', {
+					description: `File '${file.name}' has been loaded into the editor, but was truncated because it exceeded the maximum length.`
+				});
+			} else if (content) {
 				$formData.content = content;
 				toast.success('File uploaded successfully', {
 					description: `'${file.name}' has been loaded into the editor.`
 				});
 			}
+			target.value = '';
 		};
 
 		reader.onerror = () => {
 			toast.error('Upload failed', {
 				description: 'There was an error reading the file. Please try again.'
 			});
+			target.value = '';
 		};
 		reader.readAsText(file);
-
-		target.value = '';
 	}
 
 	// Functions
