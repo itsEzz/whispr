@@ -147,8 +147,19 @@
 					<div class="ml-auto gap-1.5">
 						<PopoverBadge variant="outline" id="views-badge" {disabled}>
 							{#snippet content()}
-								<Text size={16} aria-hidden="true" />
-								{readableLength} character{$formData.content.length !== 1 ? 's' : ''}
+								<span
+									class={cn(
+										'flex items-center gap-2',
+										$formData.content.length >= maxLength
+											? 'text-destructive'
+											: $formData.content.length > maxLength * 0.9
+												? 'text-yellow-600 dark:text-yellow-500'
+												: 'text-current'
+									)}
+								>
+									<Text size={16} aria-hidden="true" />
+									{readableLength} character{$formData.content.length !== 1 ? 's' : ''}
+								</span>
 							{/snippet}
 							{#snippet popoverContent()}
 								<div class="min-w-48 space-y-2">
