@@ -5,6 +5,7 @@
 	import { cn } from '$lib/utils';
 	import { clientAppConfig } from '$lib/utils/client-app-config';
 	import { getAcceptAttribute, validateTextFile } from '$lib/utils/file-validation';
+	import { getReadableContentLength } from '$lib/utils/misc';
 	import Text from '@lucide/svelte/icons/text';
 	import Upload from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
@@ -84,17 +85,6 @@
 			target.value = '';
 		};
 		reader.readAsText(file);
-	}
-
-	// Functions
-	function getReadableContentLength(length: number): string {
-		if (length < 1000) {
-			return length.toString();
-		} else if (length < 1000000) {
-			return (length / 1000).toFixed(1) + 'k';
-		} else {
-			return (length / 1000000).toFixed(1) + 'M';
-		}
 	}
 </script>
 
