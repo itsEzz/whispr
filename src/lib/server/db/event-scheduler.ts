@@ -135,6 +135,11 @@ export class DbEventScheduler {
 	 * @returns {Promise<EventSchedulerResult>} 'OK' if enabled, 'NOT_OK' if disabled, 'ERROR' on failure
 	 */
 	private async isDbSchedulerEnabled(): Promise<EventSchedulerResult> {
+		if (!db) {
+			this.logger.error('Database connection is not initialized');
+			return 'ERROR';
+		}
+
 		const result = await tca(
 			db.execute<EventSchedulerStatus>(sql.raw('SELECT @@event_scheduler as status;'))
 		);
@@ -155,6 +160,11 @@ export class DbEventScheduler {
 	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
 	 */
 	private async enableDbScheduler(): Promise<EventSchedulerResult> {
+		if (!db) {
+			this.logger.error('Database connection is not initialized');
+			return 'ERROR';
+		}
+
 		const result = await tca(db.execute(sql.raw('SET GLOBAL event_scheduler = "ON";')));
 
 		if (isError(result)) {
@@ -172,6 +182,11 @@ export class DbEventScheduler {
 	 * @returns {Promise<EventSchedulerResult>} 'OK' if event exists and is valid, 'NOT_OK' if invalid/missing, 'ERROR' on failure
 	 */
 	private async eventExists(): Promise<EventSchedulerResult> {
+		if (!db) {
+			this.logger.error('Database connection is not initialized');
+			return 'ERROR';
+		}
+
 		const result = await tca(
 			db.execute<InformationSchemaEvents>(
 				sql.raw(`
@@ -226,6 +241,11 @@ export class DbEventScheduler {
 	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
 	 */
 	private async dropEvent(): Promise<EventSchedulerResult> {
+		if (!db) {
+			this.logger.error('Database connection is not initialized');
+			return 'ERROR';
+		}
+
 		const result = await tca(
 			db.execute(
 				sql.raw(`
@@ -249,6 +269,11 @@ export class DbEventScheduler {
 	 * @returns {Promise<EventSchedulerResult>} 'OK' on success, 'ERROR' on failure
 	 */
 	private async createEvent(): Promise<EventSchedulerResult> {
+		if (!db) {
+			this.logger.error('Database connection is not initialized');
+			return 'ERROR';
+		}
+
 		const result = await tca(
 			db.execute(
 				sql.raw(`

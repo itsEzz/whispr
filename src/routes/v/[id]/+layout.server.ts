@@ -14,6 +14,11 @@ import type { LayoutServerLoad } from './$types';
 const logger = createChildLogger('routes.view');
 
 async function deleteWhispr(id: string, correlationId: string) {
+	if (!db) {
+		logger.error({ correlationId }, 'Database connection is not available');
+		error(503, 'The whispr service is currently unavailable. Please try again later.');
+	}
+
 	const deleteResult = await tca(db.delete(whispr_table).where(eq(whispr_table.id, id)));
 	if (isError(deleteResult)) {
 		logger.error(
@@ -28,23 +33,26 @@ export const load: LayoutServerLoad = async (event) => {
 	const correlationId = event.locals.correlationId;
 
 	const status = await rateLimiter.check(event);
-	if (status.limited) {
+	if (status.limited)
 		error(
 			429,
 			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
 		);
-	}
 
-	if (!(await dbEventScheduler.isValid())) {
+	if (!db) {
+		logger.error({ correlationId }, 'Database connection is not available');
 		error(503, 'The whispr service is currently unavailable. Please try again later.');
 	}
+
+	if (!(await dbEventScheduler.isValid()))
+		error(503, 'The whispr service is currently unavailable. Please try again later.');
 
 	const validationResult = idSchema.safeParse(event.params.id);
 
 	if (!validationResult.success) redirect(303, '/view?redirect-reason=invalid-id');
 
 	const whispr = await tca(
-		db.select().from(whispr_table).where(eq(whispr_table.id, event.params.id))
+		db!.select().from(whispr_table).where(eq(whispr_table.id, event.params.id))
 	);
 
 	if (isError(whispr)) {

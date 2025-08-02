@@ -17,11 +17,15 @@ export const load: PageServerLoad = async (event) => {
 	const correlationId = event.locals.correlationId;
 
 	const status = await rateLimiter.check(event);
-	if (status.limited) {
+	if (status.limited)
 		error(
 			429,
 			`Rate limit exceeded. Please wait ${status.retryAfter} seconds before trying again.`
 		);
+
+	if (!db) {
+		logger.error({ correlationId }, 'Database connection is not available');
+		error(503, 'The whispr service is currently unavailable. Please try again later.');
 	}
 
 	if (!(await dbEventScheduler.isValid()))
@@ -89,6 +93,16 @@ export const actions = {
 				error: {
 					title: 'Rate limit exceeded',
 					description: `Too many requests. Please wait ${status.retryAfter} seconds before trying to delete again.`
+				}
+			});
+		}
+
+		if (!db) {
+			logger.error({ correlationId }, 'Database connection is not available');
+			return fail(503, {
+				error: {
+					title: 'Service Unavailable',
+					description: 'The whispr service is currently unavailable. Please try again later.'
 				}
 			});
 		}

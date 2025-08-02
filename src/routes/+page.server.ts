@@ -39,7 +39,7 @@ export const actions = {
 
 		const status = await rateLimiter.check(event);
 		const form = await superValidate(event.request, zod4(createSchema));
-		if (status.limited) {
+		if (status.limited)
 			return fail(429, {
 				form,
 				error: {
@@ -47,9 +47,9 @@ export const actions = {
 					description: `Too many requests. Please wait ${status.retryAfter} seconds before creating another whispr.`
 				}
 			});
-		}
 
-		if (!(await dbEventScheduler.isValid())) {
+		if (!db) {
+			logger.error({ correlationId }, 'Database connection is not available');
 			return fail(503, {
 				form,
 				error: {
@@ -59,7 +59,16 @@ export const actions = {
 			});
 		}
 
-		if (!form.valid) {
+		if (!(await dbEventScheduler.isValid()))
+			return fail(503, {
+				form,
+				error: {
+					title: 'Service Unavailable',
+					description: 'The whispr service is currently unavailable. Please try again later.'
+				}
+			});
+
+		if (!form.valid)
 			return fail(400, {
 				form,
 				error: {
@@ -67,7 +76,6 @@ export const actions = {
 					description: 'Please ensure you have filled out the form correctly.'
 				}
 			});
-		}
 
 		const ttl: number = form.data.ttlValue * ttlUnits[form.data.ttlUnit];
 		const ttlDate = new Date(Date.now() + ttl * 1000);
