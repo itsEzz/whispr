@@ -2,7 +2,7 @@ import * as privateEnv from '$env/dynamic/private';
 import * as publicEnv from '$env/dynamic/public';
 import { clientEnvSchema, serverEnvSchema } from '$lib/schemas/env-schema';
 import { isError, tc } from '@itsezz/try-catch';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { createChildLogger } from './logger';
 
 function formatValidationError(error: z.ZodError): string {

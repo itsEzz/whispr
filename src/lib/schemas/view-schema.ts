@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 const idRegex: RegExp = /^[a-z]+\-[a-z]+\-[a-z]+$/i;
 

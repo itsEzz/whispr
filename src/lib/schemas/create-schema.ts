@@ -6,7 +6,7 @@ import {
 	upperCaseRegex
 } from '$lib/crypto/pw-strength';
 import { clientAppConfig } from '$lib/utils/client-app-config';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const passwordSchema = z
 	.string({ message: 'Must be a string' })

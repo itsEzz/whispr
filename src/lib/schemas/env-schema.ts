@@ -1,6 +1,6 @@
 import { ttlUnits } from '$lib/constants/ttl-units';
 import { isError, tc } from '@itsezz/try-catch';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 const rateUnitSchema = z.enum([
 	'ms',
