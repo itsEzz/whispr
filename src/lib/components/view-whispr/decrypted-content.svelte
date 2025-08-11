@@ -64,7 +64,7 @@
 	/>
 	{#if showFooter}
 		<div
-			class="dark:bg-input/30 flex flex-col items-center gap-2 border-t bg-transparent p-3 sm:flex-row"
+			class="dark:bg-input/30 flex flex-col items-center gap-2 rounded-b-lg border-t bg-transparent p-3 sm:flex-row"
 		>
 			<div class="flex flex-wrap items-center justify-center gap-2">
 				{#if whispr.unlimitedViews || whispr.views !== undefined}
