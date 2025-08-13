@@ -41,7 +41,7 @@
 		validators: zod4Client(createSchema),
 		resetForm: false,
 		onSubmit: async ({ formData, cancel }) => {
-			const originalContent = formData.get('content')?.toString();
+			const originalContent = formData.get('content')?.toString().trim();
 
 			// Security: Remove password-related fields from form data
 			// This ensures passwords never reach the backend, even if accidentally added
@@ -202,14 +202,14 @@
 
 <h1 class="mb-4 text-2xl font-bold" id="page-title">Create Whispr</h1>
 
-<form method="POST" use:enhance aria-labelledby="page-title" class="sm:min-h-0">
-	<div class="grid grid-cols-1 gap-4 sm:h-full sm:grid-cols-2 lg:grid-cols-3">
-		<div class="flex flex-col sm:min-h-0 lg:col-span-2">
+<form method="POST" use:enhance aria-labelledby="page-title">
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="lg:col-span-2">
 			<Content {form} disabled={!data.schedulerIsValid} />
 		</div>
 		<div class="flex flex-col">
 			<Options {form} bind:password {passwordOptionsComponent} disabled={!data.schedulerIsValid} />
-			<div class="mt-4 flex w-full justify-end gap-2">
+			<div class="mt-4 flex justify-end gap-2">
 				<Button
 					variant="destructive"
 					onclick={handleClickOpenResetDialog}

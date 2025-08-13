@@ -26,7 +26,7 @@
 	// Variables & States
 	let fileInput: HTMLInputElement;
 	const { form: formData, errors, constraints, submitting } = form;
-	const readableLength = $derived(getReadableContentLength($formData.content.length));
+	const readableLength = $derived(getReadableContentLength($formData.content.trim().length));
 	const minLength = clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH;
 	const maxLength = clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH;
 
@@ -97,13 +97,13 @@
 	onchange={handleOnChangeFile}
 	aria-label="Upload text file"
 />
-<Form.Field {form} name="content" class="flex h-full min-h-0 flex-col">
+<Form.Field {form} name="content">
 	<Form.Control>
 		{#snippet children({ props })}
 			<Form.Label class="sr-only">Content</Form.Label>
 			<div
 				class={cn(
-					'border-input dark:bg-input/30 relative mb-0 flex min-h-0 grow flex-col overflow-hidden rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px] sm:max-h-full',
+					'border-input dark:bg-input/30 relative mb-0 rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]',
 					$errors.content
 						? 'border-destructive ring-destructive/20 dark:ring-destructive/40'
 						: 'focus-within:border-ring focus-within:ring-ring/50'
@@ -115,13 +115,13 @@
 					bind:value={$formData.content}
 					disabled={$submitting || disabled}
 					class={cn(
-						'max-h-96 min-h-32 flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 sm:max-h-full '
+						'h-48 resize-y rounded-b-none border-none shadow-none focus-visible:ring-0 sm:h-[32rem]'
 					)}
 					placeholder="Enter your message here or upload a file..."
 					aria-label="Content to encrypt"
 					aria-describedby={$errors.content ? 'content-error' : undefined}
 				/>
-				<div class="dark:bg-input/30 flex flex-shrink-0 items-center border-t bg-transparent p-3">
+				<div class="dark:bg-input/30 flex items-center border-t bg-transparent p-3">
 					<Button
 						size="sm"
 						variant="ghost"
@@ -134,21 +134,21 @@
 						Upload File
 						<Upload />
 					</Button>
-					<div class="ml-auto gap-1.5">
+					<div class="ml-auto">
 						<PopoverBadge variant="outline" id="views-badge" {disabled}>
 							{#snippet content()}
 								<span
 									class={cn(
 										'flex items-center gap-2',
-										$formData.content.length >= maxLength
+										$formData.content.trim().length >= maxLength
 											? 'text-destructive'
-											: $formData.content.length > maxLength * 0.9
+											: $formData.content.trim().length > maxLength * 0.9
 												? 'text-yellow-600 dark:text-yellow-500'
 												: 'text-current'
 									)}
 								>
 									<Text size={16} aria-hidden="true" />
-									{readableLength} character{$formData.content.length !== 1 ? 's' : ''}
+									{readableLength} character{$formData.content.trim().length !== 1 ? 's' : ''}
 								</span>
 							{/snippet}
 							{#snippet popoverContent()}
@@ -157,13 +157,16 @@
 										<div
 											class={cn(
 												'h-full transition-all duration-300 ease-out',
-												$formData.content.length >= maxLength
+												$formData.content.trim().length >= maxLength
 													? 'bg-destructive'
-													: $formData.content.length > maxLength * 0.9
+													: $formData.content.trim().length > maxLength * 0.9
 														? 'bg-yellow-600 dark:bg-yellow-500'
 														: 'bg-primary'
 											)}
-											style="width: {Math.min(($formData.content.length / maxLength) * 100, 100)}%"
+											style="width: {Math.min(
+												($formData.content.trim().length / maxLength) * 100,
+												100
+											)}%"
 										></div>
 									</div>
 									<div class="text-muted-foreground flex justify-between text-xs">

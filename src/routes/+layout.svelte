@@ -129,13 +129,13 @@
 	</p>
 {/snippet}
 
-<div class="bg-background flex h-screen flex-col">
+<div class="bg-background flex min-h-screen flex-col">
 	<header
 		class="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-sm"
 	>
 		<div class="container flex h-14 items-center">
 			<!-- Logo and Site Name -->
-			<a href="/" class="mr-6 flex items-center space-x-2" aria-label="Whispr Home">
+			<a href="/" class="mr-6 flex items-center gap-2" aria-label="Whispr Home">
 				<div class="bg-primary/10 rounded-lg p-2">
 					<MessageSquareLock size={24} class="text-primary" aria-hidden="true" />
 				</div>
@@ -143,7 +143,7 @@
 			</a>
 
 			<!-- Desktop Navigation -->
-			<nav class="hidden flex-1 items-center space-x-4 sm:flex" aria-label="Main Navigation">
+			<nav class="hidden flex-1 items-center gap-4 sm:flex" aria-label="Main Navigation">
 				<a
 					href="/"
 					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname === '/'
@@ -166,7 +166,7 @@
 				</a>
 			</nav>
 
-			<div class="flex flex-1 items-center justify-end space-x-2">
+			<div class="flex flex-1 items-center justify-end gap-2">
 				<!-- Theme Toggle -->
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger
@@ -228,7 +228,7 @@
 								<div class="border-b p-2 px-4">
 									<a
 										href="/"
-										class="flex items-center space-x-3"
+										class="flex items-center gap-3"
 										onclick={handleCloseMobileMenu}
 										aria-label="Whispr Home"
 									>
@@ -241,7 +241,7 @@
 								</div>
 
 								<div class="flex-1 p-2">
-									<nav class="flex flex-col space-y-1" aria-label="Mobile Navigation">
+									<nav class="flex flex-col gap-1" aria-label="Mobile Navigation">
 										<a
 											href="/"
 											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page
@@ -299,13 +299,14 @@
 		</div>
 	</header>
 
-	<main id="main-content" class="container flex min-h-0 flex-1 flex-col p-4" tabindex="-1">
+	<main id="main-content" class="container flex flex-1 flex-col p-4 pb-20" tabindex="-1">
 		<ServiceIssueAlert show={!data.schedulerIsValid} />
 		<InsecureAlert />
 		{@render children()}
 	</main>
-
-	<footer class="flex h-14 flex-shrink-0 flex-col items-center justify-between border-t py-2">
+	<footer
+		class="bg-background fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-center border-t"
+	>
 		{@render footer()}
 	</footer>
 </div>
