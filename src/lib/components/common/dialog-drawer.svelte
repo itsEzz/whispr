@@ -126,7 +126,10 @@
 					</Drawer.Description>
 				{/if}
 			</Drawer.Header>
-			<div id={!description ? ariaDescribedby : undefined} class={cn('mx-4', !footer && 'mb-4')}>
+			<div
+				id={!description ? ariaDescribedby : undefined}
+				class={cn('mx-4 flex-1 overflow-y-auto', !footer && 'mb-4')}
+			>
 				{@render body?.()}
 			</div>
 			{#if footer}
