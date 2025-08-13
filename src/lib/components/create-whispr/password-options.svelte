@@ -173,8 +173,10 @@
 									{@render passwordStrengthIndicator(passwordStrength.hasUppercase, 'Uppercase')}
 									{@render passwordStrengthIndicator(passwordStrength.hasNumber, 'Number')}
 									{@render passwordStrengthIndicator(passwordStrength.hasSpecial, 'Special')}
-									{@render passwordStrengthIndicator(passwordStrength.score >= 3, 'Good')}
-									{@render passwordStrengthIndicator(passwordStrength.score >= 4, 'Strong')}
+									{@render passwordStrengthIndicator(
+										passwordStrength.score >= 4,
+										'Strong password'
+									)}
 								</div>
 							</div>
 
