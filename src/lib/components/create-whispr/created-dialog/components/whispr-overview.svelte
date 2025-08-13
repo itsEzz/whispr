@@ -80,7 +80,7 @@
 					{/if}
 				{/snippet}
 				{#snippet popoverContent()}
-					<div class="space-y-0.5 text-sm">
+					<div class="flex flex-col gap-0.5 text-sm">
 						<p class="text-foreground/90">
 							{viewsText}
 						</p>
@@ -100,7 +100,7 @@
 					<span>{formattedExpirationDate}</span>
 				{/snippet}
 				{#snippet popoverContent()}
-					<div class="space-y-0.5 text-sm">
+					<div class="flex flex-col gap-0.5 text-sm">
 						<p class="text-foreground/90">
 							{formattedLongExpirationDate}
 						</p>

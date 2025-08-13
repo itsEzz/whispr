@@ -127,7 +127,7 @@
 	<Form.Field {form} name="showTtl">
 		<Form.Control>
 			{#snippet children({ props })}
-				<div class="flex items-center space-x-2">
+				<div class="flex items-center gap-2">
 					<Switch
 						{...props}
 						{...$constraints.showTtl}

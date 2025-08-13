@@ -124,7 +124,7 @@
 					></canvas>
 				</div>
 				<div class="flex flex-col items-start gap-3">
-					<div class="space-y-1.5">
+					<div class="flex flex-col gap-1.5">
 						<p class="text-sm font-medium">Share on mobile devices</p>
 						<p class="text-muted-foreground text-sm">
 							Scan this QR code with your phone's camera to instantly access your whispr or download

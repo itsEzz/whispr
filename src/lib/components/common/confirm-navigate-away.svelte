@@ -29,11 +29,11 @@
 	aria-describedby="navigate-away-description"
 >
 	{#snippet body()}
-		<div class="space-y-2">
-			<p class="text-sm text-muted-foreground">
+		<div class="flex flex-col gap-2">
+			<p class="text-muted-foreground text-sm">
 				If you leave this page, the data you've entered will be lost.
 			</p>
-			<p class="text-sm text-muted-foreground">Are you sure you want to leave?</p>
+			<p class="text-muted-foreground text-sm">Are you sure you want to leave?</p>
 		</div>
 	{/snippet}
 	{#snippet footer()}

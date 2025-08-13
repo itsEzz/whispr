@@ -12,7 +12,7 @@
 
 {#if errors && errors.length > 0}
 	<div
-		class="text-destructive mt-2 space-y-1.5 text-sm font-medium"
+		class="text-destructive mt-2 flex flex-col gap-1.5 text-sm font-medium"
 		{id}
 		role="alert"
 		aria-live="polite"

@@ -91,7 +91,7 @@
 	</Label>
 
 	<span id="password-controls" class="sr-only">Password input with controls</span>
-	<div class="flex items-center space-x-2" role="group" aria-labelledby="password-controls">
+	<div class="flex items-center gap-2" role="group" aria-labelledby="password-controls">
 		<Input
 			disabled={disabled || loading}
 			type={showPassword ? 'text' : 'password'}
@@ -181,7 +181,7 @@
 							{#if passwordStrength.feedback.length > 0}
 								<div>
 									<div class="mb-2 text-sm font-medium">Suggestions</div>
-									<ul class="text-muted-foreground ml-4 list-disc space-y-1 text-xs">
+									<ul class="text-muted-foreground ml-4 flex list-disc flex-col gap-1 text-xs">
 										{#each passwordStrength.feedback as suggestion}
 											<li>
 												{suggestion}

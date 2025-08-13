@@ -37,18 +37,19 @@
 	escapeKeydownBehavior="ignore"
 	interactOutsideBehavior="ignore"
 	dialogContentCss="sm:max-w-[650px]"
+	drawerContentCss="max-h-[90vh] overflow-hidden"
 	idToFocusOnOpen="copy-whispr-link"
 	aria-labelledby="whispr-created-dialog-title"
 	aria-describedby="whispr-created-dialog-description"
 	role="dialog"
 >
 	{#snippet title()}
-		<div class="flex items-center space-x-2">
+		<div class="flex items-center gap-2">
 			<Lock class="mr-2 text-green-500" /> Whispr created!
 		</div>
 	{/snippet}
 	{#snippet body()}
-		<div class="grid h-full items-start gap-2">
+		<div class="flex flex-col gap-2 overflow-y-auto">
 			{#if randomPassword !== null}
 				<WhisprNoCustomPassword />
 			{/if}

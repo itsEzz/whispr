@@ -48,7 +48,7 @@
 	}
 </script>
 
-<div class="mt-4 space-y-2">
+<div class="mt-4 flex flex-col gap-2">
 	<div>
 		<Label for="whispr-link" class="sr-only">Whispr link</Label>
 		<Input
