@@ -6,6 +6,7 @@ COPY . /app
 WORKDIR /app
 
 FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install dotenv
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM base AS build
@@ -21,6 +22,7 @@ RUN adduser --system --uid 1001 sveltekit
 COPY --from=prod-deps --chown=sveltekit:nodejs /app/node_modules /app/node_modules
 COPY --from=build --chown=sveltekit:nodejs /app/build /app/build
 COPY --from=build --chown=sveltekit:nodejs /app/package.json /app/package.json
+RUN mkdir /app/logs && chown sveltekit:nodejs /app/logs
 
 USER sveltekit
 
@@ -29,4 +31,5 @@ EXPOSE 3000
 ENV NODE_ENV=production
 ENV PORT=3000
 
-CMD ["node", "build"]
+CMD ["node", "-r", "dotenv/config", "build"]
+
