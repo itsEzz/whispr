@@ -1,8 +1,9 @@
 import * as privateEnv from '$env/dynamic/private';
 import { serverEnvSchema } from '$lib/schemas/env-schema';
 import type { ServerAppConfig } from '$lib/types/app-config';
+import { emptyStringsToUndefined } from '$lib/utils/env';
 
-const result = serverEnvSchema.safeParse(privateEnv.env);
+const result = serverEnvSchema.safeParse(emptyStringsToUndefined(privateEnv.env));
 
 if (!result.success) {
 	throw new Error(

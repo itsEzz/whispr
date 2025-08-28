@@ -1,6 +1,7 @@
 import * as privateEnv from '$env/dynamic/private';
 import * as publicEnv from '$env/dynamic/public';
 import { clientEnvSchema, serverEnvSchema } from '$lib/schemas/env-schema';
+import { emptyStringsToUndefined } from '$lib/utils/env';
 import { isError, tc } from '@itsezz/try-catch';
 import { z } from 'zod/v4';
 import { createChildLogger } from './logger';
@@ -20,8 +21,8 @@ export async function validateEnv() {
 	logger.info('Validating environment variables...');
 
 	const result = tc(() => {
-		serverEnvSchema.parse(privateEnv.env);
-		clientEnvSchema.parse(publicEnv.env);
+		serverEnvSchema.parse(emptyStringsToUndefined(privateEnv.env));
+		clientEnvSchema.parse(emptyStringsToUndefined(publicEnv.env));
 	});
 
 	if (isError(result)) {
