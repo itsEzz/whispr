@@ -1,19 +1,10 @@
 import * as privateEnv from '$env/dynamic/private';
 import * as publicEnv from '$env/dynamic/public';
 import { clientEnvSchema, serverEnvSchema } from '$lib/schemas/env-schema';
-import { emptyStringsToUndefined } from '$lib/utils/env';
+import { emptyStringsToUndefined, formatValidationError } from '$lib/utils/env';
 import { isError, tc } from '@itsezz/try-catch';
 import { z } from 'zod/v4';
 import { createChildLogger } from './logger';
-
-function formatValidationError(error: z.ZodError): string {
-	const errorMessages = error.issues.map((err) => {
-		const path = err.path.join('.');
-		return `- ${path}: ${err.message}`;
-	});
-
-	return `Environment Validation Failed:\n${errorMessages.join('\n')}\n\nPlease check your .env file and ensure all required variables are set with valid values.`;
-}
 
 export async function validateEnv() {
 	const logger = createChildLogger('env-validation');
