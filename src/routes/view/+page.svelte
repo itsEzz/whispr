@@ -8,7 +8,6 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { viewSchema } from '$lib/schemas/view-schema';
 	import { cn } from '$lib/utils.js';
-	import { getFullUrl } from '$lib/utils/seo.js';
 	import { tc } from '@itsezz/try-catch';
 	import Eye from '@lucide/svelte/icons/eye';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
@@ -87,7 +86,7 @@
 			});
 		}
 
-		const url = new URL(window.location.href);
+		const url = new URL(page.url);
 		url.searchParams.delete('redirect-reason');
 		url.searchParams.delete('retry-after');
 		goto(url.toString(), { replaceState: true, keepFocus: true, noScroll: true });
@@ -98,12 +97,12 @@
 	title="View Whispr - Access Secure Message"
 	description="Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration."
 	keywords="view secure message, access encrypted message, whispr id, decrypt message, secure viewing, temporary message access"
-	canonical={getFullUrl('/view')}
+	canonical={page.url.href}
 	openGraph={{
 		title: 'View Whispr - Access Secure Message',
 		description:
 			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
-		url: getFullUrl('/view'),
+		url: page.url.href,
 		type: 'website'
 	}}
 	twitter={{
@@ -117,11 +116,11 @@
 		name: 'View Whispr',
 		description:
 			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
-		url: getFullUrl('/view'),
+		url: page.url.href,
 		isPartOf: {
 			'@type': 'WebSite',
 			name: 'Whispr',
-			url: getFullUrl('/')
+			url: page.url.origin
 		}
 	}}
 />

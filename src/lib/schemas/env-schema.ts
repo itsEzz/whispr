@@ -73,8 +73,6 @@ export const serverEnvSchema = z.object({
 
 export const clientEnvSchema = z
 	.object({
-		PUBLIC_BASE_URL: z.url('Must be a valid URL').optional(),
-
 		PUBLIC_CONTENT_MIN_LENGTH: positiveNumberFromString.optional().default(1),
 		PUBLIC_CONTENT_MAX_LENGTH: positiveNumberFromString.optional().default(1000000),
 

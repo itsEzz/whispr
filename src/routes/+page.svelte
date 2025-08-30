@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import ConfirmNavigateAway from '$lib/components/common/confirm-navigate-away.svelte';
 	import ConfirmReset from '$lib/components/common/confirm-reset.svelte';
 	import Content from '$lib/components/create-whispr/content.svelte';
@@ -10,7 +11,6 @@
 	import { passwordGenerator } from '$lib/crypto/pw-gen';
 	import type { CreatedWhispr } from '$lib/types/created-whispr';
 	import type { PasswordComponent } from '$lib/types/password';
-	import { getFullUrl } from '$lib/utils/seo.js';
 	import { isError, tc, tca } from '@itsezz/try-catch';
 	import Eraser from '@lucide/svelte/icons/eraser';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
@@ -159,13 +159,12 @@
 	title="Create Whispr - Secure Message Sharing"
 	description="Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection."
 	keywords="create secure message, encrypted text, password protected message, configurable expiration, temporary sharing, secure communication"
-	canonical={getFullUrl('/')}
+	canonical={page.url.href}
 	openGraph={{
 		title: 'Create Whispr - Secure Message Sharing',
 		description:
 			'Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection.',
-		url: getFullUrl('/'),
-		type: 'website'
+		url: page.url.href
 	}}
 	twitter={{
 		title: 'Create Whispr - Secure Message Sharing',
@@ -178,11 +177,11 @@
 		name: 'Create Whispr',
 		description:
 			'Create encrypted messages with configurable expiration and view limits. Share sensitive information securely with password protection.',
-		url: getFullUrl('/'),
+		url: page.url.href,
 		isPartOf: {
 			'@type': 'WebSite',
 			name: 'Whispr',
-			url: getFullUrl('/')
+			url: page.url.origin
 		}
 	}}
 />

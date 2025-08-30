@@ -7,7 +7,6 @@ export interface ServerAppConfig {
 }
 
 export interface ClientAppConfig {
-	PUBLIC_BASE_URL?: string;
 	PUBLIC_CONTENT_MIN_LENGTH: number;
 	PUBLIC_CONTENT_MAX_LENGTH: number;
 	PUBLIC_PASSWORD_MIN_LENGTH: number;

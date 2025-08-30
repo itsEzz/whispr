@@ -7,7 +7,6 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
-	import { getBaseUrl } from '$lib/utils/seo.js';
 	import Eye from '@lucide/svelte/icons/eye';
 	import Menu from '@lucide/svelte/icons/menu';
 	import MessageSquareLock from '@lucide/svelte/icons/message-square-lock';
@@ -49,32 +48,30 @@
 	description="Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings."
 	keywords="secure messaging, encrypted messages, temporary sharing, password protection, configurable expiration, privacy, security"
 	applicationName="Whispr"
-	canonical={getBaseUrl()}
+	canonical={page.url.href}
 	manifest="/manifest.json"
 	openGraph={{
 		title: 'Whispr - Secure Message Sharing',
 		description:
 			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
-		url: getBaseUrl(),
+		url: page.url.href,
 		type: 'website',
 		site_name: 'Whispr',
-		images: getBaseUrl()
-			? [
-					{
-						url: `${getBaseUrl()}/og-image.png`,
-						width: 1200,
-						height: 630,
-						alt: 'Whispr - Secure Message Sharing'
-					}
-				]
-			: undefined
+		images: [
+			{
+				url: new URL('/og-image.png', page.url.origin).href,
+				width: 1200,
+				height: 630,
+				alt: 'Whispr - Secure Message Sharing'
+			}
+		]
 	}}
 	twitter={{
 		card: 'summary_large_image',
 		title: 'Whispr - Secure Message Sharing',
 		description:
 			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
-		image: getBaseUrl() ? `${getBaseUrl()}/og-image.png` : undefined,
+		image: new URL('/og-image.png', page.url.origin).href,
 		imageAlt: 'Whispr - Secure Message Sharing'
 	}}
 	jsonLd={{
@@ -83,7 +80,7 @@
 		name: 'Whispr',
 		description:
 			'Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.',
-		url: getBaseUrl(),
+		url: page.url.href,
 		applicationCategory: 'SecurityApplication',
 		operatingSystem: 'Web Browser',
 		browserRequirements: 'Requires JavaScript. Requires HTML5.',
