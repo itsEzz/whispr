@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import * as Popover from '$lib/components/ui/popover/index.js';
@@ -149,20 +149,16 @@
 					style="width: {((passwordStrength.score + 1) / 5) * 100}%"
 				></div>
 			</div>
-			<div class="flex items-center">
+			<div class="flex items-center gap-2">
 				<span class={cn('min-w-fit text-xs font-semibold', passwordStrength.textColor)}>
 					{passwordStrength.label}
 				</span>
 				<Popover.Root>
-					<Popover.Trigger>
-						<Button
-							variant="ghost"
-							size="icon"
-							class="size-8"
-							aria-label="Password requirements and suggestions"
-						>
-							<Info aria-hidden="true" />
-						</Button>
+					<Popover.Trigger
+						class={cn(buttonVariants({ variant: 'ghost' }), 'size-4')}
+						aria-label="Password requirements and suggestions"
+					>
+						<Info aria-hidden="true" class="size-4" />
 					</Popover.Trigger>
 					<Popover.Content class="w-64 p-3" align="end">
 						<div class="space-y-3">

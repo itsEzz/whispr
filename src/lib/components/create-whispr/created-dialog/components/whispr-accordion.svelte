@@ -138,14 +138,16 @@
 							aria-haspopup="menu"
 							id="export-qr-dropdown"
 						>
-							<Button variant="secondary" size="sm" class="w-fit">
-								Export QR Code
-								{#if exportQrCodeOpen}
-									<ChevronUp aria-hidden="true" />
-								{:else}
-									<ChevronDown aria-hidden="true" />
-								{/if}
-							</Button>
+							{#snippet child({ props })}
+								<Button {...props} variant="secondary" size="sm" class="w-fit">
+									Export QR Code
+									{#if exportQrCodeOpen}
+										<ChevronUp aria-hidden="true" />
+									{:else}
+										<ChevronDown aria-hidden="true" />
+									{/if}
+								</Button>
+							{/snippet}
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Content aria-labelledby="export-qr-dropdown" role="menu">
 							<DropdownMenu.Item onclick={handleDownloadQrCodePng} role="menuitem">
