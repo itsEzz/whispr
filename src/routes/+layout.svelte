@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { version } from '$app/environment';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import InsecureAlert from '$lib/components/layout/insecure-alert.svelte';
 	import ServiceIssueAlert from '$lib/components/layout/service-issue-alert.svelte';
@@ -132,7 +133,7 @@
 	>
 		<div class="container flex h-14 items-center">
 			<!-- Logo and Site Name -->
-			<a href="/" class="mr-6 flex items-center gap-2" aria-label="Whispr Home">
+			<a href={resolve('/')} class="mr-6 flex items-center gap-2" aria-label="Whispr Home">
 				<div class="bg-primary/10 rounded-lg p-2">
 					<MessageSquareLock size={24} class="text-primary" aria-hidden="true" />
 				</div>
@@ -142,7 +143,7 @@
 			<!-- Desktop Navigation -->
 			<nav class="hidden flex-1 items-center gap-4 sm:flex" aria-label="Main Navigation">
 				<a
-					href="/"
+					href={resolve('/')}
 					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname === '/'
 						? 'text-primary'
 						: 'text-muted-foreground'}"
@@ -151,7 +152,7 @@
 					Create
 				</a>
 				<a
-					href="/view"
+					href={resolve('/view')}
 					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname.startsWith(
 						'/v'
 					)
@@ -224,7 +225,7 @@
 							<div class="flex h-full flex-col">
 								<div class="border-b p-2 px-4">
 									<a
-										href="/"
+										href={resolve('/')}
 										class="flex items-center gap-3"
 										onclick={handleCloseMobileMenu}
 										aria-label="Whispr Home"
@@ -240,7 +241,7 @@
 								<div class="flex-1 p-2">
 									<nav class="flex flex-col gap-1" aria-label="Mobile Navigation">
 										<a
-											href="/"
+											href={resolve('/')}
 											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page
 												.url.pathname === '/'
 												? 'bg-primary/10 text-primary'
@@ -261,7 +262,7 @@
 										</a>
 
 										<a
-											href="/view"
+											href={resolve('/view')}
 											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page.url.pathname.startsWith(
 												'/v'
 											)

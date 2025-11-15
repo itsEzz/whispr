@@ -41,7 +41,7 @@
 			{#snippet children({ props })}
 				<Form.Label>Expires in</Form.Label>
 				<div class="mb-3 flex flex-wrap gap-2" role="group" aria-label="Time expiration presets">
-					{#each ttlPresets as preset}
+					{#each ttlPresets as preset (preset.label)}
 						<Button
 							variant={$formData.ttlValue === preset.value && $formData.ttlUnit === preset.unit
 								? 'default'

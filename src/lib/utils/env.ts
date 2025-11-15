@@ -7,9 +7,9 @@ import type z from 'zod/v4';
  * @param {T} obj - The input object whose empty string values will be replaced.
  * @returns {T} A new object with empty string values replaced by `undefined`.
  */
-export function emptyStringsToUndefined<T extends Record<string, any>>(obj: T): T {
+export function emptyStringsToUndefined<T extends Record<string, string | undefined>>(obj: T): T {
 	return Object.fromEntries(
-		Object.entries(obj).map(([key, value]) => [key, value.trim() === '' ? undefined : value])
+		Object.entries(obj).map(([key, value]) => [key, value?.trim() === '' ? undefined : value])
 	) as T;
 }
 

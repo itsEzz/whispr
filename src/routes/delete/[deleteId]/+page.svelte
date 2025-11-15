@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import DialogDrawer from '$lib/components/common/dialog-drawer.svelte';
 	import FormError from '$lib/components/common/form-error.svelte';
@@ -73,7 +74,7 @@
 	// Functions
 	function onOpenChangeDeletedDialog(open: boolean) {
 		if (open === true) return;
-		goto('/');
+		goto(resolve('/'));
 	}
 </script>
 

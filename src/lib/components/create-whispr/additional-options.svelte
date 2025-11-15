@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Switch } from '$lib/components/ui/switch';
-	import { cn } from '$lib/utils';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm } from 'sveltekit-superforms/client';
 	import type { CreateSchema } from '../../schemas/create-schema';

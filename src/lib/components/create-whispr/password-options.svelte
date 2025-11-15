@@ -180,7 +180,7 @@
 								<div>
 									<div class="mb-2 text-sm font-medium">Suggestions</div>
 									<ul class="text-muted-foreground ml-4 flex list-disc flex-col gap-1 text-xs">
-										{#each passwordStrength.feedback as suggestion}
+										{#each passwordStrength.feedback as suggestion (suggestion)}
 											<li>
 												{suggestion}
 											</li>

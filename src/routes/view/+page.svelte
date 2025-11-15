@@ -78,17 +78,11 @@
 				description: 'The whispr you are trying to view has just expired.',
 				duration: 5000
 			});
-		} else if (redirectReason === 'rate-limited') {
-			const retryAfter = page.url.searchParams.get('retry-after') || '60';
-			toast.error('Rate limit exceeded', {
-				description: `Too many requests. Please wait ${retryAfter} seconds before trying again.`,
-				duration: 8000
-			});
 		}
 
 		const url = new URL(page.url);
 		url.searchParams.delete('redirect-reason');
-		url.searchParams.delete('retry-after');
+		// eslint-disable-next-line svelte/no-navigation-without-resolve
 		goto(url.toString(), { replaceState: true, keepFocus: true, noScroll: true });
 	});
 </script>

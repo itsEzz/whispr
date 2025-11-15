@@ -108,7 +108,7 @@
 							aria-label="Copy error details"
 						/>
 						<p class="text-muted-foreground font-mono text-xs">
-							{#each errorDetails as detail}
+							{#each errorDetails as detail (detail)}
 								{detail}<br />
 							{/each}
 						</p>
