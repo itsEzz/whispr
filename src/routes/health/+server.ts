@@ -28,23 +28,17 @@ async function checkEventScheduler(): Promise<boolean> {
 
 async function checkHealth(): Promise<HealthResponse> {
 	const result = await tca<HealthResponse>(async () => {
-		if (typeof process.uptime !== 'function') {
-			throw new Error('Process uptime check failed');
-		}
+		if (typeof process.uptime !== 'function') throw new Error('Process uptime check failed');
 
 		const uptime = process.uptime();
-		if (uptime < 1) {
-			throw new Error('Process uptime too short, possible restart detected');
-		}
+		if (uptime < 1) throw new Error('Process uptime too short, possible restart detected');
 
 		const [dbHealthy, schedulerHealthy] = await Promise.all([
 			checkDatabase(),
 			checkEventScheduler()
 		]);
 
-		if (!dbHealthy || !schedulerHealthy) {
-			throw new Error('Critical dependency check failed');
-		}
+		if (!dbHealthy || !schedulerHealthy) throw new Error('Critical dependency check failed');
 
 		return {
 			status: 'healthy',
@@ -53,13 +47,12 @@ async function checkHealth(): Promise<HealthResponse> {
 		};
 	});
 
-	if (isError(result)) {
+	if (isError(result))
 		return {
 			status: 'unhealthy',
 			timestamp: new Date().toISOString(),
 			version: process.env.npm_package_version || '1.0.0'
 		};
-	}
 
 	return result.data;
 }
