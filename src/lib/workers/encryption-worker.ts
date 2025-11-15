@@ -1,6 +1,6 @@
 import type { EncryptionMessage, EncryptionResponse } from '$lib/types/encryption';
 import { isError, tc, tca } from '@itsezz/try-catch';
-import { scrypt } from '@noble/hashes/scrypt';
+import { scrypt } from '@noble/hashes/scrypt.js';
 import { Base64 } from 'js-base64';
 import pako from 'pako';
 
@@ -78,10 +78,13 @@ class WorkerAES {
 			dkLen: 32
 		});
 
-		return await crypto.subtle.importKey('raw', derivedKey, { name: 'AES-GCM' }, false, [
-			'encrypt',
-			'decrypt'
-		]);
+		return await crypto.subtle.importKey(
+			'raw',
+			new Uint8Array(derivedKey),
+			{ name: 'AES-GCM' },
+			false,
+			['encrypt', 'decrypt']
+		);
 	}
 
 	async encrypt(plaintext: string, password: string): Promise<string> {
