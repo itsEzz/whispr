@@ -3,12 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        DATABASE_URL: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}'
     ports:
       - '${APP_PORT}:3000'
     environment:
-      - NODE_ENV=${NODE_ENV}
       - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
       - PUBLIC_CONTENT_MIN_LENGTH=${PUBLIC_CONTENT_MIN_LENGTH}
       - PUBLIC_CONTENT_MAX_LENGTH=${PUBLIC_CONTENT_MAX_LENGTH}
@@ -35,6 +32,7 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+        timeout: 60s
     restart: unless-stopped
 
   mysql:
