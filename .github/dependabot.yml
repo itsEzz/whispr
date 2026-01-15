@@ -5,16 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-    versioning-strategy: "increase-if-necessary"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+    versioning-strategy: 'increase-if-necessary'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     allow:
-      - dependency-type: "direct"
-    
+      - dependency-type: 'direct'
