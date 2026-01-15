@@ -29,8 +29,8 @@
 
 	// Variables & States
 	let open = $state<boolean>(false);
-	const badgeId = `badge-${id}`;
-	const popoverId = `popover-${id}`;
+	const badgeId = $derived(`badge-${id}`);
+	const popoverId = $derived(`popover-${id}`);
 </script>
 
 <Popover.Root bind:open>
@@ -41,7 +41,7 @@
 		aria-controls={popoverId}
 		aria-describedby={badgeId}
 	>
-		<Badge {variant} class={cn('gap-2 [&>svg]:!size-auto', classes)} id={badgeId}>
+		<Badge {variant} class={cn('gap-2 [&>svg]:size-auto!', classes)} id={badgeId}>
 			{#if typeof content === 'string'}
 				{content}
 			{:else}

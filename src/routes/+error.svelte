@@ -20,11 +20,11 @@
 	// Variables & States
 	const is404 = page.status === 404;
 	const is429 = page.status === 429;
-	const errorDetails: string[] = [
+	const errorDetails: string[] = $derived([
 		`Error Code: ${page.status}`,
 		`Message: ${page.error?.message ?? 'N/A'}`,
 		`Correlation ID: ${data.correlationId}`
-	];
+	]);
 
 	const config: ErrorPageConfig = {
 		seo: {
