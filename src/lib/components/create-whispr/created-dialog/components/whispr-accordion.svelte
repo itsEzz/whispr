@@ -119,7 +119,7 @@
 				<div class="flex justify-center min-[500px]:justify-start">
 					<canvas
 						id="qrcode-canvas"
-						class="aspect-square w-[150px] shrink-0"
+						class="aspect-square w-37.5 shrink-0"
 						aria-label="QR code for sharing your whispr"
 					></canvas>
 				</div>

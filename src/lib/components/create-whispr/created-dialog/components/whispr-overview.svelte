@@ -143,7 +143,7 @@
 					>
 				{/snippet}
 				{#snippet popoverContent()}
-					<p class="text-foreground/90 text-sm break-words">
+					<p class="text-foreground/90 text-sm wrap-break-word">
 						{downloadButtonVisibilityText}
 					</p>
 				{/snippet}

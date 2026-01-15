@@ -217,7 +217,7 @@
 						</Sheet.Trigger>
 						<Sheet.Content
 							side="left"
-							class="w-[280px] p-0"
+							class="w-70 p-0"
 							id="mobile-navigation"
 							role="dialog"
 							aria-label="Navigation menu"
