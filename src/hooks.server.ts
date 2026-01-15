@@ -20,15 +20,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	response.headers.set('X-XSS-Protection', '1; mode=block');
 	response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-	// Content Security Policy - allowing inline styles for CSS-in-JS
-	const isDevelopment = dev || process.env.NODE_ENV === 'development';
-	const csp = isDevelopment
-		? "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' ws: wss:; img-src 'self' data: https:; font-src 'self' data:;"
-		: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; font-src 'self' data:;";
-
-	response.headers.set('Content-Security-Policy', csp);
-
 	// HSTS header (only in production)
+	const isDevelopment = dev || process.env.NODE_ENV === 'development';
 	if (!isDevelopment) {
 		response.headers.set(
 			'Strict-Transport-Security',
