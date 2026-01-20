@@ -27,6 +27,7 @@
 
 	// Variables & States
 	let deleted = $state<boolean>(false);
+	// svelte-ignore state_referenced_locally
 	const form = superForm(data.form, {
 		validators: zod4Client(deleteSchema),
 		onSubmit({ formData }) {

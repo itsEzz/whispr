@@ -23,6 +23,7 @@
 	let { form, loading, disabled = false }: Props = $props();
 
 	// Variables & States
+	// svelte-ignore state_referenced_locally
 	const { form: formData, errors, enhance, constraints, submitting, allErrors, submit } = form;
 	let showPassword = $state<boolean>(false);
 	let isFormValid = $derived($allErrors.length === 0);

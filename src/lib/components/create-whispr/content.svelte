@@ -25,6 +25,7 @@
 
 	// Variables & States
 	let fileInput: HTMLInputElement;
+	// svelte-ignore state_referenced_locally
 	const { form: formData, errors, constraints, submitting } = form;
 	const readableLength = $derived(getReadableContentLength($formData.content.trim().length));
 	const minLength = clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH;

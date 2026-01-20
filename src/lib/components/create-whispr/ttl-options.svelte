@@ -20,6 +20,7 @@
 	let { form, disabled = false }: Props = $props();
 
 	// Variables & States
+	// svelte-ignore state_referenced_locally
 	const { form: formData, errors, constraints, submitting } = form;
 	const ttlPresets: TtlPreset[] = [
 		{ label: '1 hour', value: 1, unit: 'hours' },

@@ -37,6 +37,7 @@
 	let randomPassword = $state<string | null>(null);
 	let passwordOptionsComponent = $state<PasswordComponent>();
 
+	// svelte-ignore state_referenced_locally
 	const form = superForm(data.form, {
 		validators: zod4Client(createSchema),
 		resetForm: false,

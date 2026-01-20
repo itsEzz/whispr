@@ -28,6 +28,7 @@
 	}: Props = $props();
 
 	// Variables & States
+	// svelte-ignore state_referenced_locally
 	const { errors, submitting } = form;
 	let openOptions = $state<string>('options');
 	const isDesktop = new MediaQuery('(min-width: 640px)');
