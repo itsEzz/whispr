@@ -4,8 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '${APP_PORT}:3000'
+      - '${APP_PORT:-3000}:3000'
+    volumes:
+      - logs:/app/logs
     environment:
+      - ORIGIN=${ORIGIN:-http://localhost:3000}
       - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
       - PUBLIC_CONTENT_MIN_LENGTH=${PUBLIC_CONTENT_MIN_LENGTH}
       - PUBLIC_CONTENT_MAX_LENGTH=${PUBLIC_CONTENT_MAX_LENGTH}
@@ -35,22 +38,21 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: mysql:${MYSQL_VERSION}
+    image: mysql:${MYSQL_VERSION:-8.0}
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    ports:
-      - '${MYSQL_PORT}:3306'
     volumes:
       - mysql_data:/var/lib/mysql
       - ./drizzle/0000_normal_exodus.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      timeout: 10s
-      retries: 10
+      timeout: 20s
+      retries: 5
     restart: unless-stopped
 
 volumes:
   mysql_data:
+  logs:
