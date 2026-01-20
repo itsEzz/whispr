@@ -30,7 +30,7 @@
 		"drizzle-orm"
 	],
 	"engines": {
-		"node": ">=18.0.0",
+		"node": ">=20.0.0",
 		"pnpm": ">=10.0.0"
 	},
 	"packageManager": "pnpm@10.15.0",
