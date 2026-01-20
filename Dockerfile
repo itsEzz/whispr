@@ -6,7 +6,6 @@ COPY . /app
 WORKDIR /app
 
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install dotenv
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM base AS build
@@ -15,7 +14,7 @@ RUN pnpm run build
 
 FROM base
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 sveltekit
+    adduser --system --gid 1001 --uid 999 sveltekit
 
 RUN mkdir /app/logs && chown sveltekit:nodejs /app/logs
 
