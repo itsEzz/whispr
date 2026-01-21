@@ -181,6 +181,8 @@ The application includes a health check endpoint at `/health` for monitoring.
 5. Push to the branch: `git push origin feature/your-feature`
 6. Open a Pull Request
 
+   **When opening a pull request, please use the provided template (`.github/PULL_REQUEST_TEMPLATE.md`) and fill out all relevant sections.**
+
 ### Development Guidelines
 
 - Follow the existing code style
