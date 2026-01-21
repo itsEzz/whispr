@@ -35,21 +35,25 @@ const rateSchema = z.union([
 	z.array(z.tuple([positiveNumberFromString, rateUnitSchema]))
 ]);
 
-const rateFromString = z.string().transform((val, ctx) => {
-	const result = tc(() => {
-		const parsed = JSON.parse(val);
-		return rateSchema.parse(parsed);
-	});
-	if (isError(result)) {
-		ctx.addIssue({
-			code: 'custom',
-			message: `Invalid rate limiter format. Expected JSON array like [30, "m"] or [[30, "m"], [100, "h"]]`
+const rateFromString = z
+	.string()
+	.optional()
+	.transform((val, ctx) => {
+		const result = tc(() => {
+			if (val === undefined) return val;
+			const parsed = JSON.parse(val);
+			return rateSchema.parse(parsed);
 		});
-		return z.NEVER;
-	}
+		if (isError(result)) {
+			ctx.addIssue({
+				code: 'custom',
+				message: `Invalid rate limiter format. Expected JSON array like [30, "m"] or [[30, "m"], [100, "h"]]`
+			});
+			return z.NEVER;
+		}
 
-	return result.data;
-});
+		return result.data;
+	});
 
 export const serverEnvSchema = z.object({
 	DATABASE_URL: z
