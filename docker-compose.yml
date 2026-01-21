@@ -6,10 +6,10 @@ services:
     ports:
       - '${APP_PORT:-3000}:3000'
     volumes:
-      - logs:/app/logs
+      - whispr_logs:/app/logs
     environment:
       - ORIGIN=${ORIGIN:-http://localhost:3000}
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@whispr_mysql:3306/${MYSQL_DATABASE}
       - PUBLIC_CONTENT_MIN_LENGTH=${PUBLIC_CONTENT_MIN_LENGTH}
       - PUBLIC_CONTENT_MAX_LENGTH=${PUBLIC_CONTENT_MAX_LENGTH}
       - PUBLIC_PASSWORD_MIN_LENGTH=${PUBLIC_PASSWORD_MIN_LENGTH}
@@ -33,7 +33,7 @@ services:
       - RATE_LIMITER_IP=${RATE_LIMITER_IP}
       - RATE_LIMITER_IPUA=${RATE_LIMITER_IPUA}
     depends_on:
-      mysql:
+      whispr_mysql:
         condition: service_healthy
     restart: unless-stopped
 
@@ -45,7 +45,7 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - whispr_mysql_data:/var/lib/mysql
       - ./drizzle/0000_normal_exodus.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
@@ -54,5 +54,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  mysql_data:
-  logs:
+  whispr_mysql_data:
+  whispr_logs:
