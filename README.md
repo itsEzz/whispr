@@ -78,7 +78,7 @@ A secure web application for sharing encrypted messages with configurable expira
    source .env && docker-compose -f docker-compose.yml up -d
    ```
 
-   *Note: Docker Compose does not automatically load `.env` files. You must source the file first to set the environment variables.*
+   _Note: Docker Compose does not automatically load `.env` files. You must source the file first to set the environment variables._
 
 3. **Database initialization**
 
