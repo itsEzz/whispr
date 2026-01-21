@@ -1,5 +1,5 @@
 services:
-  app:
+  whispr_app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -37,7 +37,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  mysql:
+  whispr_mysql:
     image: mysql:${MYSQL_VERSION:-8.0}
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
