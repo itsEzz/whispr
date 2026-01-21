@@ -9,9 +9,7 @@ const result = serverEnvSchema.safeParse(
 	// At runtime, the real env vars will be used
 	building
 		? {
-				DATABASE_URL: 'mysql://user:password@localhost:3306/db',
-				RATE_LIMITER_IP: '[1, "m"]',
-				RATE_LIMITER_IPUA: '[1, "m"]'
+				DATABASE_URL: 'mysql://user:password@localhost:3306/db'
 			}
 		: emptyStringsToUndefined(privateEnv.env)
 );
