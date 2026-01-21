@@ -19,7 +19,7 @@ A secure web application for sharing encrypted messages with configurable expira
 
 ### Prerequisites
 
-- **Node.js** >= 18.0.0
+- **Node.js** >= 20.0.0
 - **pnpm** >= 10.0.0
 - **MySQL** >= 8.0 (or Docker for containerized setup)
 
@@ -60,22 +60,29 @@ A secure web application for sharing encrypted messages with configurable expira
    pnpm run dev
    ```
 
-### Docker Deployment
+### Docker Compose (Recommended)
 
-Set the required environment variables directly in your `docker-compose.yml` file:
+1. **Create environment file**
 
-```yaml
-environment:
-  - DATABASE_URL=mysql://user:password@mysql:3306/whispr
-  - APP_PORT=3000
-  # ... other variables
-```
+   Copy the Docker environment template and configure your variables:
 
-Then start with Docker Compose:
+   ```bash
+   cp .env.docker.example .env
+   # Edit .env with your database credentials and other settings
+   ```
 
-```bash
-docker-compose -f docker-compose.yml up -d
-```
+2. **Start the application**
+
+   ```bash
+   # Load environment variables and start the application
+   source .env && docker-compose -f docker-compose.yml up -d
+   ```
+
+   *Note: Docker Compose does not automatically load `.env` files. You must source the file first to set the environment variables.*
+
+3. **Database initialization**
+
+   The database will be automatically initialized with the schema from `drizzle/0000_normal_exodus.sql` on first run.
 
 ## 🛠️ Development
 
@@ -120,7 +127,7 @@ src/
 └── app.html           # Main HTML template
 ```
 
-### Environment Variables
+### App Environment Variables
 
 | Variable                                     | Description                              | Default     | Required |
 | -------------------------------------------- | ---------------------------------------- | ----------- | -------- |
@@ -152,9 +159,7 @@ src/
 
 ### Docker Compose (Recommended)
 
-1. Configure your `docker-compose.yml` file
-2. Run: `docker-compose -f docker-compose.yml up -d`
-3. The app will be available on the configured port
+See the **Docker Compose** section above in Quick Start for complete setup instructions.
 
 ### Manual Deployment
 
