@@ -32,7 +32,7 @@
 				intercepted or modified during transmission. While you can still use this service, be aware
 				that:
 				<ul class="list-disc pl-5">
-					<li>Your messages and passwords are not encrypted in transit</li>
+					<li>Your data is not encrypted in transit</li>
 					<li>Third parties may be able to read or modify your data</li>
 					<li>Your connection is vulnerable to man-in-the-middle attacks</li>
 				</ul>
