@@ -84,7 +84,7 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
 		"qrcode": "^1.5.4",
-		"svelte": "^5.51.5",
+		"svelte": "^5.53.5",
 		"svelte-check": "^4.3.5",
 		"svelte-seo": "^2.0.0",
 		"svelte-sonner": "^1.0.7",
