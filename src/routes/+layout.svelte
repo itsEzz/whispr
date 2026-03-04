@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import InsecureAlert from '$lib/components/layout/insecure-alert.svelte';
 	import ServiceIssueAlert from '$lib/components/layout/service-issue-alert.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
 	import { Toaster } from '$lib/components/ui/sonner';
@@ -103,7 +103,6 @@
 </a>
 
 <Toaster
-	theme={mode.current}
 	duration={6000}
 	closeButton
 	position="top-right"
@@ -172,19 +171,21 @@
 						aria-haspopup="true"
 						id="theme-menu-button"
 					>
-						<Button variant="ghost" size="icon">
-							<Sun
-								size={16}
-								class="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
-								aria-hidden="true"
-							/>
-							<Moon
-								size={16}
-								class="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
-								aria-hidden="true"
-							/>
-							<span class="sr-only">Toggle theme</span>
-						</Button>
+						{#snippet child({ props })}
+							<Button {...props} variant="ghost" size="icon">
+								<Sun
+									size={16}
+									class="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+									aria-hidden="true"
+								/>
+								<Moon
+									size={16}
+									class="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+									aria-hidden="true"
+								/>
+								<span class="sr-only">Toggle theme</span>
+							</Button>
+						{/snippet}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content align="end" aria-labelledby="theme-menu-button">
 						<DropdownMenu.Item onclick={() => handleSetMode('light')} role="menuitem">
@@ -209,11 +210,10 @@
 							aria-label="Open navigation menu"
 							aria-expanded={mobileNavOpen}
 							aria-controls="mobile-navigation"
+							class={buttonVariants({ variant: 'ghost', size: 'icon' })}
 						>
-							<Button variant="ghost" size="icon">
-								<Menu size={20} aria-hidden="true" />
-								<span class="sr-only">Toggle Menu</span>
-							</Button>
+							<Menu size={20} aria-hidden="true" />
+							<span class="sr-only">Toggle Menu</span>
 						</Sheet.Trigger>
 						<Sheet.Content
 							side="left"
