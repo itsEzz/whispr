@@ -37,8 +37,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       '@lucide/svelte':
-        specifier: ^0.564.0
-        version: 0.564.0(svelte@5.53.7)
+        specifier: ^0.561.0
+        version: 0.561.0(svelte@5.53.7)
       '@noble/hashes':
         specifier: ^2.0.1
         version: 2.0.1
@@ -755,8 +755,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lucide/svelte@0.564.0':
-    resolution: {integrity: sha512-jODK/wHX3lKi1CsLgx9wXspsDQ5/WbsNmBqecdTCbaH1Cy3C/n2g3WM1a59sokjq+81eZDFUi/7Yg4rVI3kyow==}
+  '@lucide/svelte@0.561.0':
+    resolution: {integrity: sha512-vofKV2UFVrKE6I4ewKJ3dfCXSV6iP6nWVmiM83MLjsU91EeJcEg7LoWUABLp/aOTxj1HQNbJD1f3g3L0JQgH9A==}
     peerDependencies:
       svelte: ^5
 
@@ -2990,7 +2990,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lucide/svelte@0.564.0(svelte@5.53.7)':
+  '@lucide/svelte@0.561.0(svelte@5.53.7)':
     dependencies:
       svelte: 5.53.7
 
