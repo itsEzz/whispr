@@ -16,10 +16,10 @@ export default defineConfig(
 		ignores: ['src/lib/components/ui/**']
 	},
 	js.configs.recommended,
-	...ts.configs.recommended,
-	...svelte.configs.recommended,
+	ts.configs.recommended,
+	svelte.configs.recommended,
 	prettier,
-	...svelte.configs.prettier,
+	svelte.configs.prettier,
 	{
 		languageOptions: { globals: { ...globals.browser, ...globals.node } },
 		rules: {
