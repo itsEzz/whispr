@@ -1,6 +1,6 @@
 {
 	"name": "whispr",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Share encrypted messages securely with configurable expiration and view limits. Create temporary, password-protected messages with customizable security settings.",
 	"type": "module",
 	"private": true,
