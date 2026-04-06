@@ -1,3 +1,4 @@
+import { version } from '$app/environment';
 import { db } from '$lib/server/db';
 import { dbEventScheduler } from '$lib/server/db/event-scheduler';
 import type { HealthResponse } from '$lib/types/health';
@@ -43,7 +44,7 @@ async function checkHealth(): Promise<HealthResponse> {
 		return {
 			status: 'healthy',
 			timestamp: new Date().toISOString(),
-			version: process.env.npm_package_version || '1.0.0'
+			version
 		};
 	});
 
@@ -51,7 +52,7 @@ async function checkHealth(): Promise<HealthResponse> {
 		return {
 			status: 'unhealthy',
 			timestamp: new Date().toISOString(),
-			version: process.env.npm_package_version || '1.0.0'
+			version
 		};
 
 	return result.data;
