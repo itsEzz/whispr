@@ -133,7 +133,7 @@
 						<Form.Field
 							{form}
 							name="confirm"
-							class="flex flex-row items-start space-y-0 space-x-3 rounded-md border p-4"
+							class="flex flex-row items-start space-y-0 space-x-3 border p-4"
 						>
 							<Form.Control>
 								{#snippet children({ props })}
@@ -182,9 +182,7 @@
 		{:else if data.notFound}
 			<Card.Root class="w-full max-w-lg">
 				<Card.Header class="text-center">
-					<div
-						class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center rounded-full"
-					>
+					<div class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center">
 						<SearchX size={40} aria-hidden="true" />
 					</div>
 					<Card.Title class="text-2xl" id="error-heading">Whispr Not Found</Card.Title>

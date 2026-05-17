@@ -104,9 +104,9 @@
 			<Form.Label class="sr-only">Content</Form.Label>
 			<div
 				class={cn(
-					'border-input dark:bg-input/30 relative mb-0 rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]',
+					'border-input dark:bg-input/30 relative mb-0 border bg-transparent transition-colors focus-within:ring-3',
 					$errors.content
-						? 'border-destructive ring-destructive/20 dark:ring-destructive/40'
+						? 'border-destructive dark:border-destructive/50 ring-destructive/20 dark:ring-destructive/40'
 						: 'focus-within:border-ring focus-within:ring-ring/50'
 				)}
 			>
@@ -115,9 +115,7 @@
 					{...$constraints.content}
 					bind:value={$formData.content}
 					disabled={$submitting || disabled}
-					class={cn(
-						'h-48 resize-y rounded-b-none border-none shadow-none focus-visible:ring-0 sm:h-128'
-					)}
+					class={cn('h-48 resize-y border-none focus-visible:ring-0 aria-invalid:ring-0 sm:h-128')}
 					placeholder="Enter your message here or upload a file..."
 					aria-label="Content to encrypt"
 					aria-describedby={$errors.content ? 'content-error' : undefined}
@@ -135,7 +133,7 @@
 						Upload File
 						<Upload />
 					</Button>
-					<div class="ml-auto">
+					<div class="mt-auto ml-auto">
 						<PopoverBadge variant="outline" id="views-badge" {disabled}>
 							{#snippet content()}
 								<span
@@ -148,13 +146,13 @@
 												: 'text-current'
 									)}
 								>
-									<Text size={16} aria-hidden="true" />
+									<Text size={12} aria-hidden="true" />
 									{readableLength} character{$formData.content.trim().length !== 1 ? 's' : ''}
 								</span>
 							{/snippet}
 							{#snippet popoverContent()}
 								<div class="min-w-48 space-y-2">
-									<div class="bg-muted h-2 w-full overflow-hidden rounded-full">
+									<div class="bg-muted h-2 w-full overflow-hidden">
 										<div
 											class={cn(
 												'h-full transition-all duration-300 ease-out',

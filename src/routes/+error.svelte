@@ -85,7 +85,7 @@
 	<div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
 		<Card.Root class="w-full max-w-lg">
 			<Card.Header class="text-center">
-				<div class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center rounded-full">
+				<div class="bg-muted/50 mx-auto mb-4 flex size-16 items-center justify-center">
 					<config.icon size={40} class={config.iconClass} aria-hidden="true" />
 				</div>
 				<Card.Title class="text-2xl" id="error-heading">
@@ -99,11 +99,11 @@
 						{config.description}
 					</p>
 
-					<div class="bg-muted/20 relative rounded-lg border p-3">
+					<div class="bg-muted/20 relative border p-3">
 						<CopyButton
 							copyFn={handleCopyErrorDetails}
 							variant="ghost"
-							size="sm"
+							size="icon-sm"
 							class="absolute top-1 right-1"
 							aria-label="Copy error details"
 						/>

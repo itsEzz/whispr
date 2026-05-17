@@ -108,7 +108,8 @@
 	position="top-right"
 	toastOptions={{
 		classes: {
-			closeButton: 'pointer-events-auto'
+			closeButton: 'pointer-events-auto rounded-none!',
+			toast: 'rounded-none!'
 		}
 	}}
 />
@@ -133,7 +134,7 @@
 		<div class="container flex h-14 items-center">
 			<!-- Logo and Site Name -->
 			<a href={resolve('/')} class="mr-6 flex items-center gap-2" aria-label="Whispr Home">
-				<div class="bg-primary/10 rounded-lg p-2">
+				<div class="bg-primary/10 p-2">
 					<MessageSquareLock size={24} class="text-primary" aria-hidden="true" />
 				</div>
 				<span class="font-bold sm:inline-block">Whispr</span>
@@ -230,7 +231,7 @@
 										onclick={handleCloseMobileMenu}
 										aria-label="Whispr Home"
 									>
-										<div class="bg-primary/10 rounded-lg p-2">
+										<div class="bg-primary/10 p-2">
 											<MessageSquareLock size={24} class="text-primary" aria-hidden="true" />
 										</div>
 
@@ -242,7 +243,7 @@
 									<nav class="flex flex-col gap-1" aria-label="Mobile Navigation">
 										<a
 											href={resolve('/')}
-											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page
+											class="hover:bg-accent hover:text-accent-foreground group flex items-center px-4 py-3 text-base font-medium transition-all duration-200 {page
 												.url.pathname === '/'
 												? 'bg-primary/10 text-primary'
 												: 'text-foreground'}"
@@ -250,8 +251,8 @@
 											aria-current={page.url.pathname === '/' ? 'page' : undefined}
 										>
 											<div
-												class="mr-3 flex h-8 w-8 items-center justify-center rounded-md {page.url
-													.pathname === '/'
+												class="mr-3 flex h-8 w-8 items-center justify-center {page.url.pathname ===
+												'/'
 													? 'bg-primary/20'
 													: 'bg-muted group-hover:bg-accent'}"
 											>
@@ -263,7 +264,7 @@
 
 										<a
 											href={resolve('/view')}
-											class="hover:bg-accent hover:text-accent-foreground group flex items-center rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 {page.url.pathname.startsWith(
+											class="hover:bg-accent hover:text-accent-foreground group flex items-center px-4 py-3 text-base font-medium transition-all duration-200 {page.url.pathname.startsWith(
 												'/v'
 											)
 												? 'bg-primary/10 text-primary'
@@ -272,7 +273,7 @@
 											aria-current={page.url.pathname === '/view' ? 'page' : undefined}
 										>
 											<div
-												class="mr-3 flex h-8 w-8 items-center justify-center rounded-md {page.url.pathname.startsWith(
+												class="mr-3 flex h-8 w-8 items-center justify-center {page.url.pathname.startsWith(
 													'/v'
 												)
 													? 'bg-primary/20'
@@ -297,11 +298,12 @@
 		</div>
 	</header>
 
-	<main id="main-content" class="container flex flex-1 flex-col p-4 pb-20" tabindex="-1">
+	<main id="main-content" class="container mb-14 flex-1 p-4" tabindex="-1">
 		<ServiceIssueAlert show={!data.schedulerIsValid} />
 		<InsecureAlert />
 		{@render children()}
 	</main>
+
 	<footer
 		class="bg-background fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-center border-t"
 	>

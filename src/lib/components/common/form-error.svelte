@@ -18,7 +18,7 @@
 		aria-live="polite"
 	>
 		{#each errors as error (error)}
-			<div class="bg-destructive/10 flex items-start rounded-sm px-3 py-2">
+			<div class="bg-destructive/10 flex items-start px-3 py-2">
 				<AlertCircle size={16} class="mt-0.5 mr-2 shrink-0" aria-hidden="true" />
 				<span class="leading-tight">{error}</span>
 			</div>

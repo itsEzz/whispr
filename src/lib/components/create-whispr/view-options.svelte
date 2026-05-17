@@ -35,7 +35,7 @@
 					<Input
 						type="text"
 						value="Unlimited"
-						class="text-muted-foreground"
+						class="text-muted-foreground m-0"
 						disabled
 						aria-label="Unlimited views selected"
 					/>

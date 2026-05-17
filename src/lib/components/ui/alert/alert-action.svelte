@@ -12,8 +12,8 @@
 
 <div
 	bind:this={ref}
-	data-slot="card-title"
-	class={cn("text-base leading-snug font-medium group-data-[size=sm]/card:text-sm", className)}
+	data-slot="alert-action"
+	class={cn("absolute top-2 right-2", className)}
 	{...restProps}
 >
 	{@render children?.()}

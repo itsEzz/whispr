@@ -84,7 +84,7 @@
 	<Accordion.Root type="single" bind:value={openOptions}>
 		<Accordion.Item value="options" class="border-none" id="whispr-options">
 			<Accordion.Trigger
-				class="rounded-lg border px-4 hover:no-underline"
+				class="border px-4 hover:no-underline"
 				aria-expanded={openOptions === 'options'}
 				aria-controls="whispr-options-content"
 			>

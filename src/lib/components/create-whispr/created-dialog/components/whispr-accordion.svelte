@@ -105,7 +105,7 @@
 	});
 </script>
 
-<Accordion.Root type="multiple" class="w-full rounded-lg border">
+<Accordion.Root type="multiple" class="w-full border">
 	<Accordion.Item value="qrcode" class="px-4">
 		<Accordion.Trigger
 			class="py-2 hover:no-underline"

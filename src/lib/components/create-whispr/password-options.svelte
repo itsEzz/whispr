@@ -143,7 +143,7 @@
 
 	{#if password}
 		<div class="flex items-center gap-2">
-			<div class="bg-muted mt-0.5 h-1.5 flex-1 overflow-hidden rounded-full">
+			<div class="bg-muted mt-0.5 h-1.5 flex-1 overflow-hidden">
 				<div
 					class={cn('h-full transition-all duration-300', passwordStrength.barColor)}
 					style="width: {((passwordStrength.score + 1) / 5) * 100}%"
@@ -154,10 +154,7 @@
 					{passwordStrength.label}
 				</span>
 				<Popover.Root>
-					<Popover.Trigger
-						class={cn(buttonVariants({ variant: 'ghost' }), 'size-4')}
-						aria-label="Password requirements and suggestions"
-					>
+					<Popover.Trigger class="mr-0.5" aria-label="Password requirements and suggestions">
 						<Info aria-hidden="true" class="size-4" />
 					</Popover.Trigger>
 					<Popover.Content class="w-64 p-3" align="end">

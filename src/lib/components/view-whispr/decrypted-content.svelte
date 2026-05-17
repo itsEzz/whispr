@@ -53,18 +53,18 @@
 <h1 class="mb-4 px-1 text-2xl font-bold">Whispr Content</h1>
 
 <div
-	class="border-input dark:bg-input/30 focus-within:border-ring focus-within:ring-ring/50 relative mb-0 flex min-h-0 flex-1 flex-col rounded-lg border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]"
+	class="border-input dark:bg-input/30 focus-within:border-ring focus-within:ring-ring/50 relative mb-0 flex min-h-0 flex-1 flex-col border bg-transparent transition-colors focus-within:ring-3"
 >
 	<Textarea
 		readonly
 		value={content}
-		class="flex-1 resize-none rounded-b-none border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+		class="flex-1 resize-none border-none focus-visible:ring-0 aria-invalid:ring-0"
 		placeholder="Decrypted content will appear here..."
 		aria-label="Decrypted whispr content"
 	/>
 	{#if showFooter}
 		<div
-			class="dark:bg-input/30 flex flex-col items-center gap-2 rounded-b-lg border-t bg-transparent p-3 sm:flex-row"
+			class="dark:bg-input/30 flex flex-col items-center gap-2 border-t bg-transparent p-3 sm:flex-row"
 		>
 			<div class="flex flex-wrap items-center justify-center gap-2">
 				{#if whispr.unlimitedViews || whispr.views !== undefined}

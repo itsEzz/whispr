@@ -60,7 +60,7 @@
 				</div>
 				<div
 					class={cn(
-						'border-input ring-offset-background flex items-stretch overflow-hidden rounded-md border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]',
+						'border-input ring-offset-background flex items-stretch overflow-hidden border bg-transparent shadow-xs transition-[color,box-shadow] focus-within:ring-[3px]',
 						$errors.ttlValue || $errors.ttlUnit
 							? 'border-destructive ring-destructive/20 dark:ring-destructive/40'
 							: 'focus-within:border-ring focus-within:ring-ring/50'
@@ -76,7 +76,7 @@
 						disabled={$submitting || disabled}
 						type="number"
 						aria-describedby={$errors.ttlValue ? 'ttl-value-error' : undefined}
-						class="w-full rounded-none border-0 focus-visible:ring-0"
+						class="w-full border-0 focus-visible:ring-0 aria-invalid:ring-0"
 					/>
 					<div class="relative w-px" aria-hidden="true">
 						<div class="bg-input absolute inset-0"></div>
@@ -92,7 +92,7 @@
 									type="single"
 								>
 									<Select.Trigger
-										class="mb-0 w-32 rounded-none border-0 px-3 focus:ring-0"
+										class="mb-0 w-32 border-0 px-3 focus:ring-0"
 										aria-label="Time unit"
 									>
 										{$formData.ttlUnit.charAt(0).toUpperCase() +

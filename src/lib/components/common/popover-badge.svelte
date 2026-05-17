@@ -41,7 +41,7 @@
 		aria-controls={popoverId}
 		aria-describedby={badgeId}
 	>
-		<Badge {variant} class={cn('gap-2 [&>svg]:size-auto!', classes)} id={badgeId}>
+		<Badge {variant} class={cn(classes)} id={badgeId}>
 			{#if typeof content === 'string'}
 				{content}
 			{:else}
