@@ -36,6 +36,16 @@ services:
       whispr_mysql:
         condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'node -e "require(''http'').get(''http://localhost:3000/health'',res=>{process.exit(res.statusCode===200?0:1)}).on(''error'',()=>process.exit(1))"'
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   whispr_mysql:
     image: mysql:${MYSQL_VERSION:-8.0}
