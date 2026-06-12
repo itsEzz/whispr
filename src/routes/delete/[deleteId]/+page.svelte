@@ -129,15 +129,15 @@
 					</Card.Description>
 				</Card.Header>
 				<form method="POST" use:enhance autocomplete="off">
-					<Card.Content class="space-y-2">
+					<Card.Content class="space-y-2 pb-4">
 						<Form.Field
 							{form}
 							name="confirm"
-							class="flex flex-row items-start space-y-0 space-x-3 border p-4"
+							class="flex items-start gap-3 border p-3 hover:bg-accent/50"
 						>
 							<Form.Control>
 								{#snippet children({ props })}
-									<div class="flex items-center gap-2">
+									<Form.Label>
 										<Checkbox
 											{...props}
 											{...$constraints.confirm}
@@ -150,13 +150,15 @@
 												$errors.confirm && 'border-destructive focus-visible:ring-destructive/50'
 											)}
 										/>
-										<div class="space-y-1 leading-none">
-											<Form.Label>I understand this action cannot be undone</Form.Label>
-											<Form.Description id="confirm-description">
+										<div class="grid gap-1.5 font-normal">
+											<p class="text-sm leading-none font-medium">
+												I understand this action cannot be undone
+											</p>
+											<p class="text-muted-foreground text-xs">
 												Once deleted, your Whispr will be gone forever.
-											</Form.Description>
+											</p>
 										</div>
-									</div>
+									</Form.Label>
 								{/snippet}
 							</Form.Control>
 						</Form.Field>
