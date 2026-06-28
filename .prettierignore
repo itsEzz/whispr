@@ -4,4 +4,5 @@ pnpm-lock.yaml
 yarn.lock
 
 # UI Components
+/static/
 src/lib/components/ui/**
