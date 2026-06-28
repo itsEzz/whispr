@@ -2,7 +2,7 @@ import type { EncryptionMessage, EncryptionResponse } from '$lib/types/encryptio
 import { isError, tc, tca } from '@itsezz/try-catch';
 import { scrypt } from '@noble/hashes/scrypt.js';
 import { Base64 } from 'js-base64';
-import pako from 'pako';
+import { deflate, inflate } from 'pako';
 
 class CryptoError extends Error {
 	constructor(
@@ -102,7 +102,7 @@ class WorkerAES {
 			const compressionFlag = new Uint8Array([isCompressed ? 1 : 0]);
 
 			const plaintextBuffer = isCompressed
-				? pako.deflate(encoder.encode(plaintext))
+				? deflate(encoder.encode(plaintext))
 				: encoder.encode(plaintext);
 
 			if (isCompressed && plaintextBuffer.length > this.MAX_COMPRESSED_SIZE)
@@ -117,7 +117,7 @@ class WorkerAES {
 					iv
 				},
 				key,
-				plaintextBuffer
+				plaintextBuffer as BufferSource
 			);
 
 			const combined = new Uint8Array(
@@ -198,9 +198,7 @@ class WorkerAES {
 
 			const decryptedBuffer = new Uint8Array(decrypted);
 
-			return decoder.decode(
-				compressionFlag === 1 ? pako.inflate(decryptedBuffer) : decryptedBuffer
-			);
+			return decoder.decode(compressionFlag === 1 ? inflate(decryptedBuffer) : decryptedBuffer);
 		});
 
 		if (isError(result)) throw new CryptoError('Unable to process data', ErrorCodes.CRYPTO_FAILED);
