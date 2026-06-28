@@ -1,20 +1,16 @@
-import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores, includeIgnoreFile } from 'eslint/config';
 import globals from 'globals';
 import path from 'node:path';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
 
 const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 
 export default defineConfig(
+	globalIgnores(['src/lib/components/ui/*']),
 	includeIgnoreFile(gitignorePath),
-	{
-		ignores: ['src/lib/components/ui/**']
-	},
 	js.configs.recommended,
 	ts.configs.recommended,
 	svelte.configs.recommended,
@@ -34,9 +30,13 @@ export default defineConfig(
 			parserOptions: {
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
-				parser: ts.parser,
-				svelteConfig
+				parser: ts.parser
 			}
 		}
+	},
+	{
+		// Override or add rule settings here, such as:
+		// 'svelte/button-has-type': 'error'
+		rules: {}
 	}
 );
