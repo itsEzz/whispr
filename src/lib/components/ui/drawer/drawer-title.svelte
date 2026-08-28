@@ -12,6 +12,6 @@
 <DrawerPrimitive.Title
 	bind:ref
 	data-slot="drawer-title"
-	class={cn("text-foreground text-sm font-medium", className)}
+	class={cn("text-sm font-medium text-foreground", className)}
 	{...restProps}
 />
