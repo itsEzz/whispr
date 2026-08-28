@@ -133,7 +133,7 @@
 						<Form.Field
 							{form}
 							name="confirm"
-							class="flex items-start gap-3 border p-3 hover:bg-accent/50"
+							class="hover:bg-accent/50 flex items-start gap-3 border p-3"
 						>
 							<Form.Control>
 								{#snippet children({ props })}

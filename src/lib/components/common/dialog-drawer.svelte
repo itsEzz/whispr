@@ -18,10 +18,7 @@
 		dialogContentCss?: string;
 		escapeKeydownBehavior?: 'ignore' | 'close' | 'defer-otherwise-close' | 'defer-otherwise-ignore';
 		interactOutsideBehavior?:
-			| 'ignore'
-			| 'close'
-			| 'defer-otherwise-close'
-			| 'defer-otherwise-ignore';
+			'ignore' | 'close' | 'defer-otherwise-close' | 'defer-otherwise-ignore';
 		idToFocusOnOpen?: string;
 		role?: AriaRole;
 		'aria-describedby'?: string;
