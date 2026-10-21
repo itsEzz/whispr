@@ -17,6 +17,9 @@ importers:
       mysql2:
         specifier: ^3.24.6
         version: 3.24.6(@types/node@26.6.5)
+      pino:
+        specifier: 10.3.1
+        version: 10.3.1
       pino-pretty:
         specifier: ^13.2.0
         version: 13.2.0
@@ -117,9 +120,6 @@ importers:
       pako:
         specifier: ^3.0.2
         version: 3.0.2
-      pino:
-        specifier: ^10.3.1
-        version: 10.3.1
       prettier:
         specifier: ^3.9.10
         version: 3.9.10
