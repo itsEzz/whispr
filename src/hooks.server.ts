@@ -1,7 +1,6 @@
 import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit/hooks';
 import { dev } from '$app/env';
 import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
-import { validateEnv } from '#lib/server/env-validation.js';
 import { getLogger } from '#lib/server/logger.js';
 import { humanId } from 'human-id';
 
@@ -32,13 +31,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handleError: HandleServerError = async ({ error, event, status, message }) => {
+export const handleError: HandleServerError = async ({ error, event }) => {
 	const correlationId = event.locals.correlationId;
 
 	const logger = getLogger();
 	logger.error(
-		{ correlationId, path: event.url.pathname, method: event.request.method, status, error },
-		message
+		{ correlationId, path: event.url.pathname, method: event.request.method, error },
+		'Unhandled server error'
 	);
 };
 
@@ -47,7 +46,6 @@ export const init: ServerInit = async () => {
 
 	try {
 		logger.info('App initializing...');
-		await validateEnv();
 		await dbEventScheduler.initializeEventScheduler();
 		logger.info('App initialization complete');
 	} catch (error) {

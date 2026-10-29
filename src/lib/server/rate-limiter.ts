@@ -1,7 +1,7 @@
+import { RATE_LIMITER_IP, RATE_LIMITER_IPUA } from '$app/env/private';
 import { RetryAfterRateLimiter } from 'sveltekit-rate-limiter/server';
-import { serverAppConfig } from './server-app-config';
 
 export const rateLimiter = new RetryAfterRateLimiter({
-	IP: serverAppConfig.RATE_LIMITER_IP,
-	IPUA: serverAppConfig.RATE_LIMITER_IPUA
+	IP: RATE_LIMITER_IP,
+	IPUA: RATE_LIMITER_IPUA
 });

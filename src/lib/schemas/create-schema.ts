@@ -5,23 +5,36 @@ import {
 	specialCharacterRegex,
 	upperCaseRegex
 } from '#lib/crypto/pw-strength.js';
-import { clientAppConfig } from '#lib/utils/client-app-config.js';
+import {
+	PUBLIC_CONTENT_MAX_LENGTH,
+	PUBLIC_CONTENT_MIN_LENGTH,
+	PUBLIC_EXPIRES_IN_MAX_UNIT,
+	PUBLIC_EXPIRES_IN_MAX_VALUE,
+	PUBLIC_PASSWORD_LOWER_CASE_REQUIRED,
+	PUBLIC_PASSWORD_MAX_LENGTH,
+	PUBLIC_PASSWORD_MIN_LENGTH,
+	PUBLIC_PASSWORD_NUMBER_REQUIRED,
+	PUBLIC_PASSWORD_SPECIAL_CHARACTER_REQUIRED,
+	PUBLIC_PASSWORD_UPPER_CASE_REQUIRED,
+	PUBLIC_VIEWS_MAX,
+	PUBLIC_VIEWS_MIN
+} from '$app/env/public';
 import { z } from 'zod/v4';
 
 export const passwordSchema = z
 	.string({ message: 'Must be a string' })
 	.trim()
-	.min(clientAppConfig.PUBLIC_PASSWORD_MIN_LENGTH, {
-		message: `Must be at least ${clientAppConfig.PUBLIC_PASSWORD_MIN_LENGTH.toLocaleString()} character${clientAppConfig.PUBLIC_PASSWORD_MIN_LENGTH === 1 ? '' : 's'}`
+	.min(PUBLIC_PASSWORD_MIN_LENGTH, {
+		message: `Must be at least ${PUBLIC_PASSWORD_MIN_LENGTH.toLocaleString()} character${PUBLIC_PASSWORD_MIN_LENGTH === 1 ? '' : 's'}`
 	})
-	.max(clientAppConfig.PUBLIC_PASSWORD_MAX_LENGTH, {
-		message: `Must be at most ${clientAppConfig.PUBLIC_PASSWORD_MAX_LENGTH.toLocaleString()} character${clientAppConfig.PUBLIC_PASSWORD_MAX_LENGTH === 1 ? '' : 's'}`
+	.max(PUBLIC_PASSWORD_MAX_LENGTH, {
+		message: `Must be at most ${PUBLIC_PASSWORD_MAX_LENGTH.toLocaleString()} character${PUBLIC_PASSWORD_MAX_LENGTH === 1 ? '' : 's'}`
 	})
 	.or(z.literal(''))
 	.check((ctx) => {
 		if (ctx.value === '') return;
 
-		if (clientAppConfig.PUBLIC_PASSWORD_UPPER_CASE_REQUIRED && !upperCaseRegex.test(ctx.value)) {
+		if (PUBLIC_PASSWORD_UPPER_CASE_REQUIRED && !upperCaseRegex.test(ctx.value)) {
 			ctx.issues.push({
 				code: 'custom',
 				message: 'Must contain at least one uppercase letter',
@@ -29,7 +42,7 @@ export const passwordSchema = z
 			});
 		}
 
-		if (clientAppConfig.PUBLIC_PASSWORD_LOWER_CASE_REQUIRED && !lowerCaseRegex.test(ctx.value)) {
+		if (PUBLIC_PASSWORD_LOWER_CASE_REQUIRED && !lowerCaseRegex.test(ctx.value)) {
 			ctx.issues.push({
 				code: 'custom',
 				message: 'Must contain at least one lowercase letter',
@@ -37,7 +50,7 @@ export const passwordSchema = z
 			});
 		}
 
-		if (clientAppConfig.PUBLIC_PASSWORD_NUMBER_REQUIRED && !numberRegex.test(ctx.value)) {
+		if (PUBLIC_PASSWORD_NUMBER_REQUIRED && !numberRegex.test(ctx.value)) {
 			ctx.issues.push({
 				code: 'custom',
 				message: 'Must contain at least one number',
@@ -45,10 +58,7 @@ export const passwordSchema = z
 			});
 		}
 
-		if (
-			clientAppConfig.PUBLIC_PASSWORD_SPECIAL_CHARACTER_REQUIRED &&
-			!specialCharacterRegex.test(ctx.value)
-		) {
+		if (PUBLIC_PASSWORD_SPECIAL_CHARACTER_REQUIRED && !specialCharacterRegex.test(ctx.value)) {
 			ctx.issues.push({
 				code: 'custom',
 				message: 'Must contain at least one special character',
@@ -61,19 +71,19 @@ export const createSchema = z
 	.object({
 		content: z
 			.string({ message: 'Must be a string' })
-			.min(clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH, {
-				message: `Must be at least ${clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH.toLocaleString()} character${clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH === 1 ? '' : 's'}`
+			.min(PUBLIC_CONTENT_MIN_LENGTH, {
+				message: `Must be at least ${PUBLIC_CONTENT_MIN_LENGTH.toLocaleString()} character${PUBLIC_CONTENT_MIN_LENGTH === 1 ? '' : 's'}`
 			})
-			.max(clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH, {
-				message: `Must be at most ${clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH.toLocaleString()} character${clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH === 1 ? '' : 's'}`
+			.max(PUBLIC_CONTENT_MAX_LENGTH, {
+				message: `Must be at most ${PUBLIC_CONTENT_MAX_LENGTH.toLocaleString()} character${PUBLIC_CONTENT_MAX_LENGTH === 1 ? '' : 's'}`
 			}),
 		views: z
 			.number({ message: 'Must be a number' })
-			.min(clientAppConfig.PUBLIC_VIEWS_MIN, {
-				message: `Must be at least ${clientAppConfig.PUBLIC_VIEWS_MIN.toLocaleString()}`
+			.min(PUBLIC_VIEWS_MIN, {
+				message: `Must be at least ${PUBLIC_VIEWS_MIN.toLocaleString()}`
 			})
-			.max(clientAppConfig.PUBLIC_VIEWS_MAX, {
-				message: `Must be at most ${clientAppConfig.PUBLIC_VIEWS_MAX.toLocaleString()}`
+			.max(PUBLIC_VIEWS_MAX, {
+				message: `Must be at most ${PUBLIC_VIEWS_MAX.toLocaleString()}`
 			}),
 		showViews: z.boolean({ message: 'Must be a boolean' }).default(false),
 		unlimitedViews: z.boolean({ message: 'Must be a boolean' }).default(false),
@@ -90,16 +100,14 @@ export const createSchema = z
 	})
 	.check((ctx) => {
 		const ttl = ctx.value.ttlValue * ttlUnits[ctx.value.ttlUnit];
-		const maxTtl =
-			clientAppConfig.PUBLIC_EXPIRES_IN_MAX_VALUE *
-			ttlUnits[clientAppConfig.PUBLIC_EXPIRES_IN_MAX_UNIT];
+		const maxTtl = PUBLIC_EXPIRES_IN_MAX_VALUE * ttlUnits[PUBLIC_EXPIRES_IN_MAX_UNIT];
 		if (ttl > maxTtl)
 			ctx.issues.push({
 				code: 'too_big',
 				maximum: maxTtl,
 				origin: 'number',
 				inclusive: true,
-				message: `Must be at most ${clientAppConfig.PUBLIC_EXPIRES_IN_MAX_VALUE} ${clientAppConfig.PUBLIC_EXPIRES_IN_MAX_UNIT}`,
+				message: `Must be at most ${PUBLIC_EXPIRES_IN_MAX_VALUE} ${PUBLIC_EXPIRES_IN_MAX_UNIT}`,
 				path: ['ttlValue'],
 				input: ctx.value
 			});

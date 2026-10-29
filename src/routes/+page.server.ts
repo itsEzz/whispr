@@ -1,31 +1,39 @@
 import { ttlUnits } from '#lib/constants/ttl-units.js';
 import { createSchema } from '#lib/schemas/create-schema.js';
-import { db } from '#lib/server/db/index.js';
 import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import { db } from '#lib/server/db/index.js';
 import { whispr_table } from '#lib/server/db/schema.js';
 import { createChildLogger } from '#lib/server/logger.js';
 import { rateLimiter } from '#lib/server/rate-limiter.js';
 import type { CreatedWhispr } from '#lib/types/created-whispr.js';
-import { clientAppConfig } from '#lib/utils/client-app-config.js';
+import {
+	PUBLIC_EXPIRES_IN_SHOW_RECIPIENTS_DEFAULT,
+	PUBLIC_EXPIRES_IN_UNIT_DEFAULT,
+	PUBLIC_EXPIRES_IN_VALUE_DEFAULT,
+	PUBLIC_SHOW_COPY_BUTTON_DEFAULT,
+	PUBLIC_SHOW_DOWNLOAD_BUTTON_DEFAULT,
+	PUBLIC_VIEWS_DEFAULT,
+	PUBLIC_VIEWS_SHOW_RECIPIENTS_DEFAULT
+} from '$app/env/public';
 import { isError, tca } from '@itsezz/try-catch';
 import { fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, RequestEvent } from './$types';
 
 const logger = createChildLogger('routes.create');
 
 export const load: PageServerLoad = async () => {
 	const form = await superValidate(
 		{
-			views: clientAppConfig.PUBLIC_VIEWS_DEFAULT,
-			ttlValue: clientAppConfig.PUBLIC_EXPIRES_IN_VALUE_DEFAULT,
-			ttlUnit: clientAppConfig.PUBLIC_EXPIRES_IN_UNIT_DEFAULT,
-			showViews: clientAppConfig.PUBLIC_VIEWS_SHOW_RECIPIENTS_DEFAULT,
-			showTtl: clientAppConfig.PUBLIC_EXPIRES_IN_SHOW_RECIPIENTS_DEFAULT,
-			showCopyButton: clientAppConfig.PUBLIC_SHOW_COPY_BUTTON_DEFAULT,
-			showDownloadButton: clientAppConfig.PUBLIC_SHOW_DOWNLOAD_BUTTON_DEFAULT
+			views: PUBLIC_VIEWS_DEFAULT,
+			ttlValue: PUBLIC_EXPIRES_IN_VALUE_DEFAULT,
+			ttlUnit: PUBLIC_EXPIRES_IN_UNIT_DEFAULT,
+			showViews: PUBLIC_VIEWS_SHOW_RECIPIENTS_DEFAULT,
+			showTtl: PUBLIC_EXPIRES_IN_SHOW_RECIPIENTS_DEFAULT,
+			showCopyButton: PUBLIC_SHOW_COPY_BUTTON_DEFAULT,
+			showDownloadButton: PUBLIC_SHOW_DOWNLOAD_BUTTON_DEFAULT
 		},
 		zod4(createSchema)
 	);
@@ -34,7 +42,7 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async (event) => {
+	default: async (event: RequestEvent) => {
 		const correlationId = event.locals.correlationId;
 
 		const status = await rateLimiter.check(event);

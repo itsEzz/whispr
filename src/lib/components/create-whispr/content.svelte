@@ -3,9 +3,9 @@
 	import * as Form from '#lib/components/ui/form/index.js';
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
 	import { cn } from '#lib/utils.js';
-	import { clientAppConfig } from '#lib/utils/client-app-config.js';
 	import { getAcceptAttribute, validateTextFile } from '#lib/utils/file-validation.js';
 	import { getReadableContentLength } from '#lib/utils/misc.js';
+	import { PUBLIC_CONTENT_MAX_LENGTH, PUBLIC_CONTENT_MIN_LENGTH } from '$app/env/public';
 	import Text from '@lucide/svelte/icons/text';
 	import Upload from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';
@@ -28,8 +28,8 @@
 	// svelte-ignore state_referenced_locally
 	const { form: formData, errors, constraints, submitting } = form;
 	const readableLength = $derived(getReadableContentLength($formData.content.trim().length));
-	const minLength = clientAppConfig.PUBLIC_CONTENT_MIN_LENGTH;
-	const maxLength = clientAppConfig.PUBLIC_CONTENT_MAX_LENGTH;
+	const minLength = PUBLIC_CONTENT_MIN_LENGTH;
+	const maxLength = PUBLIC_CONTENT_MAX_LENGTH;
 
 	// Handler Functions
 	function handleClickFileUpload() {
