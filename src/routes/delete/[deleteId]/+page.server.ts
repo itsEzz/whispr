@@ -1,6 +1,6 @@
 import { deleteIdSchema, deleteSchema } from '#lib/schemas/delete-schema.js';
-import { db } from '#lib/server/db/index.js';
 import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import { db } from '#lib/server/db/index.js';
 import { whispr_table } from '#lib/server/db/schema.js';
 import { createChildLogger } from '#lib/server/logger.js';
 import { rateLimiter } from '#lib/server/rate-limiter.js';
@@ -9,7 +9,7 @@ import { error, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, RequestEvent } from './$types';
 
 const logger = createChildLogger('routes.delete');
 
@@ -82,7 +82,7 @@ export const load: PageServerLoad = async (event) => {
 };
 
 export const actions = {
-	default: async (event) => {
+	default: async (event: RequestEvent) => {
 		const correlationId = event.locals.correlationId;
 
 		const status = await rateLimiter.check(event);
