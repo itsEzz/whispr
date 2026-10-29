@@ -1,9 +1,9 @@
 <script lang="ts">
-	import * as Accordion from '$lib/components/ui/accordion/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
-	import type { CreateSchema } from '$lib/schemas/create-schema';
-	import type { PasswordComponent } from '$lib/types/password';
+	import * as Accordion from '#lib/components/ui/accordion/index.js';
+	import { Badge } from '#lib/components/ui/badge/index.js';
+	import * as Card from '#lib/components/ui/card/index.js';
+	import type { CreateSchema } from '#lib/schemas/create-schema.js';
+	import type { PasswordComponent } from '#lib/types/password.js';
 	import { MediaQuery } from 'svelte/reactivity';
 	import type { Infer } from 'sveltekit-superforms';
 	import type { SuperForm, ValidationErrors } from 'sveltekit-superforms/client';

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Form from '$lib/components/ui/form/index.js';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import { cn } from '$lib/utils';
-	import { clientAppConfig } from '$lib/utils/client-app-config';
-	import { getAcceptAttribute, validateTextFile } from '$lib/utils/file-validation';
-	import { getReadableContentLength } from '$lib/utils/misc';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as Form from '#lib/components/ui/form/index.js';
+	import { Textarea } from '#lib/components/ui/textarea/index.js';
+	import { cn } from '#lib/utils.js';
+	import { clientAppConfig } from '#lib/utils/client-app-config.js';
+	import { getAcceptAttribute, validateTextFile } from '#lib/utils/file-validation.js';
+	import { getReadableContentLength } from '#lib/utils/misc.js';
 	import Text from '@lucide/svelte/icons/text';
 	import Upload from '@lucide/svelte/icons/upload';
 	import { toast } from 'svelte-sonner';

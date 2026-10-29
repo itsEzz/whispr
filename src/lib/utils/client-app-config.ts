@@ -1,6 +1,6 @@
 import * as publicEnv from '$env/dynamic/public';
-import { clientEnvSchema } from '$lib/schemas/env-schema';
-import type { ClientAppConfig } from '$lib/types/app-config';
+import { clientEnvSchema } from '#lib/schemas/env-schema.js';
+import type { ClientAppConfig } from '#lib/types/app-config.js';
 import { emptyStringsToUndefined } from './env';
 
 const result = clientEnvSchema.safeParse(emptyStringsToUndefined(publicEnv.env));

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
-	import * as Popover from '$lib/components/ui/popover/index.js';
-	import { passwordGenerator } from '$lib/crypto/pw-gen';
-	import { getPasswordStrength } from '$lib/crypto/pw-strength';
-	import { cn } from '$lib/utils';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Input } from '#lib/components/ui/input/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
+	import * as Popover from '#lib/components/ui/popover/index.js';
+	import { passwordGenerator } from '#lib/crypto/pw-gen.js';
+	import { getPasswordStrength } from '#lib/crypto/pw-strength.js';
+	import { cn } from '#lib/utils.js';
 	import { isError, tc } from '@itsezz/try-catch';
 	import Check from '@lucide/svelte/icons/check';
 	import Dices from '@lucide/svelte/icons/dices';

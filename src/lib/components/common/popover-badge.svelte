@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Badge, type BadgeVariant } from '$lib/components/ui/badge/index.js';
-	import * as Popover from '$lib/components/ui/popover/index.js';
-	import { cn } from '$lib/utils';
+	import { Badge, type BadgeVariant } from '#lib/components/ui/badge/index.js';
+	import * as Popover from '#lib/components/ui/popover/index.js';
+	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 
 	// Props

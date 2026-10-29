@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { version } from '$app/environment';
+	import { version } from '$app/env';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import InsecureAlert from '$lib/components/layout/insecure-alert.svelte';
-	import ServiceIssueAlert from '$lib/components/layout/service-issue-alert.svelte';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import * as Sheet from '$lib/components/ui/sheet/index.js';
-	import { Toaster } from '$lib/components/ui/sonner';
+	import InsecureAlert from '#lib/components/layout/insecure-alert.svelte';
+	import ServiceIssueAlert from '#lib/components/layout/service-issue-alert.svelte';
+	import { Button, buttonVariants } from '#lib/components/ui/button/index.js';
+	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
+	import * as Sheet from '#lib/components/ui/sheet/index.js';
+	import { Toaster } from '#lib/components/ui/sonner/index.js';
 	import Eye from '@lucide/svelte/icons/eye';
 	import Menu from '@lucide/svelte/icons/menu';
 	import MessageSquareLock from '@lucide/svelte/icons/message-square-lock';
@@ -152,7 +152,7 @@
 					Create
 				</a>
 				<a
-					href={resolve('/view')}
+					href={resolve('view')}
 					class="hover:text-primary text-sm font-medium transition-colors {page.url.pathname.startsWith(
 						'/v'
 					)
@@ -263,7 +263,7 @@
 										</a>
 
 										<a
-											href={resolve('/view')}
+											href={resolve('view')}
 											class="hover:bg-accent hover:text-accent-foreground group flex items-center px-4 py-3 text-base font-medium transition-all duration-200 {page.url.pathname.startsWith(
 												'/v'
 											)

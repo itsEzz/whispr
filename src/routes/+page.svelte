@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import ConfirmNavigateAway from '$lib/components/common/confirm-navigate-away.svelte';
-	import ConfirmReset from '$lib/components/common/confirm-reset.svelte';
-	import Content from '$lib/components/create-whispr/content.svelte';
-	import WhisprCreatedDialog from '$lib/components/create-whispr/created-dialog/whispr-created-dialog.svelte';
-	import Options from '$lib/components/create-whispr/options.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Form from '$lib/components/ui/form/index.js';
-	import aesWorker from '$lib/crypto/aes-worker';
-	import { passwordGenerator } from '$lib/crypto/pw-gen';
-	import type { CreatedWhispr } from '$lib/types/created-whispr';
-	import type { PasswordComponent } from '$lib/types/password';
+	import ConfirmNavigateAway from '#lib/components/common/confirm-navigate-away.svelte';
+	import ConfirmReset from '#lib/components/common/confirm-reset.svelte';
+	import Content from '#lib/components/create-whispr/content.svelte';
+	import WhisprCreatedDialog from '#lib/components/create-whispr/created-dialog/whispr-created-dialog.svelte';
+	import Options from '#lib/components/create-whispr/options.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as Form from '#lib/components/ui/form/index.js';
+	import aesWorker from '#lib/crypto/aes-worker.js';
+	import { passwordGenerator } from '#lib/crypto/pw-gen.js';
+	import type { CreatedWhispr } from '#lib/types/created-whispr.js';
+	import type { PasswordComponent } from '#lib/types/password.js';
 	import { isError, tc, tca } from '@itsezz/try-catch';
 	import Eraser from '@lucide/svelte/icons/eraser';
 	import LoaderCircle from '@lucide/svelte/icons/loader-circle';

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import * as Alert from '$lib/components/ui/alert/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { browser } from '$app/env';
+	import * as Alert from '#lib/components/ui/alert/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import ShieldAlert from '@lucide/svelte/icons/shield-alert';
 	import X from '@lucide/svelte/icons/x';
 	import { onMount } from 'svelte';

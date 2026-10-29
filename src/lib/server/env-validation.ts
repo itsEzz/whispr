@@ -1,7 +1,7 @@
 import * as privateEnv from '$env/dynamic/private';
 import * as publicEnv from '$env/dynamic/public';
-import { clientEnvSchema, serverEnvSchema } from '$lib/schemas/env-schema';
-import { emptyStringsToUndefined, formatValidationError } from '$lib/utils/env';
+import { clientEnvSchema, serverEnvSchema } from '#lib/schemas/env-schema.js';
+import { emptyStringsToUndefined, formatValidationError } from '#lib/utils/env.js';
 import { isError, tc } from '@itsezz/try-catch';
 import { z } from 'zod/v4';
 import { createChildLogger } from './logger';

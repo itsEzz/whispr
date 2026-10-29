@@ -1,7 +1,7 @@
 <script lang="ts">
-	import PopoverBadge from '$lib/components/common/popover-badge.svelte';
-	import type { CreatedWhispr } from '$lib/types/created-whispr';
-	import { formatDate, getUserLocale } from '$lib/utils/date-helpers';
+	import PopoverBadge from '#lib/components/common/popover-badge.svelte';
+	import type { CreatedWhispr } from '#lib/types/created-whispr.js';
+	import { formatDate, getUserLocale } from '#lib/utils/date-helpers.js';
 	import CalendarX from '@lucide/svelte/icons/calendar-x';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Download from '@lucide/svelte/icons/download';

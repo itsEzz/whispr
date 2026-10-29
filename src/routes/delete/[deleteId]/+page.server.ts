@@ -1,9 +1,9 @@
-import { deleteIdSchema, deleteSchema } from '$lib/schemas/delete-schema';
-import { db } from '$lib/server/db';
-import { dbEventScheduler } from '$lib/server/db/event-scheduler';
-import { whispr_table } from '$lib/server/db/schema';
-import { createChildLogger } from '$lib/server/logger.js';
-import { rateLimiter } from '$lib/server/rate-limiter';
+import { deleteIdSchema, deleteSchema } from '#lib/schemas/delete-schema.js';
+import { db } from '#lib/server/db/index.js';
+import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import { whispr_table } from '#lib/server/db/schema.js';
+import { createChildLogger } from '#lib/server/logger.js';
+import { rateLimiter } from '#lib/server/rate-limiter.js';
 import { isError, tca } from '@itsezz/try-catch';
 import { error, fail } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';

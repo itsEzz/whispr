@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import { cn } from '$lib/utils';
+	import * as Dialog from '#lib/components/ui/dialog/index.js';
+	import * as Drawer from '#lib/components/ui/drawer/index.js';
+	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 	import type { AriaRole } from 'svelte/elements';
 	import { MediaQuery } from 'svelte/reactivity';
@@ -18,7 +18,10 @@
 		dialogContentCss?: string;
 		escapeKeydownBehavior?: 'ignore' | 'close' | 'defer-otherwise-close' | 'defer-otherwise-ignore';
 		interactOutsideBehavior?:
-			'ignore' | 'close' | 'defer-otherwise-close' | 'defer-otherwise-ignore';
+			| 'ignore'
+			| 'close'
+			| 'defer-otherwise-close'
+			| 'defer-otherwise-ignore';
 		idToFocusOnOpen?: string;
 		role?: AriaRole;
 		'aria-describedby'?: string;

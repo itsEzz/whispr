@@ -1,12 +1,12 @@
 <script lang="ts">
-	import CopyButton from '$lib/components/common/copy-button.svelte';
-	import * as Accordion from '$lib/components/ui/accordion/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
-	import { copyText, isCopySupported } from '$lib/utils/copy';
-	import { getSvgString, qrCodeToPng, qrCodeToSvg } from '$lib/utils/qrcode';
+	import CopyButton from '#lib/components/common/copy-button.svelte';
+	import * as Accordion from '#lib/components/ui/accordion/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
+	import { Input } from '#lib/components/ui/input/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
+	import { copyText, isCopySupported } from '#lib/utils/copy.js';
+	import { getSvgString, qrCodeToPng, qrCodeToSvg } from '#lib/utils/qrcode.js';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import ChevronUp from '@lucide/svelte/icons/chevron-up';
 	import CodeXml from '@lucide/svelte/icons/code-xml';

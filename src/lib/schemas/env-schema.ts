@@ -1,4 +1,4 @@
-import { ttlUnits } from '$lib/constants/ttl-units';
+import { ttlUnits } from '#lib/constants/ttl-units.js';
 import { isError, tc } from '@itsezz/try-catch';
 import { z } from 'zod/v4';
 

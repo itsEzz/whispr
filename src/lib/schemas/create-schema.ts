@@ -1,11 +1,11 @@
-import { ttlUnits } from '$lib/constants/ttl-units';
+import { ttlUnits } from '#lib/constants/ttl-units.js';
 import {
 	lowerCaseRegex,
 	numberRegex,
 	specialCharacterRegex,
 	upperCaseRegex
-} from '$lib/crypto/pw-strength';
-import { clientAppConfig } from '$lib/utils/client-app-config';
+} from '#lib/crypto/pw-strength.js';
+import { clientAppConfig } from '#lib/utils/client-app-config.js';
 import { z } from 'zod/v4';
 
 export const passwordSchema = z

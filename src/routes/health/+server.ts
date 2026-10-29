@@ -1,7 +1,7 @@
-import { version } from '$app/environment';
-import { db } from '$lib/server/db';
-import { dbEventScheduler } from '$lib/server/db/event-scheduler';
-import type { HealthResponse } from '$lib/types/health';
+import { version } from '$app/env';
+import { db } from '#lib/server/db/index.js';
+import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import type { HealthResponse } from '#lib/types/health.js';
 import { isError, isSuccess, tca } from '@itsezz/try-catch';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';

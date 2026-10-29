@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { isSuccess, tca } from '@itsezz/try-catch';
 import { toast } from 'svelte-sonner';
 

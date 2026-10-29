@@ -1,4 +1,4 @@
-import type { TtlUnits } from '$lib/types/ttl';
+import type { TtlUnits } from '#lib/types/ttl.js';
 
 export const ttlUnits: TtlUnits = {
 	minutes: 60,

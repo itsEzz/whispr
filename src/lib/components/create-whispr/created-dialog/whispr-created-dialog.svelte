@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Separator } from '$lib/components/ui/separator/index.js';
-	import type { CreatedWhispr } from '$lib/types/created-whispr';
+	import { Separator } from '#lib/components/ui/separator/index.js';
+	import type { CreatedWhispr } from '#lib/types/created-whispr.js';
 	import Lock from '@lucide/svelte/icons/lock';
 	import { Base64 } from 'js-base64';
 	import DialogDrawer from '../../common/dialog-drawer.svelte';

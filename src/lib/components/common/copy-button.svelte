@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from '$lib/components/ui/button/index.js';
-	import { cn } from '$lib/utils';
+	import { Button, type ButtonProps } from '#lib/components/ui/button/index.js';
+	import { cn } from '#lib/utils.js';
 	import CircleCheck from '@lucide/svelte/icons/circle-check';
 	import CircleX from '@lucide/svelte/icons/circle-x';
 	import Copy from '@lucide/svelte/icons/copy';

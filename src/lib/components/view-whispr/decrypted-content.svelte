@@ -1,12 +1,12 @@
 <script lang="ts">
-	import CopyButton from '$lib/components/common/copy-button.svelte';
-	import PopoverBadge from '$lib/components/common/popover-badge.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import type { ViewWhispr } from '$lib/types/view-whispr';
-	import { copyText } from '$lib/utils/copy';
-	import { formatDate, getUserLocale } from '$lib/utils/date-helpers';
-	import { downloadFile } from '$lib/utils/download';
+	import CopyButton from '#lib/components/common/copy-button.svelte';
+	import PopoverBadge from '#lib/components/common/popover-badge.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Textarea } from '#lib/components/ui/textarea/index.js';
+	import type { ViewWhispr } from '#lib/types/view-whispr.js';
+	import { copyText } from '#lib/utils/copy.js';
+	import { formatDate, getUserLocale } from '#lib/utils/date-helpers.js';
+	import { downloadFile } from '#lib/utils/download.js';
 	import CalendarX from '@lucide/svelte/icons/calendar-x';
 	import Download from '@lucide/svelte/icons/download';
 	import Eye from '@lucide/svelte/icons/eye';

@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { isError, tca } from '@itsezz/try-catch';
 import QRCode from 'qrcode';
 import { downloadFile } from './download';

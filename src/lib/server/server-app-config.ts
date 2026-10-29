@@ -1,8 +1,8 @@
-import { building } from '$app/environment';
+import { building } from '$app/env';
 import * as privateEnv from '$env/dynamic/private';
-import { serverEnvSchema } from '$lib/schemas/env-schema';
-import type { ServerAppConfig } from '$lib/types/app-config';
-import { emptyStringsToUndefined } from '$lib/utils/env';
+import { serverEnvSchema } from '#lib/schemas/env-schema.js';
+import type { ServerAppConfig } from '#lib/types/app-config.js';
+import { emptyStringsToUndefined } from '#lib/utils/env.js';
 
 const result = serverEnvSchema.safeParse(
 	// During build time, provide dummy values for required env vars to satisfy the schema

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import aesWorker from '$lib/crypto/aes-worker';
-	import { viewPasswordSchema } from '$lib/schemas/view-schema';
-	import type { ViewWhispr } from '$lib/types/view-whispr';
+	import aesWorker from '#lib/crypto/aes-worker.js';
+	import { viewPasswordSchema } from '#lib/schemas/view-schema.js';
+	import type { ViewWhispr } from '#lib/types/view-whispr.js';
 	import { isError, tc, tca } from '@itsezz/try-catch';
 	import { Base64 } from 'js-base64';
 	import { onMount, tick } from 'svelte';

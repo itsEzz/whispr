@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ViewWhispr from '$lib/components/view-whispr/view-whispr.svelte';
+	import ViewWhispr from '#lib/components/view-whispr/view-whispr.svelte';
 	import SvelteSeo from 'svelte-seo';
 	import type { LayoutProps } from './$types';
 

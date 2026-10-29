@@ -1,4 +1,4 @@
-import type { EncryptionMessage, EncryptionResponse } from '$lib/types/encryption';
+import type { EncryptionMessage, EncryptionResponse } from '#lib/types/encryption.js';
 import { isError, tc, tca } from '@itsezz/try-catch';
 import { scrypt } from '@noble/hashes/scrypt.js';
 import { Base64 } from 'js-base64';

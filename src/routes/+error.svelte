@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import CopyButton from '$lib/components/common/copy-button.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
-	import type { ErrorPageConfig } from '$lib/types/error';
-	import { copyText } from '$lib/utils/copy.js';
+	import CopyButton from '#lib/components/common/copy-button.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as Card from '#lib/components/ui/card/index.js';
+	import type { ErrorPageConfig } from '#lib/types/error.js';
+	import { copyText } from '#lib/utils/copy.js';
 	import AlertTriangle from '@lucide/svelte/icons/alert-triangle';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import Home from '@lucide/svelte/icons/home';

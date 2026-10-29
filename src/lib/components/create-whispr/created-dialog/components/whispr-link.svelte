@@ -1,11 +1,11 @@
 <script lang="ts">
-	import CopyButton from '$lib/components/common/copy-button.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
-	import type { CreatedWhispr } from '$lib/types/created-whispr';
-	import { copyText, isCopySupported } from '$lib/utils/copy';
-	import { isShareSupported, shareText } from '$lib/utils/share';
+	import CopyButton from '#lib/components/common/copy-button.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import { Input } from '#lib/components/ui/input/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
+	import type { CreatedWhispr } from '#lib/types/created-whispr.js';
+	import { copyText, isCopySupported } from '#lib/utils/copy.js';
+	import { isShareSupported, shareText } from '#lib/utils/share.js';
 	import Share2 from '@lucide/svelte/icons/share-2';
 	import { toast } from 'svelte-sonner';
 

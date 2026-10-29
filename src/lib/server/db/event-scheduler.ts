@@ -3,8 +3,8 @@ import type {
 	EventSchedulerStatus,
 	InformationSchemaEvents,
 	ValidationCache
-} from '$lib/types/database';
-import { isDateInPast } from '$lib/utils/date-helpers';
+} from '#lib/types/database.js';
+import { isDateInPast } from '#lib/utils/date-helpers.js';
 import { isError, tc, tca } from '@itsezz/try-catch';
 import { sql } from 'drizzle-orm';
 import type pino from 'pino';

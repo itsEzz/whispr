@@ -1,6 +1,6 @@
-import { viewSchema } from '$lib/schemas/view-schema';
-import { dbEventScheduler } from '$lib/server/db/event-scheduler';
-import { rateLimiter } from '$lib/server/rate-limiter';
+import { viewSchema } from '#lib/schemas/view-schema.js';
+import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import { rateLimiter } from '#lib/server/rate-limiter.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';

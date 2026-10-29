@@ -1,8 +1,8 @@
-import { dev } from '$app/environment';
-import { dbEventScheduler } from '$lib/server/db/event-scheduler.js';
-import { validateEnv } from '$lib/server/env-validation.js';
-import { getLogger } from '$lib/server/logger.js';
-import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
+import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit/hooks';
+import { dev } from '$app/env';
+import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
+import { validateEnv } from '#lib/server/env-validation.js';
+import { getLogger } from '#lib/server/logger.js';
 import { humanId } from 'human-id';
 
 export const handle: Handle = async ({ event, resolve }) => {

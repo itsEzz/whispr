@@ -1,4 +1,4 @@
-import { dbEventScheduler } from '$lib/server/db/event-scheduler';
+import { dbEventScheduler } from '#lib/server/db/event-scheduler.js';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
