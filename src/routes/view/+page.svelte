@@ -32,7 +32,7 @@
 			if (result.type !== 'success') {
 				if (result.data.error.title || result.data.error.description) {
 					toast.error(result.data.error.title, {
-						description: result.data.error.description,
+						description: result.data.error.description
 					});
 				}
 				return;
@@ -40,7 +40,9 @@
 			return form.data;
 		},
 		taintedMessage: () => {
-			return new Promise((resolve) => (openNavigateAwayDialog = { open: true, onConfirm: () => resolve(true) }));
+			return new Promise(
+				(resolve) => (openNavigateAwayDialog = { open: true, onConfirm: () => resolve(true) })
+			);
 		},
 		onError({ result }) {
 			const parseError = tc(() => JSON.parse(result.error.message));
@@ -49,14 +51,14 @@
 					description:
 						parseError.data?.message ||
 						`Too many requests. Please wait ${parseError.data?.retryAfter || 60} seconds before trying again.`,
-					duration: 8000,
+					duration: 8000
 				});
 			} else {
 				toast.error(parseError.data?.title || 'Something went wrong', {
-					description: parseError.data?.message || 'Please try again in a moment.',
+					description: parseError.data?.message || 'Please try again in a moment.'
 				});
 			}
-		},
+		}
 	});
 
 	const { form: formData, enhance, submitting, allErrors, errors, constraints, submit } = form;
@@ -70,19 +72,19 @@
 		if (redirectReason === 'invalid-id') {
 			toast.info('Whispr not found', {
 				description: 'The whispr you are looking for does not exist or has expired.',
-				duration: 5000,
+				duration: 5000
 			});
 		} else if (redirectReason === 'expired') {
 			toast.info('Whispr expired', {
 				description: 'The whispr you are trying to view has just expired.',
-				duration: 5000,
+				duration: 5000
 			});
 		}
 
 		const url = new URL(page.url.toString());
 		url.searchParams.delete('redirect-reason');
 		// eslint-disable-next-line svelte/no-navigation-without-resolve
-		goto(url.toString(), { replaceState: true });
+		goto(url.toString(), { replaceState: true, reset: false });
 	});
 </script>
 
@@ -96,12 +98,12 @@
 		description:
 			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
 		url: page.url.href,
-		type: 'website',
+		type: 'website'
 	}}
 	twitter={{
 		title: 'View Whispr - Access Secure Message',
 		description:
-			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.',
+			'Access encrypted messages with your Whispr ID. Secure viewing with password protection and automatic expiration.'
 	}}
 	jsonLd={{
 		'@context': 'https://schema.org',
@@ -113,12 +115,15 @@
 		isPartOf: {
 			'@type': 'WebSite',
 			name: 'Whispr',
-			url: page.url.origin,
-		},
+			url: page.url.origin
+		}
 	}}
 />
 
-<ConfirmNavigateAway bind:open={openNavigateAwayDialog.open} onConfirm={openNavigateAwayDialog.onConfirm} />
+<ConfirmNavigateAway
+	bind:open={openNavigateAwayDialog.open}
+	onConfirm={openNavigateAwayDialog.onConfirm}
+/>
 
 <div class="mt-12 flex justify-center sm:mt-16 md:mt-20">
 	<Card.Root class="w-full max-w-md">
