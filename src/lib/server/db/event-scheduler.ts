@@ -149,7 +149,7 @@ export class DbEventScheduler {
 			return 'ERROR';
 		}
 
-		const status = (result.data?.[0] as unknown as [EventSchedulerStatus])[0].status;
+		const status = (result.data as unknown as [[EventSchedulerStatus, [unknown]]])[0][0].status;
 
 		return status === 'ON' ? 'OK' : 'NOT_OK';
 	}
