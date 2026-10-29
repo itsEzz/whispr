@@ -204,6 +204,7 @@ export default defineConfig({
 			{
 				files: ['*.svelte', '**/*.svelte'],
 				rules: {
+					'no-undef': 'off',
 					'no-inner-declarations': 'off',
 					'no-self-assign': 'off'
 				},
